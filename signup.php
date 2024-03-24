@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet" />
 
+    <!-- Just Validate Dev CDN -->
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+
     <!-- * Flowbite CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
@@ -68,7 +71,7 @@
             <!-- Service Seeker -->
             <div>
                 <h4></h4>
-                <form action="" class="bg-gray-300 mt-10 px-3 py-5 sm:p-10 rounded-md" enctype="multipart/form-data">
+                <form action="" id="ssSignUpForm" class="bg-gray-300 mt-10 px-3 py-5 sm:p-10 rounded-md" enctype="multipart/form-data">
                     <!-- Name, Email, Contact No -->
                     <div class="sm:flex gap-x-10">
                         <!-- Full Name -->
@@ -201,6 +204,10 @@
     <!-- Flowbite CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
+    <!-- Form Validation Script -->
+    <script>
+        const validator = new window.JustValidate("#ssSignUpForm")
+    </script>
     <!-- Login Page Navigate Script -->
     <!-- <script>
         const loginButtonEl = document.querySelector("#btnLogin");
