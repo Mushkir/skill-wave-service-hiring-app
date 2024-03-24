@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Sen", sans-serif;
+  font-optical-sizing: auto;
+}
+
+a:is(:link, :active, :visited).activeState {
+  @apply bg-[#8a535a] text-white-variant-1 rounded;
+}
+
+#heroSection {
+  height: 90dvh;
+  background: linear-gradient(
+      to right,
+      rgba(109, 41, 50, 1),
+      rgba(109, 41, 50, 0.8)
+    ),
+    url(../img/main-background-image.jpeg);
+  background-position: center;
+  background-size: cover;
+}
