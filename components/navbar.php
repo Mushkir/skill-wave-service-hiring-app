@@ -49,7 +49,7 @@
         const signUpButtonEl = document.querySelector("#btnSignup");
 
         signUpButtonEl.addEventListener("click", () => {
-            window.location.href = "./signup.php";
+            window.location.href = "./signup.php?ssSignUp";
         });
     </script>
 

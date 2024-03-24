@@ -1,0 +1,174 @@
+<h4></h4>
+<form action="" class="bg-gray-300 mt-10 px-3 py-5 sm:p-10 rounded-md" enctype="multipart/form-data" id="serviceProvidersSignUpForm">
+    <!-- Name, Email, Contact No -->
+    <div class="sm:flex gap-x-10">
+        <!-- Full Name -->
+        <div class="w-full">
+            <label for="sp-fullname" class="font-semibold text-cus-maron">Name<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <input type="text" name="sp-fullname" id="sp-fullname" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: Mohamed Mushkir" required />
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="w-full">
+            <label for="sp-email" class="font-semibold text-cus-maron">Email<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <input type="email" name="sp-email" id="sp-email" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: username@example.com" required />
+            </div>
+        </div>
+
+        <!-- Contact No -->
+        <div class="w-full">
+            <label for="sp-contact-no" class="font-semibold text-cus-maron">Contact No.<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <input type="tel" name="sp-contact-no" id="sp-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94 777195282" required />
+            </div>
+        </div>
+    </div>
+
+    <!-- Username, Password, Confirm Password -->
+    <div class="sm:flex gap-x-10">
+        <!-- Username -->
+        <div class="w-full">
+            <label for="sp-username" class="font-semibold text-cus-maron">Username<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <input type="text" name="sp-username" id="sp-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required />
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="w-full">
+            <label for="sp-password" class="font-semibold text-cus-maron">Password<span class="text-red-500">*</span></label>
+            <div class="mb-5 mt-2 flex bg-white items-center justify-center rounded">
+                <input type="password" name="sp-password" id="sp-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Enter your password" required />
+
+                <!-- Eye Icon -->
+                <button type="button" class="mr-3" id="eye-closed-icon">
+                    <i class="fa-regular fa-eye-slash"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="w-full">
+            <label for="sp-confirm-password" class="font-semibold text-cus-maron">Confirm Password<span class="text-red-500">*</span></label>
+            <div class="mb-5 mt-2 flex bg-white items-center justify-center rounded">
+                <input type="password" name="sp-confirm-password" id="sp-confirm-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Confirm password" required />
+
+                <!-- Eye Icon -->
+                <button type="button" class="mr-3" id="eye-closed-icon-conf">
+                    <i class="fa-regular fa-eye-slash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gender, Address Line, City -->
+    <div class="sm:flex gap-x-10">
+        <!-- Gender -->
+        <div class="w-full">
+            <label for="sp-gender" class="font-semibold text-cus-maron">Gender<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <select name="sp-gender" id="sp-gender" class="w-full bg-white border-none rounded mt-2 outline-none px-5 py-2">
+                    <option value="">Select your gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Address Line -->
+        <div class="w-full">
+            <label for="sp-addresp-line" class="font-semibold text-cus-maron">Address Line<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <input type="text" name="sp-addresp-line" id="sp-addresp-line" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: no. 246/a, meera nagar road" required />
+            </div>
+        </div>
+
+        <!-- City -->
+        <div class="w-full sm:flex items-center gap-8">
+            <div class="w-full">
+                <label for="sp-city" class="font-semibold text-cus-maron">District<span class="text-red-500">*</span></label>
+                <div class="mb-5">
+                    <select name="sp-district" id="sp-district" class="w-full bg-white border-none rounded mt-2 outline-none px-5 py-2">
+                        <option value="">District</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="w-full">
+                <label for="sp-city" class="font-semibold text-cus-maron">Town<span class="text-red-500">*</span></label>
+                <div class="mb-5">
+                    <select name="sp-town" id="sp-town" class="w-full bg-white border-none rounded mt-2 outline-none px-5 py-2">
+                        <option value="">Town</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image, Qualifications, -->
+    <div class="sm:flex gap-x-10">
+        <!-- Qualification -->
+        <div class="w-full">
+            <label for="sp-qualification" class="font-semibold text-cus-maron">Qualifications<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <textarea name="sp-qualification" id="sp-qualification" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: MBBS, Engineer..."></textarea>
+            </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="w-full">
+            <label for="sp-skills" class="font-semibold text-cus-maron">Skills<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <textarea name="sp-skills" id="sp-skills" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Mechanic, Plumber..."></textarea>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="w-full">
+            <label for="file-input" class="font-semibold text-cus-maron">Upload File<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <input class="block w-full mt-2 rounded cursor-pointer focus:outline-none bg-white" id="file-input" type="file" name="file-input" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Description, Keywords, Starting Price -->
+    <div class="sm:flex gap-x-10">
+        <!-- Description -->
+        <div class="w-full">
+            <label for="sp-desc" class="font-semibold text-cus-maron">Service Description<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <textarea name="sp-desc" id="sp-desc" rows="5" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Puncturing, Oil Changing..."></textarea>
+            </div>
+        </div>
+
+        <!-- Keywords -->
+        <div class="w-full">
+            <label for="sp-keywords" class="font-semibold text-cus-maron">Keywords<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <textarea name="sp-keywords" id="sp-keywords" rows="5" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Puncture, Mechanic, Car Reparing, Oil Changing..."></textarea>
+            </div>
+        </div>
+
+        <!-- Starting Price -->
+        <div class="w-full">
+            <label for="sp-starting-price" class="font-semibold text-cus-maron">Package Starting Price<span class="text-red-500">*</span></label>
+            <div class="mb-5">
+                <input class="font-normal w-full bg-white border-none rounded mt-2 outline-none" id="sp-starting-price" type="text" name="sp-starting-price" placeholder="Ex: 500.00" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal toggle -->
+    <div class="mt-5 w-full">
+        <button id="successButton" data-modal-target="successModal" data-modal-toggle="successModal" class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-cus-maron" type="submit">
+            Create Account
+        </button>
+    </div>
+
+    <!-- Main Model code need to write here -->
+</form>
