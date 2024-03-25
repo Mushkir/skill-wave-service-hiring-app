@@ -779,6 +779,10 @@ video {
   margin-bottom: 1.5rem;
 }
 
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
 .ms-5 {
   margin-inline-start: 1.25rem;
 }
@@ -809,10 +813,6 @@ video {
 
 .mt-\[6\.25rem\] {
   margin-top: 6.25rem;
-}
-
-.mr-3 {
-  margin-right: 0.75rem;
 }
 
 .box-border {
@@ -2053,19 +2053,14 @@ video {
   background-color: rgb(109 41 50 / var(--tw-bg-opacity));
 }
 
-.bg-cus-maron-1 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 118 123 / var(--tw-bg-opacity));
-}
-
 .bg-gray-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
-.bg-green-500 {
+.bg-maronLightVariant {
   --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+  background-color: rgb(224 213 215 / var(--tw-bg-opacity));
 }
 
 .bg-primary-color-10 {
@@ -3294,3 +3289,5 @@ a:is(:link, :active, :visited).activeState {
     }
   }
 }
+
+

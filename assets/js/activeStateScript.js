@@ -15,4 +15,3 @@ navLinksEl.forEach((el) => {
     el.classList.add("activeState");
   }
 });
-// console.log(pathURL);
