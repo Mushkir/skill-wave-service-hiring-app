@@ -8,7 +8,7 @@ eyeClosedIconEl.addEventListener("click", () => {
   // * Password Element
   const serviceProvidersPasswordEl = document.querySelector("#ss-password");
 
-  if (serviceProvidersPasswordEl.type === "password") {
+  if (serviceProvidersPasswordEl.type == "password") {
     serviceProvidersPasswordEl.type = "text";
     eyeClosedIconEl.innerHTML = `<i class="fa-regular fa-eye"></i>`;
   } else {
@@ -22,7 +22,7 @@ eyeClosedIconForConfirmPasswordEl.addEventListener("click", () => {
   // * Confirm password Element
   const confirmPasswordEl = document.querySelector("#ss-confirm-password");
 
-  if (confirmPasswordEl.type === "password") {
+  if (confirmPasswordEl.type == "password") {
     confirmPasswordEl.type = "text";
     eyeClosedIconForConfirmPasswordEl.innerHTML = `<i class="fa-regular fa-eye"></i>`;
   } else {

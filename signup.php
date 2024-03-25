@@ -112,21 +112,11 @@
     <!-- JS Code of Show & Hide Password -->
     <script src="./assets/js/show-and-hide-password.script.js"></script>
 
+    <!-- Custom validation for Username -->
+    <script src="./assets/js/usernameCustomError.validation.js"></script>
 
-    <!-- Form Validation Script -->
-    <script>
-        // const validator = new window.JustValidate("#ssSignUpForm")
-    </script>
     <!-- Login Page Navigate Script -->
-    <!-- <script>
-        const loginButtonEl = document.querySelector("#btnLogin");
-
-        loginButtonEl.addEventListener("click", () => {
-            window.location.href = "./login.php";
-        });
-    </script> -->
-
-    <!-- JS Code -->
+    <script src="./assets/js/loginNavigation.js"></script>
 </body>
 
 </html>

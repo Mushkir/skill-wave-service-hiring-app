@@ -2887,6 +2887,10 @@ a:is(:link, :active, :visited).activeState {
   background-size: cover;
 }
 
+.errorMsg {
+  margin-top: 0.5rem;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -3289,5 +3293,3 @@ a:is(:link, :active, :visited).activeState {
     }
   }
 }
-
-

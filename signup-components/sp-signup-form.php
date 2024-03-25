@@ -22,7 +22,7 @@
         <div class="w-full">
             <label for="sp-contact-no" class="font-semibold text-cus-maron">Contact No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="tel" name="sp-contact-no" id="sp-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94 777195282" required />
+                <input type="tel" name="sp-contact-no" id="sp-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94 777195282 / +94777195282" required />
             </div>
         </div>
     </div>
@@ -33,7 +33,8 @@
         <div class="w-full">
             <label for="sp-username" class="font-semibold text-cus-maron">Username<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="sp-username" id="sp-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required />
+                <input type="text" name="sp-username" id="sp-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required onkeyup="showCustomError()" />
+                <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden">Username cannot contain spaces</span>
             </div>
         </div>
 
@@ -90,7 +91,7 @@
         <!-- City -->
         <div class="w-full sm:flex items-center gap-8">
             <div class="w-full">
-                <label for="sp-city" class="font-semibold text-cus-maron">District<span class="text-red-500">*</span></label>
+                <label for="sp-district" class="font-semibold text-cus-maron">District<span class="text-red-500">*</span></label>
                 <div class="mb-5">
                     <select name="sp-district" id="sp-district" class="w-full bg-white border-none rounded mt-2 outline-none px-5 py-2">
                         <option value="">District</option>
@@ -99,7 +100,7 @@
             </div>
 
             <div class="w-full">
-                <label for="sp-city" class="font-semibold text-cus-maron">Town<span class="text-red-500">*</span></label>
+                <label for="sp-town" class="font-semibold text-cus-maron">Town<span class="text-red-500">*</span></label>
                 <div class="mb-5">
                     <select name="sp-town" id="sp-town" class="w-full bg-white border-none rounded mt-2 outline-none px-5 py-2">
                         <option value="">Town</option>
@@ -172,3 +173,219 @@
 
     <!-- Main Model code need to write here -->
 </form>
+
+<!-- JS Code of Data Validation -->
+<script>
+    const validator = new window.JustValidate("#serviceProvidersSignUpForm")
+
+    validator.addField("#sp-fullname",
+        [{
+                rule: "required"
+            }, {
+                rule: 'minLength',
+                value: 3,
+            },
+            {
+                rule: 'maxLength',
+                value: 20,
+            },
+        ], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-email",
+        [{
+                rule: 'required'
+            },
+            {
+                rule: 'email',
+            },
+        ], {
+            errorLabelCssClass: ['errorMsg']
+        })
+
+    validator.addField("#sp-contact-no",
+        [{
+                rule: 'required'
+            },
+            {
+                rule: 'number',
+            },
+            {
+                rule: 'minLength',
+                value: 12,
+            },
+            {
+                rule: 'maxLength',
+                value: 13
+            }
+        ], {
+            errorLabelCssClass: ['errorMsg']
+        })
+
+    validator.addField("#sp-username",
+        [{
+                rule: "required"
+            }, {
+                rule: 'minLength',
+                value: 3,
+            },
+            {
+                rule: 'maxLength',
+                value: 15,
+            },
+        ], {
+            errorLabelCssClass: ['errorMsg']
+        })
+
+    validator.addField("#sp-password",
+        [{
+                rule: "required"
+            }, {
+                rule: 'minLength',
+                value: 8,
+            },
+            {
+                rule: 'maxLength',
+                value: 15,
+            },
+            {
+                rule: 'strongPassword',
+            }
+        ], {
+            errorLabelCssClass: ['errorMsg']
+        })
+
+    validator.addField("#sp-confirm-password",
+        [{
+            rule: "required"
+        }, {
+            validator: (value, fields) => {
+                if (
+                    fields['#sp-password'] &&
+                    fields['#sp-password'].elem
+                ) {
+                    const repeatPasswordValue =
+                        fields['#sp-password'].elem.value;
+
+                    return value === repeatPasswordValue;
+                }
+
+                return true;
+            },
+            errorMessage: "Passwords should be the same",
+        }, ], {
+            errorLabelCssClass: ['errorMsg']
+        })
+
+    validator.addField("#sp-gender",
+        [{
+            rule: 'required'
+        }], {
+            errorLabelCssClass: ['errorMsg']
+        })
+
+    validator.addField("#sp-addresp-line",
+        [{
+            rule: "required"
+        }, {
+            rule: 'minLength',
+            value: 3,
+        }, ], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-district",
+        [{
+            rule: "required"
+        }, ], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-town",
+        [{
+            rule: "required"
+        }, ], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-qualification",
+        [{
+            rule: "required"
+        }, {
+            rule: 'minLength',
+            value: 3,
+        }, {
+            rule: 'maxLength',
+            value: 20,
+        }], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-skills",
+        [{
+            rule: "required"
+        }, {
+            rule: 'minLength',
+            value: 3,
+        }, {
+            rule: 'maxLength',
+            value: 50,
+        }], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#file-input",
+        [{
+            rule: 'minFilesCount',
+            value: 1,
+        }, {
+            rule: "files",
+            value: {
+                files: {
+                    extensions: ['jpeg', 'jpg', 'png'],
+                    types: ['image/jpeg', 'image/jpg', 'image/png'],
+                }
+            }
+        }], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-desc",
+        [{
+            rule: "required"
+        }, {
+            rule: 'minLength',
+            value: 3,
+        }, {
+            rule: 'maxLength',
+            value: 500,
+        }], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-keywords",
+        [{
+            rule: "required"
+        }, {
+            rule: 'minLength',
+            value: 3,
+        }, {
+            rule: 'maxLength',
+            value: 500,
+        }], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+
+    validator.addField("#sp-starting-price",
+        [{
+            rule: "required"
+        }, {
+            rule: "number"
+        }, {
+            rule: 'minLength',
+            value: 1,
+        }], {
+            errorLabelCssClass: ['errorMsg'],
+        })
+</script>

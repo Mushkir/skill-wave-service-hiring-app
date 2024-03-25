@@ -23,4 +23,6 @@ a:is(:link, :active, :visited).activeState {
   background-size: cover;
 }
 
-
+.errorMsg {
+  margin-top: 0.5rem;
+}
