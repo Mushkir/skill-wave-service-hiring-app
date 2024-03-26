@@ -112,11 +112,16 @@
     <!-- JS Code of Show & Hide Password -->
     <script src="./assets/js/show-and-hide-password.script.js"></script>
 
+    <!-- Just Validate Dev validation code -->
+    <script src="./assets/js/signUpform.validation.js"></script>
+
     <!-- Custom validation for Username -->
     <script src="./assets/js/usernameCustomError.validation.js"></script>
 
     <!-- Login Page Navigate Script -->
     <script src="./assets/js/loginNavigation.js"></script>
+
+
 </body>
 
 </html>
