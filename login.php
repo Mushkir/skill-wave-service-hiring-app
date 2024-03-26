@@ -5,7 +5,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./assets/img/logo.png" class="object-cover" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Service Seeker's Sign-Up | Skill-Wave</title>
+    <title>Login | Skill-Wave</title>
+
+    <!-- Just Validate Dev CDN -->
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 
     <!-- * Google Font CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,9 +18,18 @@
     <!-- * Flowbite CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
+
+
     <!-- * Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
+    <!-- JustValidateDev CDN -->
+
+
+    <!-- * TailwindCSS -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <!-- Footer Alignment CSS -->
     <style>
         .footerPlace {
             display: flex;
@@ -29,11 +41,6 @@
             margin-top: auto;
         }
     </style>
-
-    <!-- * TailwindCSS -->
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/style2.css">
-
 </head>
 
 <body class="footerPlace">
@@ -41,13 +48,13 @@
     <header class="relative z-40">
         <nav class="bg-primary-color-10 sm:px-10 fixed top-0 left-0 right-0">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="./index.php">
+                <a href="/">
                     <img src="./assets/img/logo.png" class="w-20 sm:w-28" alt="Skill-Wave Logo" />
                 </a>
 
                 <!-- Login Button -->
                 <button class="py-1.5 px-5 bg-cus-maron lg:text-xl text-primary-color-10 rounded hover:transition 500 hover:bg-cus-maron-3" aria-current="page" id="btnSignUp">
-                    SignUp
+                    Sign Up
                 </button>
             </div>
         </nav>
@@ -55,37 +62,38 @@
     <!-- End -->
 
     <!-- Main -->
-    <main class="mt-[6.25rem] px-3 sm:px-20">
+    <main class="mt-[6.25rem] pb-10 px-3 sm:px-20">
         <!-- Main Container -->
-        <section class="pt-10 sm:pt-24 w-full sm:w-[700px] sm:max-w-8xl mx-auto mb-10">
-            <form action="" class="bg-gray-300 mt-10 px-3 py-5 sm:p-10 rounded-md">
+        <section class="sm:pt-24 w-full sm:w-[700px] max-w-8xl mx-auto">
+            <form action="" class="bg-gray-300 mt-10 px-3 py-5 sm:p-10 rounded-md" id="mainLoginForm">
                 <!-- Username -->
                 <div class="w-full">
-                    <label for="username" class="font-semibold text-sm sm:text-base text-cus-maron">Username</label>
+                    <label for="username" class="font-semibold text-cus-maron">Username</label>
                     <div class="mb-5">
-                        <input type="text" name="username" id="username" class="font-normal text-sm sm:text-base w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required />
+                        <input type="text" name="username" id="username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required onkeyup="showCustomError()" />
+                        <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden"></span>
                     </div>
                 </div>
 
                 <!-- Password -->
                 <div class="w-full">
-                    <label for="password" class="font-semibold text-sm sm:text-base text-cus-maron">Password</label>
-                    <div class="mb-3 mt-2 flex bg-white items-center justify-center rounded">
-                        <input type="password" name="password" id="password" class="font-normal text-sm sm:text-base w-full bg-white border-none rounded outline-none" placeholder="Enter your password" required />
+                    <label for="password" class="font-semibold text-cus-maron">Password</label>
+                    <div class="mb-3">
+                        <input type="password" name="password" id="password" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: Password" required />
                     </div>
                 </div>
 
                 <!-- Show Password Checkbox -->
                 <div class="hover:text-cus-maron-100 hover:font-semibold flex items-center gap-2 mb-5">
                     <input class="w-4 h-4 rounded bg-maronLightVariant text-cus-maron-100 focus:ring-cus-maron-100" type="checkbox" name="show-password" id="show-password" value="true" />
-                    <label class="text-cus-maron text-sm sm:text-base" for="show-password">
+                    <label class="text-cus-maron" for="show-password">
                         Show Password
                     </label>
                 </div>
 
                 <!-- Choose category -->
                 <div class="w-full">
-                    <select name="user-category" id="user-category" class="bg-white border-0 px-5 py-2 rounded w-full text-cus-maron text-sm sm:text-base">
+                    <select name="user-category" id="user-category" class="bg-white border-0 px-5 py-2 rounded w-full text-cus-maron">
                         <option value="">Choose your category</option>
                         <option value="Service Provider">Service Provider</option>
                         <option value="Service Seeker">Service Seeker</option>
@@ -94,12 +102,12 @@
 
                 <!-- Login button -->
                 <div class="mt-8">
-                    <button class="bg-cus-maron text-sm sm:text-base w-full px-5 py-2 rounded text-primary-color-10 hover:text-white hover:bg-cus-maron-100">
+                    <button class="bg-cus-maron w-full px-5 py-2 rounded text-primary-color-10 hover:text-white hover:bg-cus-maron-100">
                         Login
                     </button>
                 </div>
 
-                <a href="#" class="text-sm sm:text-base font-normal block mt-5 text-cus-maron-1 hover:text-cus-maron hover:underline">Forgot Password?</a>
+                <a href="#" class="text-sm text-center sm:text-left font-normal block mt-5 text-cus-maron-1 hover:text-cus-maron hover:underline">Forgot Password?</a>
             </form>
         </section>
     </main>
@@ -119,10 +127,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
     <!-- Show and Hide Password -->
-    <!-- <script src="./assets/js/show-and-hide-password.script.js"></script> -->
+    <script src="./assets/js/show-and-hide-password.script.js"></script>
 
+    <!-- Form Validation script -->
+    <script src="./assets/js/form.validation.js"></script>
 
-    <!-- <script type="module" src="./assets/js/ss-signUp.validation.js"></script> -->
+    <!-- Username Custom Error -->
+    <script src="./assets/js/usernameCustomError.validation.js"></script>
+
+    <!-- JS code to Navigate Sign-Up page -->
     <script>
         // * JavaScript code for Login page navigation.
         const signUpButtonEl = document.querySelector("#btnSignUp");
@@ -131,6 +144,7 @@
             window.location.href = "./signup.php?ssSignUp";
         });
     </script>
+
 </body>
 
 </html>

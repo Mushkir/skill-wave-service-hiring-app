@@ -123,7 +123,7 @@
     </script>
 
     <!-- Just Validate Dev validation code -->
-    <script src="./assets/js/signUpform.validation.js"></script>
+    <script src="./assets/js/form.validation.js"></script>
 
     <!-- Custom validation for Username -->
     <script src="./assets/js/usernameCustomError.validation.js"></script>

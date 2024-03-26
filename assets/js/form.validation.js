@@ -551,6 +551,51 @@ if (
       errorLabelCssClass: ["errorMsg"],
     }
   );
-} else {
-  alert("Oops! 404!");
+} else if (
+  document.location.href === "http://localhost/skillWaveWebApp/login.php"
+) {
+  const validator = new window.JustValidate("#mainLoginForm");
+
+  // Name
+  validator.addField(
+    "#username",
+    [
+      {
+        rule: "required",
+      },
+      {
+        rule: "minLength",
+        value: 3,
+      },
+    ],
+    {
+      errorLabelCssClass: ["errorMsg"],
+    }
+  );
+
+  //   Password
+  validator.addField(
+    "#password",
+    [
+      {
+        rule: "required",
+      },
+    ],
+    {
+      errorLabelCssClass: ["errorMsg"],
+    }
+  );
+
+  // User Category
+  validator.addField(
+    "#user-category",
+    [
+      {
+        rule: "required",
+      },
+    ],
+    {
+      errorLabelCssClass: ["errorMsg"],
+    }
+  );
 }

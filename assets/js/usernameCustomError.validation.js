@@ -13,6 +13,10 @@ function showCustomError() {
     const usernameEl = document.querySelector("#ss-username");
 
     validation(usernameEl);
+  } else if (usernameInputIdName == "username") {
+    const usernameEl = document.querySelector("#username");
+
+    validation(usernameEl);
   }
 }
 
