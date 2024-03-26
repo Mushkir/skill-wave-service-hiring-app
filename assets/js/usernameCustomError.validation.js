@@ -24,7 +24,8 @@ function validation(inputIdName) {
     usernameSpaceErrorEl.classList.remove("hidden");
     usernameSpaceErrorEl.classList.add("block");
   } else if (!/^[a-zA-Z0-9_]*$/.test(username)) {
-    usernameSpaceErrorEl.textContent = "_ Symbol only acceptable.";
+    usernameSpaceErrorEl.textContent =
+      "Username will accept only underscore '_' symbol";
     usernameSpaceErrorEl.classList.remove("hidden");
     usernameSpaceErrorEl.classList.add("block");
   } else {
