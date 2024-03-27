@@ -30,11 +30,11 @@
                         <a href="/contact" class="py-2 px-3 font-normal text-cus-maron-100 lg:text-lg hover:font-semibold hover:bg-cus-maron hover:!text-primary-color-7 hover:transition 500 hover:rounded" aria-current="page">Contact Us</a>
                     </li>
 
-                    <button class="py-1.5 px-5 bg-cus-maron lg:text-xl text-primary-color-10 rounded hover:transition 500 hover:bg-cus-maron-3" aria-current="page" id="btnLogin">
+                    <button class="py-1.5 px-5 bg-cus-maron lg:text-xl text-primary-color-10 w-full rounded-full sm:w-24 sm:rounded hover:transition 500 hover:bg-cus-maron-3" aria-current="page" id="btnLogin">
                         Login
                     </button>
 
-                    <button class="py-1.5 px-5 border-2 border-cus-maron text-cus-maron lg:text-xl rounded hover:transition 500 hover:bg-cus-maron-3 hover:text-primary-color-10" aria-current="page" id="btnSignup">
+                    <button class="py-1 pl-4 pr-5 border-2 text-center border-cus-maron text-cus-maron lg:text-xl w-full rounded-full sm:w-24 sm:rounded hover:transition 500 hover:bg-cus-maron-3 hover:text-primary-color-10" aria-current="page" id="btnSignup">
                         Signup
                     </button>
                 </ul>

@@ -21,6 +21,14 @@
     <!-- TailwindCSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 
+    <style>
+        a:is(:link, :active, :visited).activeState {
+            background: #6D2932;
+            color: #C7B7A3;
+            border-radius: 4px;
+        }
+    </style>
+
     <!-- Active-state script -->
     <script defer src="./assets/js/activeState.js"></script>
 </head>

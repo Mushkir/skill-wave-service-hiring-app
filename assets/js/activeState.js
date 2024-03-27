@@ -1,7 +1,7 @@
 // * Steps to set Active-state manually.
 // * 1. Need to get the Path through (window.location.pathname)
 const pathURL = window.location.pathname;
-console.log(pathURL);
+// console.log(pathURL);
 
 // console.log(window);
 
@@ -10,9 +10,7 @@ const navLinksEl = document.querySelectorAll("ul a");
 
 // * 3. Assign the current pathURL href into
 navLinksEl.forEach((el) => {
-  //   console.log(el.classList.add("activa"));
-
-  console.dir(el.href);
+  // console.dir(el.href);
 
   el.classList.remove("activeState");
 

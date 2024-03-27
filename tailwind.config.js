@@ -1,6 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./**/*.{html,js,php}", "./find-service-provider.php"],
+  content: [
+    "./**/*.{html,js,php}",
+    "./*.php",
+    "./lang/*.php",
+    "./lang/*.html",
+    "./js/custom.min.js",
+    "./find-service-provider.php",
+    "./assets/js/form.validation.js",
+  ],
 
   theme: {
     extend: {

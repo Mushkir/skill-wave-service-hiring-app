@@ -30,6 +30,8 @@
     <style>
         a:is(:link, :active, :visited).activeState {
             background: #6D2932;
+            color: #C7B7A3;
+            border-radius: 4px;
         }
     </style>
 
@@ -46,12 +48,14 @@
         <section class="mt-10 sm:mt-20 px-3 sm:px-5 md:px-20">
             <!-- Search bar -->
             <div class="max-w-7xl mx-auto">
-                <form class="w-full">
+                <form class="w-full" action="" id="searchServiceProvidersForm">
                     <div class="relative w-full text-primary-color-10">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none w-full">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
-                        <input type="search" class="block w-full p-4 ps-10 text-sm rounded-md bg-cus-maron text-primary-color-10 placeholder-primary-color-10 focus:ring-white" placeholder="Ex: Mechanic, Plumber ..." required />
+                        <div>
+                            <input type="search" id="search-sp" name="search-sp" class="block w-full p-4 ps-10 text-sm rounded-md bg-cus-maron text-primary-color-10 placeholder-primary-color-10 focus:ring-white" placeholder="Ex: Mechanic, Plumber ..." required />
+                        </div>
                         <button type="submit" class="absolute end-2.5 bottom-2.5 bg-primary-color-10 font-medium rounded text-sm px-5 py-2 text-cus-maron hover:bg-primary-color-9">
                             Search
                         </button>
@@ -743,7 +747,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
     <!-- Form Validation script -->
-    <script src="./assets/js/form.validation.js"></script>
+    
 
 
 </body>
