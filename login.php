@@ -18,13 +18,8 @@
     <!-- * Flowbite CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
-
-
     <!-- * Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-    <!-- JustValidateDev CDN -->
-
 
     <!-- * TailwindCSS -->
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -45,20 +40,7 @@
 
 <body class="footerPlace">
     <!-- Header Part -->
-    <header class="relative z-40">
-        <nav class="bg-primary-color-10 sm:px-10 fixed top-0 left-0 right-0">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="/">
-                    <img src="./assets/img/logo.png" class="w-20 sm:w-28" alt="Skill-Wave Logo" />
-                </a>
-
-                <!-- Login Button -->
-                <button class="py-1.5 px-5 bg-cus-maron lg:text-xl text-primary-color-10 rounded hover:transition 500 hover:bg-cus-maron-3" aria-current="page" id="btnSignUp">
-                    Sign Up
-                </button>
-            </div>
-        </nav>
-    </header>
+    <?php include('./components/navbar.php') ?>
     <!-- End -->
 
     <!-- Main -->
@@ -134,16 +116,6 @@
 
     <!-- Username Custom Error -->
     <script src="./assets/js/usernameCustomError.validation.js"></script>
-
-    <!-- JS code to Navigate Sign-Up page -->
-    <script>
-        // * JavaScript code for Login page navigation.
-        const signUpButtonEl = document.querySelector("#btnSignUp");
-
-        signUpButtonEl.addEventListener("click", () => {
-            window.location.href = "./signup.php?ssSignUp";
-        });
-    </script>
 
 </body>
 

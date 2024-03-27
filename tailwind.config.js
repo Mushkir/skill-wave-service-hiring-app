@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./**/*.{html,js,php}"],
+  content: ["./**/*.{html,js,php}", "./find-service-provider.php"],
 
   theme: {
     extend: {
@@ -17,6 +17,7 @@ module.exports = {
         maronLightVariant: "#e0d5d7",
         "maron-hover-effect": "#572028",
         "white-variant-1": "#fafafa",
+        boneWhite: "#F9F6EE",
       },
     },
   },

@@ -118,7 +118,7 @@
     </div>
 
     <!-- Modal toggle -->
-    <div class="mt-5 w-full">
+    <div class="mt-10 sm:mt-5 w-full">
         <button id="successButton" data-modal-target="successModal" data-modal-toggle="successModal" class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-cus-maron" type="submit">
             Create Account
         </button>

@@ -35,6 +35,12 @@
             border-radius: 10px;
             color: wheat;
         }
+
+        @media only screen and (max-width: 640px) {
+            .formActive {
+                border-radius: 9999px;
+            }
+        }
     </style>
 
 
@@ -42,20 +48,7 @@
 
 <body>
     <!-- Header Part -->
-    <header class="relative z-40">
-        <nav class="bg-primary-color-10 sm:px-10 fixed top-0 left-0 right-0">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="./index.php">
-                    <img src="./assets/img/logo.png" class="w-20 sm:w-28" alt="Skill-Wave Logo" />
-                </a>
-
-                <!-- Login Button -->
-                <button class="py-1.5 px-5 bg-cus-maron lg:text-xl text-primary-color-10 rounded hover:transition 500 hover:bg-cus-maron-3" aria-current="page" id="btnLogin">
-                    Login
-                </button>
-            </div>
-        </nav>
-    </header>
+    <?php include('./components/navbar.php') ?>
     <!-- End -->
 
     <!-- Main -->
@@ -63,17 +56,17 @@
         <!-- Main Container -->
         <section class="pt-24 max-w-8xl mx-auto">
             <!-- Header Div -->
-            <div class="flex items-center justify-between bg-maronLightVariant rounded-md">
+            <div class="flex items-center justify-between bg-maronLightVariant rounded-full sm:rounded-md">
                 <!-- Service Seeker Section -->
                 <div class="w-full" id="serviceSeekerDiv">
-                    <a href="signup.php?ssSignUp" class="block text-center py-3 sm:text-2xl font-semibold">
+                    <a href="signup.php?ssSignUp" class="block text-center py-3 sm:text-2xl font-semibold rounded-full sm:rounded-md">
                         Service Seeker
                     </a>
                 </div>
 
                 <!-- Service Providers Section -->
                 <div class="w-full" id="serviceProviderDiv">
-                    <a href="signup.php?spSignUp" class="block text-center py-3 sm:text-2xl font-semibold">
+                    <a href="signup.php?spSignUp" class=" rounded-full sm:rounded-md block text-center py-3 sm:text-2xl font-semibold">
                         Service Provider
                     </a>
                 </div>

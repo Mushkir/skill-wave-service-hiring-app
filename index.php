@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 
     <!-- Active-state script -->
-    <script defer src="./assets/js/activeStateScript.js"></script>
+    <script defer src="./assets/js/activeState.js"></script>
 </head>
 
 <body>
