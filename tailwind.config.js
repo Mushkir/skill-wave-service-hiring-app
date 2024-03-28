@@ -8,6 +8,7 @@ module.exports = {
     "./js/custom.min.js",
     "./find-service-provider.php",
     "./assets/js/form.validation.js",
+    "./admin/login.php",
   ],
 
   theme: {
