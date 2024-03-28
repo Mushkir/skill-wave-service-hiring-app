@@ -59,6 +59,11 @@
             <button class="bg-cus-maron px-5 py-2 rounded text-primary-color-10 hover:bg-maron-hover-effect hover:font-semibold w-full">
                 Login
             </button>
+
+            <!-- Back to Home -->
+            <section class="" style="color: #7b3e46;">
+                <a href="../index.php" class="block text-sm hover:underline mt-5 font-medium hover:text-cus-maron text-center">Back to Home</a>
+            </section>
         </form>
     </section>
 

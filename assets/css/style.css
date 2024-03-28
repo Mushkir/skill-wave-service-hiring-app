@@ -2835,6 +2835,11 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-cus-maron-4 {
+  --tw-text-opacity: 1;
+  color: rgb(123 62 70 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }

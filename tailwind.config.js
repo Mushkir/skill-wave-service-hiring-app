@@ -22,6 +22,7 @@ module.exports = {
         "cus-maron-1": "#99767B",
         "cus-maron-2": "#6D2932",
         "cus-maron-3": "#62242d",
+        "cus-maron-4": "#7b3e46",
         "cus-maron-100": "#41181e",
         maronLightVariant: "#e0d5d7",
         "maron-hover-effect": "#572028",
