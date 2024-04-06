@@ -181,13 +181,23 @@
                         contentType: false, // Don't set content type (required for FormData)
                         success: function(response) {
                             console.log(response);
-                            Swal.fire({
-                                title: "Account Created!",
-                                text: "Dear Admin! Your account has been created successfully!",
-                                icon: "success"
-                            });
+                            // $("body").html(response);
+                            // Swal.fire({
 
-                            $("#adminSignUpForm")[0].reset();
+                            //     title: "Account Created!",
+                            //     text: "Dear Admin! Your account has been created successfully!",
+                            //     icon: "success"
+
+                            // }).then((result) => {
+
+                            //     if (result.isConfirmed) {
+
+                            //         $("#adminSignUpForm")[0].reset();
+                            //         $(document)[0].location.href = "login.php";
+
+                            //     }
+                            // })
+
 
                         },
                         error: function(xhr, status, error) {

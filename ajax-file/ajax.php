@@ -3,7 +3,6 @@
 require_once('../classes/common/Database.php');
 require_once('../classes/app/Admin.php');
 
-
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
 
     $adminUsernameEl = $_POST['admin-username'];
@@ -13,11 +12,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
 
     $encryptedPassword = password_hash($adminPasswordEl, PASSWORD_DEFAULT);
 
-    $dbObj = new Database();
+    $db = new Database();
 
-    $adminProfileImg = $dbObj->imageUpload($adminProfileImgEl);
+    // $adminProfileImg = $db->imageUpload($adminProfileImgEl);
 
-    $db = new Admin();
+    $admin = new Admin();
+    // $allAdminData = $admin->read();
 
-    $db->addAdmin($adminUsernameEl, $encryptedPassword, $adminProfileImg, $adminEmailEl);
+    // $admin->addAdmin($adminUsernameEl, $encryptedPassword, $adminProfileImg, $adminEmailEl);
 }
