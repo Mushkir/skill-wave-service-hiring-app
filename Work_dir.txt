@@ -1,4 +1,16 @@
 To do:
+Top 1: Need to implement Admin Dashboard with District and Town adding ui.
+Top 2: Need to implement District and Town details adding by admin feature.
+1. Need to implement Service Seeker signup process.
+2. Need to implement Service Seeker login process.
+3. Need to implement Service Provider signup process.
+4. Need to implement Service Provider login process.
+
+
+
+Future Enhancement
 1. Need to write validation for SP search bar.
-2. Need to create Admin Panel
-3. 
+2. Need to create Admin Panel - Future Work.
+
+
+
