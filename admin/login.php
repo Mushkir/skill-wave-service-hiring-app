@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet" />
 
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- JustValidate CDN -->
     <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 
@@ -78,28 +81,112 @@
         })
     </script>
 
-    <!-- JustValidate code for form validation -->
+    <!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- JQuery script -->
     <script>
-        const validator = new window.JustValidate("#adminLoginForm")
+        $(document).ready(function() {
 
-        validator.addField("#admin-username",
-            [{
+            // console.log();
+
+            const FormEl = document.querySelector("#adminLoginForm");
+
+            // * JustValidateDev Form validation 
+            const validator = new window.JustValidate(FormEl)
+
+            validator.addField("#admin-username",
+                [{
+                        rule: "required",
+                    },
+                    {
+                        rule: "minLength",
+                        value: 3,
+                    },
+                ], {
+                    errorLabelCssClass: ["errorMsg"],
+                })
+
+            validator.addField("#password",
+                [{
                     rule: "required",
-                },
-                {
-                    rule: "minLength",
-                    value: 3,
-                },
-            ], {
-                errorLabelCssClass: ["errorMsg"],
-            })
+                }, ], {
+                    errorLabelCssClass: ["errorMsg"],
+                })
 
-        validator.addField("#password",
-            [{
-                rule: "required",
-            }, ], {
-                errorLabelCssClass: ["errorMsg"],
+            validator.onSuccess((e) => {
+
+                e.preventDefault
+
+                $(document).on("submit", FormEl, function(e) {
+
+                    const formData = new FormData(FormEl);
+
+                    formData.append("action", "adminLoginRequest")
+
+                    e.preventDefault();
+
+                    // Send the Request to Server
+                    $.ajax({
+                        url: '../ajax-file/ajax.php',
+                        type: "POST",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        beforeSend: function() {
+                            // console.log("Server Loading");
+                        },
+                        success: function(response) {
+
+                            // console.log(response);
+                            if (response == "404") {
+                                Swal.fire({
+
+                                    title: "Invalid username!",
+                                    text: "We regret to inform you that the username is not valid. Kindly give the correct username. Thank you!",
+                                    icon: "error"
+                                })
+                            } else if (response == "2000") {
+                                Swal.fire({
+
+                                    title: "Invalid Password!",
+                                    text: "We regret to inform you that the password is not valid. Kindly give the correct password. Thank you!",
+                                    icon: "error"
+                                })
+                            } else if (response == "2001") {
+                                Swal.fire({
+
+                                    title: "Login Success!",
+                                    text: "Dear Admin! Your login process has been done successfully!",
+                                    icon: "success"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+
+                                        // Reset the form
+                                        $("#adminLoginForm")[0].reset();
+
+                                        // Navigate to Admin Dashboard
+                                        $(document)[0].location.href = "./dashboard.php?text"
+                                    }
+                                })
+                            } else {
+                                Swal.fire({
+
+                                    title: "Technical Error!",
+                                    text: "Unfortunately a technical error occured! Please contact IT Support...",
+                                    icon: "warning"
+                                })
+                            }
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log("Status: " + status);
+                            console.log("Error Response: " + xhr.responseText);
+                        }
+                    })
+                })
             })
+        })
     </script>
 </body>
 

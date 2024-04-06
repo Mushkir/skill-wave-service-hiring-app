@@ -239,12 +239,10 @@
                                     icon: "success"
 
                                 }).then((result) => {
-
                                     if (result.isConfirmed) {
 
                                         $("#adminSignUpForm")[0].reset();
                                         $(document)[0].location.href = "login.php";
-
                                     }
                                 })
                             }
