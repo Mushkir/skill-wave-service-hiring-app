@@ -5,6 +5,7 @@ require_once('../classes/app/Admin.php');
 
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
 
+    $adminNameEl = $_POST['admin-name'];
     $adminUsernameEl = $_POST['admin-username'];
     $adminPasswordEl = $_POST['password'];
     $adminEmailEl = $_POST['admin-email'];
@@ -14,10 +15,34 @@ if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
 
     $db = new Database();
 
-    // $adminProfileImg = $db->imageUpload($adminProfileImgEl);
+    $adminProfileImg = $db->imageUpload($adminProfileImgEl);
 
     $admin = new Admin();
-    // $allAdminData = $admin->read();
 
-    // $admin->addAdmin($adminUsernameEl, $encryptedPassword, $adminProfileImg, $adminEmailEl);
+    $isAdminNameExist = $admin->countRows("username", $adminUsernameEl); // This method is checking does the username already exist or not in DB
+
+    $isAdminEmailExist = $admin->countRows("email", $adminEmailEl); // This method is checking does the email already exist or not in DB
+
+    $serverResponse;
+
+    if ($isAdminNameExist > 0 && $isAdminEmailExist > 0) {
+
+        $serverResponse = "11";
+    } elseif ($isAdminNameExist > 0) {
+
+        $serverResponse = "-1";
+    } elseif ($isAdminEmailExist > 0) {
+
+        $serverResponse = "0";
+    } else {
+
+        $serverResponse = "200";
+    }
+
+    echo $serverResponse;
+
+    if ($serverResponse == "200") {
+
+        $admin->addAdmin($adminNameEl, $adminUsernameEl, $encryptedPassword, $adminProfileImg, $adminEmailEl);
+    }
 }

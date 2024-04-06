@@ -34,6 +34,23 @@
     <section class=" bg-primary-color-10 w-full rounded-md max-w-xl p-8" style="margin-top: 208px;">
 
         <form action="" method="post" id="adminSignUpForm" enctype="multipart/form-data">
+
+            <!-- Name -->
+            <section class="mb-5">
+                <label for="admin-name" class="font-semibold text-cus-maron">Name</label>
+                <div>
+                    <input type="text" name="admin-name" id="admin-name" placeholder="Enter your name" class="w-full border-0 rounded mt-1 outline-none" required />
+                </div>
+            </section>
+
+            <!-- Email -->
+            <section class="mb-5">
+                <label for="admin-email" class="font-semibold text-cus-maron">Email</label>
+                <div>
+                    <input type="text" name="admin-email" id="admin-email" placeholder="Enter your email" class="w-full border-0 rounded mt-1 outline-none" required />
+                </div>
+            </section>
+
             <!-- Username -->
             <section class="mb-5">
                 <label for="admin-username" class="font-semibold text-cus-maron">Username</label>
@@ -58,14 +75,6 @@
                 </label>
             </section>
 
-            <!-- Email -->
-            <section class="mb-5">
-                <label for="admin-email" class="font-semibold text-cus-maron">Email</label>
-                <div>
-                    <input type="text" name="admin-email" id="admin-email" placeholder="Enter your email" class="w-full border-0 rounded mt-1 outline-none" required />
-                </div>
-            </section>
-
             <!-- Image -->
             <section class="w-full">
                 <label for="admin-profile-image" class="font-semibold text-cus-maron">Upload File<span class="text-red-500">*</span></label>
@@ -76,7 +85,7 @@
 
             <!-- Login Button -->
             <button class="bg-cus-maron px-5 py-2 rounded text-primary-color-10 hover:bg-maron-hover-effect hover:font-semibold w-full">
-                Login
+                Create Account
             </button>
 
             <!-- Back to Home -->
@@ -108,6 +117,18 @@
             const validator = new window.JustValidate("#adminSignUpForm")
 
             validator.addField("#admin-username",
+                [{
+                        rule: "required",
+                    },
+                    {
+                        rule: "minLength",
+                        value: 3,
+                    },
+                ], {
+                    errorLabelCssClass: ["errorMsg"],
+                })
+
+            validator.addField("#admin-name",
                 [{
                         rule: "required",
                     },
@@ -168,7 +189,7 @@
 
                     e.preventDefault();
 
-                    const formData = new FormData(this); // Construct FormData from the form
+                    const formData = new FormData(this);
 
                     // Append the action parameter
                     formData.append("action", "signUpAdmin");
@@ -176,35 +197,62 @@
                     $.ajax({
                         url: '../ajax-file/ajax.php',
                         type: 'POST',
-                        data: formData, // Send FormData object directly
-                        processData: false, // Don't process the data (required for FormData)
-                        contentType: false, // Don't set content type (required for FormData)
+                        data: formData,
+                        processData: false,
+                        contentType: false,
                         success: function(response) {
-                            console.log(response);
-                            // $("body").html(response);
-                            // Swal.fire({
+                            console.log("Response: " + response);
+                            if (response == "11") {
+                                Swal.fire({
 
-                            //     title: "Account Created!",
-                            //     text: "Dear Admin! Your account has been created successfully!",
-                            //     icon: "success"
+                                    title: "Username and Email Exist!",
+                                    text: "We regret to inform you that the username and email are already taken. Kindly choose a different one. Thank you!",
+                                    icon: "error"
+                                })
+                            }
 
-                            // }).then((result) => {
+                            if (response == "0") {
+                                Swal.fire({
 
-                            //     if (result.isConfirmed) {
+                                    title: "Email Address Exist!",
+                                    text: "We regret to inform you that the email address is already taken. Kindly choose a different one. Thank you!",
+                                    icon: "error"
 
-                            //         $("#adminSignUpForm")[0].reset();
-                            //         $(document)[0].location.href = "login.php";
+                                })
+                            }
 
-                            //     }
-                            // })
+                            if (response == "-1") {
+                                Swal.fire({
 
+                                    title: "Username Exist!",
+                                    text: "We regret to inform you that the username is already taken. Kindly choose a different one. Thank you!",
+                                    icon: "error"
 
+                                })
+                            }
+
+                            if (response == "200") {
+                                Swal.fire({
+
+                                    title: "Account Created!",
+                                    text: "Dear Admin! Your account has been created successfully!",
+                                    icon: "success"
+
+                                }).then((result) => {
+
+                                    if (result.isConfirmed) {
+
+                                        $("#adminSignUpForm")[0].reset();
+                                        $(document)[0].location.href = "login.php";
+
+                                    }
+                                })
+                            }
                         },
                         error: function(xhr, status, error) {
                             console.log("Status : " + status);
                             console.log(xhr.responseText);
                         }
-
                     })
                 })
             })
