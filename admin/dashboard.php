@@ -34,7 +34,7 @@
             <ul>
                 <!-- Dashboard -->
                 <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="#" class="flex items-center gap-4 bg-[#6D2932] pl-5 p-3 rounded-r-xl text-white">
+                    <a href="dashboard.php?dashboard" class="flex items-center gap-4 bg-[#6D2932] pl-5 p-3 rounded-r-xl text-white">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@
         <!-- Content -->
         <section class="bg-[#F9F6EE] w-full min-h-screen p-5 rounded-xl">
             <!-- Header Par -->
-            <section class="flex items-start justify-between">
+            <section class="flex items-start justify-between relative z-40">
                 <div class="bg-primary-color-10 flex items-center w-[250px] p-2 gap-4 rounded-lg">
                     <!-- Search Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 16 16">
@@ -138,7 +138,7 @@
                 </div>
 
                 <!-- Profile -->
-                <div class="hover:cursor-pointer" id="admin-profile">
+                <div class="hover:cursor-pointer z-40 absolute top-0 right-0" id="admin-profile">
                     <div>
                         <div class="flex justify-end items-center">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" class="w-10 h-10 object-cover rounded-full" />
@@ -186,7 +186,13 @@
                 </div>
             </section>
 
-            <section></section>
+            <section class="mt-8 -z-10">
+                <?php
+                if (isset($_GET['dashboard'])) {
+                    include('summary.php');
+                }
+                ?>
+            </section>
         </section>
     </section>
 
