@@ -21,6 +21,13 @@
 
     <!-- TailwindCSS -->
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <style>
+        .activeSideBar {
+            background-color: #6D2932;
+            color: #FFFFFF;
+        }
+    </style>
 </head>
 
 <body class="bg-primary-color-10">
@@ -34,7 +41,7 @@
             <ul>
                 <!-- Dashboard -->
                 <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="dashboard.php?dashboard" class="flex items-center gap-4 bg-[#6D2932] pl-5 p-3 rounded-r-xl text-white">
+                    <a href="dashboard.php?dashboard" class="flex items-center gap-4  pl-5 p-3 rounded-r-xl" id="dashboardMenu">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -49,7 +56,7 @@
 
                 <!-- District -->
                 <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                    <a href="dashboard.php?district" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="districtMenu">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
@@ -191,6 +198,10 @@
                 if (isset($_GET['dashboard'])) {
                     include('summary.php');
                 }
+
+                if (isset($_GET['district'])) {
+                    include('district.php');
+                }
                 ?>
             </section>
         </section>
@@ -216,6 +227,23 @@
                 adminProfileDropdownEl.classList.add("hidden");
             }
         });
+    </script>
+
+    <script>
+        const dashboardMenuEl = document.querySelector("#dashboardMenu");
+        const districtMenuEl = document.querySelector("#districtMenu");
+
+        const PATH_HREF = "http://localhost/skillWaveWebApp/admin/dashboard.php?"
+        const documentPathHref = document.location.href;
+        // console.log(document.location.href);
+
+        if (documentPathHref == `${PATH_HREF}dashboard`) {
+            dashboardMenuEl.classList.add("activeSideBar")
+        }
+
+        if (documentPathHref == `${PATH_HREF}district`) {
+            districtMenuEl.classList.add("activeSideBar");
+        }
     </script>
 </body>
 
