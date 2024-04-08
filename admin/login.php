@@ -166,7 +166,7 @@
                                         $("#adminLoginForm")[0].reset();
 
                                         // Navigate to Admin Dashboard
-                                        $(document)[0].location.href = "./dashboard.php?text"
+                                        $(document)[0].location.href = "./dashboard.php"
                                     }
                                 })
                             } else {
