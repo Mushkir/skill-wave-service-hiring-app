@@ -28,13 +28,13 @@
     <section class="flex items-center gap-7 p-5 pl-0">
         <!-- Sidebar -->
         <section class="w-1/5 min-h-screen">
-            <h1 class="p-5 text-2xl font-bold text-cus-maron">Skill-Wave</h1>
+            <h1 class="p-5 text-2xl font-bold text-[#6D2932]">Skill-Wave</h1>
 
             <!-- Menu List Item -->
             <ul>
                 <!-- Dashboard -->
-                <li class="hover:bg-cus-maron hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="#" class="flex items-center gap-4 bg-cus-maron pl-5 p-3 rounded-r-xl text-white">
+                <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                    <a href="#" class="flex items-center gap-4 bg-[#6D2932] pl-5 p-3 rounded-r-xl text-white">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -48,7 +48,7 @@
                 </li>
 
                 <!-- District -->
-                <li class="hover:bg-cus-maron hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
                     <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
                         <!-- Icon -->
                         <div>
@@ -63,7 +63,7 @@
                 </li>
 
                 <!-- Town -->
-                <li class="hover:bg-cus-maron hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
                     <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
                         <!-- Icon -->
                         <div>
@@ -78,7 +78,7 @@
                 </li>
 
                 <!-- Total Service Providers -->
-                <li class="hover:bg-cus-maron hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
                     <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
                         <!-- Icon -->
                         <div>
@@ -93,7 +93,7 @@
                 </li>
 
                 <!-- Total Service Seekers -->
-                <li class="hover:bg-cus-maron hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
                     <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
                         <!-- Icon -->
                         <div>
@@ -108,7 +108,7 @@
                 </li>
 
                 <!-- Settings -->
-                <li class="hover:bg-cus-maron hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
                     <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
                         <!-- Icon -->
                         <div>
@@ -126,9 +126,91 @@
 
         <!-- Content -->
         <section class="bg-[#F9F6EE] w-full min-h-screen p-5 rounded-xl">
-            <strong>From content part</strong>
+            <!-- Header Par -->
+            <section class="flex items-start justify-between">
+                <div class="bg-primary-color-10 flex items-center w-[250px] p-2 gap-4 rounded-lg">
+                    <!-- Search Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 16 16">
+                        <path fill="#6D2932" d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0a5.5 5.5 0 0 1 11 0" />
+                    </svg>
+
+                    <input type="text" name="" id="" class="bg-primary-color-10 w-full outline-none placeholder-[#6D2932]" placeholder="Search" />
+                </div>
+
+                <!-- Profile -->
+                <div class="hover:cursor-pointer" id="admin-profile">
+                    <div>
+                        <div class="flex justify-end items-center">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" class="w-10 h-10 object-cover rounded-full" />
+                        </div>
+
+                        <!-- Dropdown menu -->
+                        <div class="mt-2 bg-primary-color-10 py-[10px] rounded-lg hidden" id="admin-profile-dropdown">
+                            <ul>
+                                <li class="text-[#62242d] px-[16px]">Mohamed Mushkir</li>
+                                <li class="text-[#8a535a] px-[16px] mb-4">
+                                    <p class="text-[14px]">mushkirmohamed@gmail.com</p>
+                                </li>
+
+                                <hr />
+
+                                <li class="mt-3 text-[#62242d] px-[16px] py-1 hover:bg-[#6D2932] hover:text-white">
+                                    <a href="#" class="flex items-center gap-2">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M5.85 17.1q1.275-.975 2.85-1.537T12 15q1.725 0 3.3.563t2.85 1.537q.875-1.025 1.363-2.325T20 12q0-3.325-2.337-5.663T12 4Q8.675 4 6.337 6.338T4 12q0 1.475.488 2.775T5.85 17.1M12 13q-1.475 0-2.488-1.012T8.5 9.5q0-1.475 1.013-2.488T12 6q1.475 0 2.488 1.013T15.5 9.5q0 1.475-1.012 2.488T12 13m0 9q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22" />
+                                            </svg>
+                                        </div>
+
+                                        Profile
+                                    </a>
+                                </li>
+
+                                <li class="mt-2 text-[#62242d] px-[16px] py-1 hover:bg-[#6D2932] hover:text-white">
+                                    <a href="#" class="flex items-center gap-2">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
+                                                    <path stroke-linejoin="round" d="M13.477 21.245H8.34a4.918 4.918 0 0 1-5.136-4.623V7.378A4.918 4.918 0 0 1 8.34 2.755h5.136" />
+                                                    <path stroke-miterlimit="10" d="M20.795 12H7.442" />
+                                                    <path stroke-linejoin="round" d="m16.083 17.136l4.404-4.404a1.04 1.04 0 0 0 0-1.464l-4.404-4.404" />
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section></section>
         </section>
     </section>
+
+    <!-- Dropdown script -->
+    <script>
+        const adminProfileEl = document.querySelector("#admin-profile");
+        const adminProfileDropdownEl = document.querySelector(
+            "#admin-profile-dropdown"
+        );
+
+        adminProfileEl.addEventListener("click", () => {
+            adminProfileDropdownEl.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", (event) => {
+            const isClickInsideDropdown = adminProfileDropdownEl.contains(
+                event.target
+            );
+            const isClickInsideProfile = adminProfileEl.contains(event.target);
+            if (!isClickInsideDropdown && !isClickInsideProfile) {
+                adminProfileDropdownEl.classList.add("hidden");
+            }
+        });
+    </script>
 </body>
 
 </html>
