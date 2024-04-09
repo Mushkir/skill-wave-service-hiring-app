@@ -136,7 +136,7 @@
 
         <!-- Content -->
         <section class="bg-[#F9F6EE] w-full min-h-screen p-5 rounded-xl">
-            <!-- Header Par -->
+            <!-- Header Part -->
             <section class="flex items-start justify-between relative z-40">
                 <div class="bg-primary-color-10 flex items-center w-[250px] p-2 gap-4 rounded-lg">
                     <!-- Search Icon -->
@@ -177,7 +177,7 @@
                                 </li>
 
                                 <li class="mt-2 text-[#62242d] px-[16px] py-1 hover:bg-[#6D2932] hover:text-white">
-                                    <a href="#" class="flex items-center gap-2">
+                                    <a href="logout.php" class="flex items-center gap-2">
                                         <div>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                                                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
