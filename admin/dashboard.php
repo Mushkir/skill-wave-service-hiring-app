@@ -226,6 +226,7 @@
         </section>
     </section>
 
+
     <!-- Dropdown script -->
     <script>
         const adminProfileEl = document.querySelector("#admin-profile");

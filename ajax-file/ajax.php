@@ -98,3 +98,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'adminLoginRequest') {
         echo $statusCode;
     }
 }
+
+// Todo: Admin Need to add district detail
+if (isset($_POST['action']) && $_POST['action'] == 'addNewDistrictInfo') {
+
+    if (isset($_SESSION['adminUsername'])) {
+
+        echo $_SESSION['adminUsername'];
+    }
+}

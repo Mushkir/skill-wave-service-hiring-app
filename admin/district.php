@@ -60,31 +60,67 @@
     </div>
 </section>
 
-<!-- Validation code -->
+
+<!-- JQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<!-- JQuery script -->
 <script>
-    const districtAddingFormEl = document.querySelector("#districtAddingForm");
-    const validator = new window.JustValidate(districtAddingFormEl);
+    $(document).ready(function() {
 
-    validator.addField(
-        "#district-name",
-        [{
-                rule: "required",
-            },
-            {
-                rule: "minLength",
-                value: 3,
-            },
-            {
-                rule: "maxLength",
-                value: 30,
-            },
-        ], {
-            errorLabelCssClass: ["errorMsg"],
-        }
-    );
+        // * Form validation script
+        const districtAddingFormEl = document.querySelector("#districtAddingForm");
+        const validator = new window.JustValidate(districtAddingFormEl);
 
-    validator.onSuccess(() => {
-        districtAddingFormEl.submit();
-        districtAddingFormEl.reset();
-    });
+        validator.addField(
+            "#district-name",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 30,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        validator.onSuccess((e) => {
+
+            e.preventDefault();
+
+            // JQuery code to send the request to server
+            $(document).on("submit", districtAddingFormEl, function(e) {
+
+                e.preventDefault();
+
+                const formData = new FormData(districtAddingFormEl);
+
+                formData.append("action", "addNewDistrictInfo")
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function(response) {
+
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log(`Status: ${status}`);
+                        console.log(`Response: ${xhr.responseText}`);
+                    }
+                })
+            })
+        });
+
+    })
 </script>
