@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet" />
 
+    <!-- JustValidateDev CDN -->
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+
     <!-- SweetAlert CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -71,7 +74,7 @@
 
                 <!-- Town -->
                 <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                    <a href="dashboard.php?town" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="townMenu">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">
@@ -86,7 +89,7 @@
 
                 <!-- Total Service Providers -->
                 <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                    <a href="dashboard.php?serviceProviders" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="serviceProvidersMenu">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 640 512">
@@ -101,7 +104,7 @@
 
                 <!-- Total Service Seekers -->
                 <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                    <a href="dashboard.php?serviceSeekers" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="serviceSeekersMenu">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -116,7 +119,7 @@
 
                 <!-- Settings -->
                 <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                    <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                    <a href="dashboard.php?settings" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="settingsMenu">
                         <!-- Icon -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -202,6 +205,22 @@
                 if (isset($_GET['district'])) {
                     include('district.php');
                 }
+
+                if (isset($_GET['town'])) {
+                    include('town.php');
+                }
+
+                if (isset($_GET['serviceProviders'])) {
+                    include('service-providers.php');
+                }
+
+                if (isset($_GET['serviceSeekers'])) {
+                    include('service-seekers.php');
+                }
+
+                if (isset($_GET['settings'])) {
+                    include('profile.php');
+                }
                 ?>
             </section>
         </section>
@@ -232,6 +251,10 @@
     <script>
         const dashboardMenuEl = document.querySelector("#dashboardMenu");
         const districtMenuEl = document.querySelector("#districtMenu");
+        const townMenuEl = document.querySelector("#townMenu");
+        const serviceProvidersMenuEl = document.querySelector("#serviceProvidersMenu");
+        const serviceSeekersMenuEl = document.querySelector("#serviceSeekersMenu");
+        const settingsMenuEl = document.querySelector("#settingsMenu");
 
         const PATH_HREF = "http://localhost/skillWaveWebApp/admin/dashboard.php?"
         const documentPathHref = document.location.href;
@@ -243,6 +266,23 @@
 
         if (documentPathHref == `${PATH_HREF}district`) {
             districtMenuEl.classList.add("activeSideBar");
+        }
+
+        if (documentPathHref == `${PATH_HREF}town`) {
+            townMenuEl.classList.add("activeSideBar");
+        }
+
+        if (documentPathHref == `${PATH_HREF}serviceProviders`) {
+            serviceProvidersMenuEl.classList.add("activeSideBar")
+        }
+
+
+        if (documentPathHref == `${PATH_HREF}serviceSeekers`) {
+            serviceSeekersMenuEl.classList.add("activeSideBar")
+        }
+
+        if (documentPathHref == `${PATH_HREF}settings`) {
+            settingsMenuEl.classList.add("activeSideBar")
         }
     </script>
 </body>
