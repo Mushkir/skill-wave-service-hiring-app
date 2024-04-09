@@ -68,6 +68,8 @@
 <script>
     $(document).ready(function() {
 
+        // console.dir(document);
+
         // * Form validation script
         const districtAddingFormEl = document.querySelector("#districtAddingForm");
         const validator = new window.JustValidate(districtAddingFormEl);
@@ -109,9 +111,16 @@
                     contentType: false,
                     processData: false,
                     data: formData,
+                    beforeSend: function(request) {
+                        // console.log(request);
+                    },
                     success: function(response) {
 
                         console.log(response);
+
+                        console.log(JSON.parse(response));
+
+
                     },
                     error: function(xhr, status, error) {
 

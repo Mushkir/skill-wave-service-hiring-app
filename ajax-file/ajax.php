@@ -4,6 +4,7 @@ session_start();
 
 require_once('../classes/common/Database.php');
 require_once('../classes/app/Admin.php');
+require_once('../classes/app/District.php');
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -102,8 +103,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'adminLoginRequest') {
 // Todo: Admin Need to add district detail
 if (isset($_POST['action']) && $_POST['action'] == 'addNewDistrictInfo') {
 
-    if (isset($_SESSION['adminUsername'])) {
+    $districtNameEl = $_POST['district-name'];
 
-        echo $_SESSION['adminUsername'];
-    }
+    $district = new District();
+
+    $district->addDistrict($districtNameEl);
 }

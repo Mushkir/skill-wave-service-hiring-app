@@ -1,6 +1,8 @@
 <?php
+// ! For App
+require_once('../classes/common/Database.php');
 
-require_once '../common/Database.php';
+// require_once '../common/Database.php';
 
 class District extends Database
 {
@@ -17,6 +19,12 @@ class District extends Database
             $statement = $this->connection->prepare($query);
 
             $statement->execute([':name' => $districtName]);
+
+            $insertID = $this->connection->lastInsertId();
+
+            $insertedData = $this->getDistrictInfoById($insertID);
+
+            echo json_encode($insertedData);
 
             return true;
         } catch (PDOException $ex) {
