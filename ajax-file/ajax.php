@@ -109,3 +109,58 @@ if (isset($_POST['action']) && $_POST['action'] == 'addNewDistrictInfo') {
 
     $district->addDistrict($districtNameEl);
 }
+
+// Todo: Show all the district data
+if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrict') {
+
+    $showDistrictsInTable = "";
+    $serialNo = 1;
+
+    $district = new District();
+
+    $allDistrictInfo = $district->viewDistrict();
+    $rowsOfTotalDistricts = $district->countRows();
+
+    if ($rowsOfTotalDistricts > 0) {
+
+        $showDistrictsInTable .= '<table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="district-list">
+    <thead>
+        <tr class="bg-[#6D2932] text-[#F9F6EE] text-center">
+            <th class="p-3 text-center">S.No</th>
+            <th class="p-3 text-center">ID</th>
+            <th class="p-3 text-center">District Name</th>
+            <th class="p-3 text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>';
+
+        foreach ($allDistrictInfo as $arrayOfAllDistrict) {
+
+            $districtID = $arrayOfAllDistrict['district_id'];
+            $districtName = $arrayOfAllDistrict['name'];
+
+            $showDistrictsInTable .= '<tr>
+        <td class=" border-r-[#6D2932] border-r-2">' . '#' . $serialNo++ . '</td>
+        <td class=" border-r-[#6D2932] border-r-2">' . $districtID . '</td>
+        <td>' . $districtName . '</td>
+        <td class=" text-center">
+            <a href="' . $districtID . '" title="Edit">
+                <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+            </a>
+            <a href="' . $districtID . '">
+                <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+            </a>
+        </td>
+    </tr>';
+        }
+
+        $showDistrictsInTable .= '</tbody></table>';
+    } else {
+
+        $showDistrictsInTable .= "<h3 class='text-red-500 text-2xl text-center font-bold'>Currently no district details are available!</h3>";
+        $showDistrictsInTable .= "<br>";
+        $showDistrictsInTable .= "<img src='https://cdnl.iconscout.com/lottie/premium/thumb/empty-box-5708298-4748209.gif' class='w-[250px] h-[250px] object-cover mx-auto' alt=''>";
+    }
+
+    echo $showDistrictsInTable;
+}

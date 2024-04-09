@@ -13,20 +13,22 @@
                 </div>
             </div>
 
-            <button class="bg-[#6D2932] px-5 py-2 rounded-lg text-[#F9F6EE] hover:bg-[#41181e]">
+
+            <button class="bg-[#6D2932] px-5 py-2 rounded-lg text-[#F9F6EE] hover:bg-[#41181e]" id="insertDistrict">
                 Add New District
             </button>
         </form>
     </div>
 
     <!-- Right -->
-    <div class="w-full">
-        <table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto">
+    <div class="w-full" id="displayDistrictsDiv">
+        <!-- <table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="district-list">
             <thead>
                 <tr class="bg-[#6D2932] text-[#F9F6EE]">
                     <th class="p-3">S.No</th>
                     <th class="p-3">ID</th>
                     <th class="p-3">District Name</th>
+                    <th class="p-3">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,29 +36,88 @@
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td>Ampara</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
                 <tr>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td>Ampara</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
                 <tr>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td>Ampara</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
                 <tr>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td>Ampara</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
                 <tr>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td>Ampara</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
+                <tr>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td>Ampara</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
+                </tr>
+
             </tbody>
-        </table>
+        </table> -->
     </div>
 </section>
 
@@ -68,7 +129,33 @@
 <script>
     $(document).ready(function() {
 
-        // console.dir(document);
+        showAllDistricts();
+
+        function showAllDistricts() {
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: 'POST',
+                data: {
+                    action: "showAllDistrict"
+                },
+                success: function(respone) {
+                    console.log(respone);
+
+                    $("#displayDistrictsDiv").html(respone);
+                    $("#district-list").DataTable({
+                        order: [
+                            [1, 'asc']
+                        ]
+                    });
+                },
+                error: function(xhr, status, error) {
+
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+
+        }
 
         // * Form validation script
         const districtAddingFormEl = document.querySelector("#districtAddingForm");
@@ -97,7 +184,7 @@
             e.preventDefault();
 
             // JQuery code to send the request to server
-            $(document).on("submit", districtAddingFormEl, function(e) {
+            $("#insertDistrict").click(function(e) {
 
                 e.preventDefault();
 
@@ -116,10 +203,23 @@
                     },
                     success: function(response) {
 
-                        console.log(response);
+                        const districtJsonData = JSON.parse(response);
+                        const {
+                            name
+                        } = districtJsonData
 
-                        console.log(JSON.parse(response));
+                        console.log(name);
+                        Swal.fire({
 
+                            title: "New District.",
+                            text: `Dear Admin! New district name (${name}) has been added successfully!`,
+                            icon: "success"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                showAllDistricts();
+                                $(districtAddingFormEl)[0].reset();
+                            }
+                        })
 
                     },
                     error: function(xhr, status, error) {
