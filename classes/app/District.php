@@ -68,8 +68,15 @@ class District extends Database
 
             $statement->execute([':id' => $id]);
 
+            $isDataExist = $statement->rowCount();
 
-            $result =  $statement->fetch(PDO::FETCH_ASSOC);
+            if ($isDataExist > 0) {
+
+                $result =  $statement->fetch(PDO::FETCH_ASSOC);
+            } else {
+
+                $result = "0";
+            }
 
             return $result;
         } catch (PDOException $ex) {

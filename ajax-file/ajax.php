@@ -164,3 +164,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrict') {
 
     echo $showDistrictsInTable;
 }
+
+// Todo: Get the data of district_id, which recieved via $_GET[]
+if (isset($_GET['districtID'])) {
+
+    $passedDistrictId = $_GET['districtID'];
+
+    // Get the data using id and getDistrictInfoById()
+    $district = new District();
+
+    $isDataExist = $district->getDistrictInfoById($passedDistrictId);
+
+    // Sending the response to client in JSON String format.
+    echo json_encode($isDataExist);
+}

@@ -1,5 +1,5 @@
 <form class=" h-screen w-screen z-50 backdrop-blur-sm absolute left-[50%] top-[40%] -translate-x-[50%] -translate-y-[50%] hidden" id="editDistrictForm">
-    <div class=" w-full max-w-[500px] shadow-md rounded-lg px-8 pt-4 pb-8 mb-4 bg-[#6D2932] absolute left-[50%] top-[40%] -translate-x-[50%] -translate-y-[50%] ">
+    <div class=" w-full max-w-[500px] shadow-md rounded-lg px-8 pt-4 pb-8 mb-4 bg-[#6D2932] absolute left-[50%] top-[40%] -translate-x-[50%] -translate-y-[50%]">
         <div class="flex items-center justify-between">
             <h4 class="text-white font-bold text-lg mb-3">Edit district name</h4>
 
@@ -9,6 +9,7 @@
         <hr>
 
         <div class="mb-4 mt-5">
+            <input type="hidden" name="district-id" id="district-id">
             <label class="block text-[#e3dbd1] mb-2" for="district">
                 District
             </label>

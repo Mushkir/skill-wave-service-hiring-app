@@ -149,19 +149,53 @@
             })
         });
 
-        // * Script for display the Edit District modal, when admin click the edit button in District Page.
+        // * Script for display the Edit District modal, when admin click the Edit (Pen icon) button in District Page.
         $(document).on("click", "#editFormModal", function(e) {
 
             e.preventDefault();
-            const editDistrictForm = $("#editDistrictForm");
 
-            editDistrictForm.removeClass("hidden").addClass("transition duration-300 opacity-0");
+            const editDistrictFormEl = $("#editDistrictForm");
+
+            editDistrictFormEl.removeClass("hidden").addClass("transition duration-300 opacity-0");
 
             // Wait for a moment to allow the transition to take effect
             setTimeout(function() {
                 // Add class to smoothly transition the opacity
-                editDistrictForm.addClass("opacity-100");
+                editDistrictFormEl.addClass("opacity-100");
             }, 100);
+
+            // <------------------------ JQuery request to display district detail in UI ------------------------>
+            // * Storyline
+            // 1. GET the district id
+            const passedDistrictID = $(this).attr('href');
+
+            // 2. Send the request to server to get the data of recieved id.
+            $.ajax({
+
+                url: '../ajax-file/ajax.php',
+                type: 'GET',
+                data: {
+                    districtID: passedDistrictID
+                },
+                success: function(response) {
+                    // 3. Get the response (data) from server.
+
+                    const districtJsonInfo = JSON.parse(response);
+
+                    const {
+                        district_id,
+                        name
+                    } = districtJsonInfo;
+
+                    // 4. Injetct the result to UI.
+                    $("#district-id")[0].value = district_id;
+                    $("#district")[0].value = name;
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
         })
     })
 </script>
