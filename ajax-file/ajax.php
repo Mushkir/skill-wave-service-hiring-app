@@ -147,7 +147,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrict') {
             <a href="' . $districtID . '" title="Edit" id="editFormModal">
                 <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
             </a>
-            <a href="' . $districtID . '">
+            <a href="' . $districtID . '" title="Delete" id="deleteBtn">
                 <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
             </a>
         </td>
@@ -188,4 +188,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'updateDistrictName') {
     $district = new District();
 
     $district->updateDistrict($districtId, $districtNameEl);
+}
+
+// Todo: Delete the seleted District
+if (isset($_GET['passedDistrictID'])) {
+
+    $passedDistrictId = $_GET['passedDistrictID'];
+
+    $district = new District();
+
+    $arrayOfDistrictInfo = $district->getDistrictInfoById($passedDistrictId);
+
+    echo json_encode($arrayOfDistrictInfo);
+
+    if (isset($_GET['deleteConfimation']) && $_GET['deleteConfimation'] == 'true') {
+
+        $district->deleteDistrict($passedDistrictId);
+    }
 }

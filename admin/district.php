@@ -192,16 +192,11 @@
             })
         })
 
-        // Update JQuery script
+        // Update district JQuery script
         $("#updateDistrict").click(function(e) {
 
             e.preventDefault();
 
-            // const editDistrictFormEl = document.querySelector("#editDistrictForm");
-
-            // const formData = new FormData(editDistrictFormEl);
-
-            // formData.append("action", "updateDistrictName");
             const editDistrictFormEl = $("#editDistrictForm").serialize();
 
             // Sending ajax request
@@ -247,6 +242,88 @@
                 }
             })
 
+        })
+
+        // Delete district JQuery script
+        $(document).on("click", "#deleteBtn", function(e) {
+
+            e.preventDefault();
+            const passedDistrictID = $(this).attr("href");
+
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: 'GET',
+                data: {
+                    passedDistrictID: passedDistrictID
+                },
+                success: function(response) {
+                    // console.log(response);
+
+                    const districtJsonInfo = JSON.parse(response);
+
+                    const {
+                        district_id,
+                        name
+                    } = districtJsonInfo;
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "bg-blue-500 px-5 py-2 rounded text-white mr-5",
+                            cancelButton: "bg-red-500 px-5 py-2 rounded text-white mr-5"
+                        },
+                        buttonsStyling: false
+                    });
+                    swalWithBootstrapButtons.fire({
+                        title: `Are you sure you want to delete ${name} district with the ID number ${district_id}`,
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!",
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            $.ajax({
+                                url: '../ajax-file/ajax.php',
+                                type: "GET",
+                                data: {
+                                    passedDistrictID: passedDistrictID,
+                                    deleteConfimation: true // If user clicks Yes, the only delete process will proceed.
+                                },
+                                success: function(resp) {
+                                    // console.log("Resp: " + resp);
+
+                                    swalWithBootstrapButtons.fire({
+                                        title: "Deleted!",
+                                        text: `${name} district has been deleted from the database.`,
+                                        icon: "success"
+                                    });
+                                    showAllDistricts();
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log("Status: " + status);
+                                    console.log("XHR Response: " + xhr.responseText);
+                                }
+                            })
+
+                        } else if (
+                            /* Read more about handling dismissals below */
+                            result.dismiss === Swal.DismissReason.cancel
+                        ) {
+                            swalWithBootstrapButtons.fire({
+                                title: "Cancelled",
+                                text: "Your file is safe :)",
+                                icon: "error"
+                            });
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
         })
     })
 </script>
