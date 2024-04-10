@@ -149,6 +149,7 @@
             })
         });
 
+        // * Script for display the Edit District modal, when admin click the edit button in District Page.
         $(document).on("click", "#editFormModal", function(e) {
 
             e.preventDefault();
@@ -162,12 +163,5 @@
                 editDistrictForm.addClass("opacity-100");
             }, 100);
         })
-
-        // $("#closeBtn").click(function(e) {
-
-        //     e.preventDefault();
-
-        //     closeModal();
-        // })
     })
 </script>
