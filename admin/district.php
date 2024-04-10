@@ -1,7 +1,10 @@
+<?php include('district-edit-modal.php'); ?>
+
 <h3 class="mt-20 mb-5 text-center text-xl font-semibold text-[#6D2932]">
     Here you can explore currently available district details as well as can add
     new district info also
 </h3>
+
 <section class="flex items-start justify-between gap-10">
     <!-- Left -->
     <div class="w-full">
@@ -22,108 +25,19 @@
 
     <!-- Right -->
     <div class="w-full" id="displayDistrictsDiv">
-        <!-- <table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="district-list">
-            <thead>
-                <tr class="bg-[#6D2932] text-[#F9F6EE]">
-                    <th class="p-3">S.No</th>
-                    <th class="p-3">ID</th>
-                    <th class="p-3">District Name</th>
-                    <th class="p-3">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Ampara</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
 
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Ampara</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Ampara</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Ampara</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Ampara</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Ampara</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table> -->
     </div>
+
+
 </section>
+
 
 
 <!-- JQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<!-- DataTables CDN -->
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 
 <!-- JQuery script -->
 <script>
@@ -139,7 +53,7 @@
                     action: "showAllDistrict"
                 },
                 success: function(respone) {
-                    console.log(respone);
+                    // console.log(respone);
 
                     $("#displayDistrictsDiv").html(respone);
                     $("#district-list").DataTable({
@@ -155,6 +69,10 @@
                 }
             })
 
+        }
+
+        function closeModal() {
+            console.log("Closemodal");
         }
 
         // * Form validation script
@@ -231,5 +149,25 @@
             })
         });
 
+        $(document).on("click", "#editFormModal", function(e) {
+
+            e.preventDefault();
+            const editDistrictForm = $("#editDistrictForm");
+
+            editDistrictForm.removeClass("hidden").addClass("transition duration-300 opacity-0");
+
+            // Wait for a moment to allow the transition to take effect
+            setTimeout(function() {
+                // Add class to smoothly transition the opacity
+                editDistrictForm.addClass("opacity-100");
+            }, 100);
+        })
+
+        // $("#closeBtn").click(function(e) {
+
+        //     e.preventDefault();
+
+        //     closeModal();
+        // })
     })
 </script>

@@ -144,7 +144,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrict') {
         <td class=" border-r-[#6D2932] border-r-2">' . $districtID . '</td>
         <td>' . $districtName . '</td>
         <td class=" text-center">
-            <a href="' . $districtID . '" title="Edit">
+            <a href="' . $districtID . '" title="Edit" id="editFormModal">
                 <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
             </a>
             <a href="' . $districtID . '">
