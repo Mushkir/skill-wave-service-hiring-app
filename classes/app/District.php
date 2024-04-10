@@ -95,6 +95,12 @@ class District extends Database
             $statement = $this->connection->prepare($query);
 
             $statement->execute([':id' => $id, ':name' => $newValue]);
+
+            $updatedData = $this->getDistrictInfoById($id);
+
+            echo json_encode($updatedData);
+
+            return true;
         } catch (PDOException $ex) {
 
             echo "Error: " . $ex->getMessage();

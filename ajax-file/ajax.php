@@ -178,3 +178,14 @@ if (isset($_GET['districtID'])) {
     // Sending the response to client in JSON String format.
     echo json_encode($isDataExist);
 }
+
+// Todo: Update the District Name 
+if (isset($_POST['action']) && $_POST['action'] == 'updateDistrictName') {
+
+    $districtId = $_POST["district-id"];
+    $districtNameEl = $_POST["districtName"];
+
+    $district = new District();
+
+    $district->updateDistrict($districtId, $districtNameEl);
+}

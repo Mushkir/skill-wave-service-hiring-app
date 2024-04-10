@@ -31,8 +31,6 @@
 
 </section>
 
-
-
 <!-- JQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -69,10 +67,6 @@
                 }
             })
 
-        }
-
-        function closeModal() {
-            console.log("Closemodal");
         }
 
         // * Form validation script
@@ -189,13 +183,70 @@
 
                     // 4. Injetct the result to UI.
                     $("#district-id")[0].value = district_id;
-                    $("#district")[0].value = name;
+                    $("#districtName")[0].value = name;
                 },
                 error: function(xhr, status, error) {
                     console.log("Status: " + status);
                     console.log("XHR Response: " + xhr.responseText);
                 }
             })
+        })
+
+        // Update JQuery script
+        $("#updateDistrict").click(function(e) {
+
+            e.preventDefault();
+
+            // const editDistrictFormEl = document.querySelector("#editDistrictForm");
+
+            // const formData = new FormData(editDistrictFormEl);
+
+            // formData.append("action", "updateDistrictName");
+            const editDistrictFormEl = $("#editDistrictForm").serialize();
+
+            // Sending ajax request
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: 'POST',
+                data: editDistrictFormEl + "&action=updateDistrictName",
+                success: function(response) {
+                    Swal.fire({
+                        title: "Are you sure to update?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, update it!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            const updatedDistrictInfo = JSON.parse(response);
+                            // console.log(response);
+                            const {
+                                district_id,
+                                name
+                            } =
+                            updatedDistrictInfo;
+
+                            Swal.fire({
+                                title: "Updated!",
+                                text: `The District ID No. ${district_id} name has been successfully updated as '${name}'`,
+                                icon: "success",
+                            });
+
+                            showAllDistricts();
+                            $("#editDistrictForm").addClass("hidden")
+                            $("#editDistrictForm")[0].reset();
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+
         })
     })
 </script>
