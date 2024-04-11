@@ -6,6 +6,10 @@ require_once('../classes/common/Database.php');
 require_once('../classes/app/Admin.php');
 require_once('../classes/app/District.php');
 
+$district = new District();
+// $town = new Town();
+
+
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
 
@@ -205,4 +209,24 @@ if (isset($_GET['passedDistrictID'])) {
 
         $district->deleteDistrict($passedDistrictId);
     }
+}
+
+// Todo: Need to show all the district name in Town section <select></select>
+if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrictsName') {
+
+    $output = "";
+
+    $arrayOfAllDistrictInfo = $district->viewDistrict();
+
+    $output .= '<option value="">Select the district</option>';
+
+    foreach ($arrayOfAllDistrictInfo as $row) {
+
+        $districtId = $row['district_id'];
+        $districtName = $row['name'];
+
+        $output .= '<option value="' . $districtId . '">' . $districtName . '</option>';
+    }
+
+    echo $output;
 }

@@ -11,10 +11,10 @@
                 <label for="district-name" class="mb-2 block text-[#6D2932] font-semibold">District Name</label>
                 <div>
                     <select name="district-name" id="district-name" class="p-2 rounded-lg w-full outline-none text-[#6D2932]">
-                        <option value="">Select the district</option>
+                        <!-- <option value="">Select the district</option> -->
+                        <!-- <option value="">Ampara</option>
                         <option value="">Ampara</option>
-                        <option value="">Ampara</option>
-                        <option value="">Ampara</option>
+                        <option value="">Ampara</option> -->
                     </select>
                 </div>
             </div>
@@ -34,14 +34,14 @@
 
     <!-- Right -->
     <div class="w-full">
-        <table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto">
+        <table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="townInfoTable">
             <thead>
                 <tr class="bg-[#6D2932] text-[#F9F6EE]">
-                    <th class="p-3">S.No</th>
-                    <th class="p-3">District ID</th>
-                    <th class="p-3">District Name</th>
-                    <th class="p-3">Town ID</th>
-                    <th class="p-3">Town Name</th>
+                    <th class="p-3 text-center">S.No</th>
+                    <th class="p-3 text-center">District ID</th>
+                    <th class="p-3 text-center">District Name</th>
+                    <th class="p-3 text-center">Town ID</th>
+                    <th class="p-3 text-center">Town Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,47 +78,80 @@
     </div>
 </section>
 
+<!-- JQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<!-- DataTables CDN -->
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+
 <!-- Validation code -->
 <script>
-    const townAddingFormEl = document.querySelector("#townAddingForm");
-    const validator = new window.JustValidate(townAddingFormEl);
+    $(document).ready(function() {
 
-    validator.addField(
-        "#district-name",
-        [{
-                rule: "required",
-            },
-            {
-                rule: "minLength",
-                value: 3,
-            },
-            {
-                rule: "maxLength",
-                value: 30,
-            },
-        ], {
-            errorLabelCssClass: ["errorMsg"],
+        showDistricts();
+
+        // * Function for display all district name in Town section UI (<select></select>).
+        function showDistricts() {
+            $.ajax({
+
+                url: '../ajax-file/ajax.php',
+                type: 'POST',
+                data: {
+                    action: "showAllDistrictsName"
+                },
+                success: function(response) {
+                    // console.log(response);
+                    // * Need to inject the response in UI
+                    $("#district-name").html(response)
+
+                },
+                error: function(xhr, status, error) {
+
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+
         }
-    );
 
-    validator.addField("#town-name",
-        [{
-                rule: 'required'
-            }, {
-                rule: "minLength",
-                value: 3,
-            },
-            {
-                rule: "maxLength",
-                value: 30,
-            },
+        $("#townInfoTable").DataTable();
 
-        ], {
-            errorLabelCssClass: ["errorMsg"],
-        })
+        const townAddingFormEl = document.querySelector("#townAddingForm");
+        const validator = new window.JustValidate(townAddingFormEl);
 
-    validator.onSuccess(() => {
-        districtAddingFormEl.submit();
-        districtAddingFormEl.reset();
-    });
+        validator.addField(
+            "#district-name",
+            [{
+                rule: "required",
+            }, ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        validator.addField("#town-name",
+            [{
+                    rule: 'required'
+                }, {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 30,
+                },
+
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            })
+
+        validator.onSuccess((e) => {
+
+            e.preventDefault();
+
+
+
+
+        });
+
+    })
 </script>

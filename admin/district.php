@@ -268,8 +268,8 @@
 
                     const swalWithBootstrapButtons = Swal.mixin({
                         customClass: {
-                            confirmButton: "bg-blue-500 px-5 py-2 rounded text-white mr-5",
-                            cancelButton: "bg-red-500 px-5 py-2 rounded text-white mr-5"
+                            confirmButton: "bg-blue-500 px-5 py-2 rounded text-white mr-5 hover:bg-blue-600 hover:transition 500",
+                            cancelButton: "bg-red-500 px-5 py-2 rounded text-white mr-5 hover:bg-red-600 hover:transition 500"
                         },
                         buttonsStyling: false
                     });
