@@ -7,6 +7,8 @@ require_once('../classes/app/Admin.php');
 require_once('../classes/app/District.php');
 require_once('../classes/app/Town.php');
 
+$db = new Database();
+$admin = new Admin();
 $district = new District();
 $town = new Town();
 
@@ -215,8 +217,6 @@ if (isset($_GET['passedDistrictID'])) {
 if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrictsName') {
 
     $output = "";
-
-    $district = new District();
 
     $arrayOfAllDistrictInfo = $district->viewDistrict();
 
