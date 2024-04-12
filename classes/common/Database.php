@@ -70,4 +70,29 @@ class Database
             echo "Error: " . $ex->getMessage();
         }
     }
+
+    // Function for JOIN Queries
+    public function getMultipleData($query)
+    {
+        try {
+
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->execute();
+
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $dataSet = [];
+
+            foreach ($results as $arrayOfResults) {
+
+                $dataSet[] = $arrayOfResults;
+            }
+
+            return $dataSet;
+        } catch (PDOException $ex) {
+
+            echo "Error from getMultipleData(): " . $ex->getMessage();
+        }
+    }
 }

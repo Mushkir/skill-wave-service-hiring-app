@@ -1,3 +1,5 @@
+<?php include('town-edit-modal.php'); ?>
+
 <h3 class="mt-20 mb-5 text-center text-xl font-semibold text-[#6D2932]">
     Here you can explore currently available details of districts and town as well
     as can add new town info also
@@ -30,116 +32,8 @@
     </div>
 
     <!-- Right -->
-    <div class="w-full">
-        <table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="townInfoTable">
-            <thead>
-                <tr class="bg-[#6D2932] text-[#F9F6EE]">
-                    <th class="p-3 text-center">S.No</th>
-                    <th class="p-3 text-center">District ID</th>
-                    <th class="p-3 text-center">District Name</th>
-                    <th class="p-3 text-center">Town ID</th>
-                    <th class="p-3 text-center">Town Name</th>
-                    <th class="p-3 text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit" id="editTownModal">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#" title="Delete" id="deleteTownBtn">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
+    <div class="w-full" id="townInfoTableDiv">
 
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit" id="editTownModal">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#" title="Delete" id="deleteTownBtn">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit" id="editTownModal">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#" title="Delete" id="deleteTownBtn">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit" id="editTownModal">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#" title="Delete" id="deleteTownBtn">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit" id="editTownModal">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#" title="Delete" id="deleteTownBtn">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
-                    <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
-                    <td class=" text-center">
-                        <a href="#" title="Edit" id="editTownModal">
-                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                        <a href="#" title="Delete" id="deleteTownBtn">
-                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </section>
 
@@ -154,6 +48,7 @@
     $(document).ready(function() {
 
         showDistricts();
+        showAllTownInfo();
 
         // * Function for display all district name in Town section UI (<select></select>).
         function showDistricts() {
@@ -179,7 +74,26 @@
 
         }
 
-        $("#townInfoTable").DataTable();
+        // * Function for display all the details of Town in Table.
+        function showAllTownInfo() {
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: 'POST',
+                data: {
+                    request: "showAllTownInfo"
+                },
+                success: function(response) {
+
+                    // console.log(response);
+                    $("#townInfoTableDiv").html(response)
+                    $("#townInfoTable").DataTable();
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+        }
 
         const townAddingFormEl = document.querySelector("#townAddingForm");
         const validator = new window.JustValidate(townAddingFormEl);
@@ -256,6 +170,62 @@
             })
 
         });
+
+        // Script for open the edit modal of Town
+        $(document).on("click", "#editTownModal", function(e) {
+
+            e.preventDefault();
+
+            const editTownFormEl = $("#editTownForm")
+
+            editTownFormEl.removeClass("hidden").addClass("transition duration-300 opacity-0")
+
+            setInterval(() => {
+                editTownFormEl.addClass("opacity-100")
+            }, 100);
+
+            // Sending request to update
+            // Storyline
+            // 1. Get the Id of the town
+            const passedTownId = $(this).attr('href');
+
+            // 2. Send the request to server to fetch data
+            $.ajax({
+
+                url: '../ajax-file/ajax.php',
+                type: "GET",
+                data: {
+                    passedTownId: passedTownId
+                },
+                success: function(response) {
+
+                    console.log(response);
+                    // 3. Get the data from server.
+                    const townDataInJson = JSON.parse(response)
+                    console.log(townDataInJson);
+
+                    const {
+                        district_id,
+                        name,
+                        town_id
+                    } = townDataInJson
+
+                    // 4. Get the district id and send the request to server to get relevent district name.
+                    $.ajax({
+                        
+                    })
+                },
+                error: function(xhr, status, error) {
+
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+
+            })
+
+
+
+        })
     })
 </script>
 

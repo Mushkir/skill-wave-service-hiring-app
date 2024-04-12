@@ -241,3 +241,66 @@ if (isset($_POST['request']) && $_POST['request'] == 'insertTownInfo') {
 
     $town->addTown($townNameEl, $districtIdEl);
 }
+
+// Todo: Need to show all the info of Town
+if (isset($_POST['request']) && $_POST['request'] == 'showAllTownInfo') {
+
+    $query = "SELECT table_town.town_id, table_town.name AS town_name, table_town.district_id, table_district.name AS district_name FROM table_town LEFT JOIN table_district ON table_town.district_id = table_district.district_id";
+
+    $serialNo = 1;
+
+    $results = $db->getMultipleData($query);
+
+    $outputOfUI = "";
+
+    $outputOfUI .= '<table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="townInfoTable">
+    <thead>
+        <tr class="bg-[#6D2932] text-[#F9F6EE]">
+            <th class="p-3 text-center">S.No</th>
+            <th class="p-3 text-center">Town ID</th>
+            <th class="p-3 text-center">Town Name</th>
+            <th class="p-3 text-center">District ID</th>
+            <th class="p-3 text-center">District Name</th>
+            <th class="p-3 text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>';
+
+    foreach ($results as $arrayOfTownInfo) {
+
+        $townId = $arrayOfTownInfo['town_id'];
+        $townName = $arrayOfTownInfo['town_name'];
+        $districtId = $arrayOfTownInfo['district_id'];
+        $districtName = $arrayOfTownInfo['district_name'];
+
+        $outputOfUI .= '<tr>
+        <td class=" border-r-[#6D2932] border-r-2">#' . $serialNo++ . '</td>
+        <td class=" border-r-[#6D2932] border-r-2">' . $townId . '</td>
+        <td class=" border-r-[#6D2932] border-r-2">' . $townName  . '</td>
+        <td class=" border-r-[#6D2932] border-r-2">' . $districtId . '</td>
+        <td class="border-r-[#6D2932] border-r-2">' . $districtName . '</td>
+        <td class=" text-center">
+            <a href="' . $townId . '" title="Edit" id="editTownModal">
+                <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+            </a>
+            <a href="' . $townId . '" title="Delete" id="deleteTownBtn">
+                <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+            </a>
+        </td>
+    </tr>';
+    }
+
+    $outputOfUI .= '</tbody></table>';
+
+    echo $outputOfUI;
+}
+
+// Todo: Need to show the town detail in update modal
+if (isset($_GET['passedTownId'])) {
+
+    $passedTownId = $_GET['passedTownId'];
+
+    $isTownDataExist = $town->getTownInfoById($passedTownId);
+
+    echo json_encode($isTownDataExist);
+}
