@@ -8,7 +8,7 @@
 <section class="flex items-start justify-between gap-10">
     <!-- Left -->
     <div class="w-full">
-        <form action="" method="post" id="districtAddingForm" class="bg-primary-color-10 rounded-lg p-5">
+        <form action="" method="post" onsubmit="return false" id="districtAddingForm" class="bg-primary-color-10 rounded-lg p-5">
             <div class="mb-5">
                 <label for="district-name" class="mb-2 block text-[#6D2932] font-semibold">District Name</label>
                 <div>
@@ -91,30 +91,28 @@
             }
         );
 
-        validator.onSuccess((e) => {
-
-            e.preventDefault();
+        validator.onSuccess((event) => {
+            event.preventDefault();
 
             // JQuery code to send the request to server
-            $("#insertDistrict").click(function(e) {
-
+            $(document).on("submit", "#districtAddingForm", function(e) {
                 e.preventDefault();
+                e.stopImmediatePropagation();
 
-                const formData = new FormData(districtAddingFormEl);
+                const formData = new FormData(this);
 
                 formData.append("action", "addNewDistrictInfo")
 
                 $.ajax({
                     url: '../ajax-file/ajax.php',
                     type: 'POST',
-                    contentType: false,
-                    processData: false,
                     data: formData,
+                    processData: false,
+                    contentType: false,
                     beforeSend: function(request) {
                         // console.log(request);
                     },
                     success: function(response) {
-
                         const districtJsonData = JSON.parse(response);
                         const {
                             name

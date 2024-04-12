@@ -5,10 +5,10 @@ session_start();
 require_once('../classes/common/Database.php');
 require_once('../classes/app/Admin.php');
 require_once('../classes/app/District.php');
+require_once('../classes/app/Town.php');
 
 $district = new District();
-// $town = new Town();
-
+$town = new Town();
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -146,7 +146,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrict') {
             $showDistrictsInTable .= '<tr>
         <td class=" border-r-[#6D2932] border-r-2">' . '#' . $serialNo++ . '</td>
         <td class=" border-r-[#6D2932] border-r-2">' . $districtID . '</td>
-        <td>' . $districtName . '</td>
+        <td class="border-r-2 border-r-[#6D2932]">' . $districtName . '</td>
         <td class=" text-center">
             <a href="' . $districtID . '" title="Edit" id="editFormModal">
                 <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
@@ -216,6 +216,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrictsName') {
 
     $output = "";
 
+    $district = new District();
+
     $arrayOfAllDistrictInfo = $district->viewDistrict();
 
     $output .= '<option value="">Select the district</option>';
@@ -229,4 +231,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrictsName') {
     }
 
     echo $output;
+}
+
+// Todo: Insert the Town details.
+if (isset($_POST['request']) && $_POST['request'] == 'insertTownInfo') {
+
+    $districtIdEl = $_POST['district-name'];
+    $townNameEl = $_POST['town-name'];
+
+    $town->addTown($townNameEl, $districtIdEl);
 }

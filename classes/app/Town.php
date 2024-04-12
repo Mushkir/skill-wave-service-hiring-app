@@ -1,6 +1,6 @@
 <?php
 // ! For App
-require '../../classes/common/Database.php';
+require_once '../classes/common/Database.php';
 
 // ! For Debugging
 // require_once '../common/Database.php';

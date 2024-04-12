@@ -10,11 +10,8 @@
             <div class="mb-5">
                 <label for="district-name" class="mb-2 block text-[#6D2932] font-semibold">District Name</label>
                 <div>
-                    <select name="district-name" id="district-name" class="p-2 rounded-lg w-full outline-none text-[#6D2932]">
-                        <!-- <option value="">Select the district</option> -->
-                        <!-- <option value="">Ampara</option>
-                        <option value="">Ampara</option>
-                        <option value="">Ampara</option> -->
+                    <select name="district-name" id="district-name" class="p-2 rounded-lg w-full outline-none text-[#6D2932] bg-gray-200">
+
                     </select>
                 </div>
             </div>
@@ -26,7 +23,7 @@
                 </div>
             </div>
 
-            <button class="bg-[#6D2932] px-5 py-2 rounded-lg text-[#F9F6EE] hover:bg-[#41181e]">
+            <button class="bg-[#6D2932] px-5 py-2 rounded-lg text-[#F9F6EE] hover:bg-[#41181e]" id="addNewTownBtn">
                 Add New Town
             </button>
         </form>
@@ -42,6 +39,7 @@
                     <th class="p-3 text-center">District Name</th>
                     <th class="p-3 text-center">Town ID</th>
                     <th class="p-3 text-center">Town Name</th>
+                    <th class="p-3 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,28 +48,95 @@
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Nintavur</td>
+                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit" id="editTownModal">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#" title="Delete" id="deleteTownBtn">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
                 <tr>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Nintavur</td>
+                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit" id="editTownModal">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#" title="Delete" id="deleteTownBtn">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
                 <tr>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Nintavur</td>
+                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit" id="editTownModal">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#" title="Delete" id="deleteTownBtn">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
+
                 <tr>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
                     <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
                     <td class=" border-r-[#6D2932] border-r-2">1</td>
-                    <td>Nintavur</td>
+                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit" id="editTownModal">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#" title="Delete" id="deleteTownBtn">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit" id="editTownModal">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#" title="Delete" id="deleteTownBtn">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td class=" border-r-[#6D2932] border-r-2">Ampara</td>
+                    <td class=" border-r-[#6D2932] border-r-2">1</td>
+                    <td class="border-r-[#6D2932] border-r-2">Nintavur</td>
+                    <td class=" text-center">
+                        <a href="#" title="Edit" id="editTownModal">
+                            <i class="fa-solid fa-pen-to-square mr-4 text-[#6D2932] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                        <a href="#" title="Delete" id="deleteTownBtn">
+                            <i class="fa-solid fa-trash mr-4 text-[#41181e] hover:-translate-y-1 hover:transition 500"></i>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -145,13 +210,58 @@
             })
 
         validator.onSuccess((e) => {
-
             e.preventDefault();
 
+            // * Sending request to server to insert town detail.
+            $(document).on("submit", townAddingFormEl, function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation(); // It will stop twice form submission.
 
+                const formData = new FormData(townAddingFormEl);
 
+                formData.append("request", "insertTownInfo");
+
+                // * Ajax Code
+                $.ajax({
+
+                    url: '../ajax-file/ajax.php',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        const townJsonData = JSON.parse(response);
+                        const {
+                            name
+                        } =
+                        townJsonData;
+
+                        Swal.fire({
+
+                            title: "New District.",
+                            text: `Dear Admin! New town name (${name}) has been added successfully!`,
+                            icon: "success"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $(townAddingFormEl)[0].reset();
+                            }
+                        })
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                })
+            })
 
         });
-
     })
 </script>
+
+<!-- 
+error: function(xhr, status, error) {
+
+console.log("Status: " + status);
+console.log("XHR Response: " + xhr.responseText);}
+-->
