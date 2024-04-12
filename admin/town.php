@@ -49,6 +49,7 @@
 
         showDistricts();
         showAllTownInfo();
+        showAllDistrictInTownEdit();
 
         // * Function for display all district name in Town section UI (<select></select>).
         function showDistricts() {
@@ -89,6 +90,24 @@
                     $("#townInfoTable").DataTable();
                 },
                 error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+        }
+
+        function showAllDistrictInTownEdit() {
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                data: {
+                    "request": "showAllDistrictInTownEditForm"
+                },
+                type: 'POST',
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+
                     console.log("Status: " + status);
                     console.log("XHR Response: " + xhr.responseText);
                 }
@@ -144,6 +163,7 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+                        // console.log(response);
                         const townJsonData = JSON.parse(response);
                         const {
                             name
@@ -158,6 +178,7 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $(townAddingFormEl)[0].reset();
+                                showAllTownInfo();
                             }
                         })
                     },
@@ -171,7 +192,7 @@
 
         });
 
-        // Script for open the edit modal of Town
+        // * Script for open the edit modal of Town
         $(document).on("click", "#editTownModal", function(e) {
 
             e.preventDefault();
@@ -205,26 +226,25 @@
                     console.log(townDataInJson);
 
                     const {
-                        district_id,
+                        town_id,
                         name,
-                        town_id
+                        district_id,
+                        district_name
                     } = townDataInJson
 
-                    // 4. Get the district id and send the request to server to get relevent district name.
-                    $.ajax({
-                        
-                    })
+                    // 4. Get the district id and display in ui.
+                    $("#editTownForm")[0][0].value = district_id
+                    $("#editTownForm")[0][1][0].textContent = district_name;
+                    $("#editTownForm")[0][1][0].value = district_id;
+                    $("#update-town-name")[0].value = name;
+                    $("#town-id")[0].value = town_id;
                 },
                 error: function(xhr, status, error) {
 
                     console.log("Status: " + status);
                     console.log("XHR Response: " + xhr.responseText);
                 }
-
             })
-
-
-
         })
     })
 </script>

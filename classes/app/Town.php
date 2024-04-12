@@ -11,9 +11,9 @@ class Town extends Database
     protected $tableName = "table_town";
 
     // * Function for Insert Town Detail
-    public function addTown($townName, $districtId)
+    public function addTown($townName, $districtId, $districtName)
     {
-        $query = "INSERT INTO {$this->tableName} (name, district_id) VALUES (:name, :district_id)";
+        $query = "INSERT INTO {$this->tableName} (name, district_id, district_name) VALUES (:name, :district_id, :district_name)";
 
         try {
 
@@ -21,7 +21,7 @@ class Town extends Database
             $statement = $this->connection->prepare($query);
 
             // Execute the statement
-            $statement->execute([':name' => $townName, ':district_id' => $districtId]);
+            $statement->execute([':name' => $townName, ':district_id' => $districtId, ':district_name' => $districtName]);
 
             $insertId = $this->connection->lastInsertId();
 
@@ -91,15 +91,15 @@ class Town extends Database
     }
 
     // * Function for Update Town Info.
-    public function updateTownInfo($townId, $townName, $districtId)
+    public function updateTownInfo($townId, $townName, $districtId, $districtName)
     {
-        $query = "UPDATE {$this->tableName} SET name = :name, district_id = :districtId WHERE town_id = :id";
+        $query = "UPDATE {$this->tableName} SET name = :name, district_id = :districtId, district_name = :district_name WHERE town_id = :id";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':name' => $townName, ':districtId' => $districtId, ':town_id' => $townId]);
+            $statement->execute([':name' => $townName, ':districtId' => $districtId, ':town_id' => $townId, ':district_name' => $districtName]);
 
             $updatedTownData = $this->getTownInfoById($townId);
 

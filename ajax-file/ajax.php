@@ -237,19 +237,27 @@ if (isset($_POST['action']) && $_POST['action'] == 'showAllDistrictsName') {
 if (isset($_POST['request']) && $_POST['request'] == 'insertTownInfo') {
 
     $districtIdEl = $_POST['district-name'];
+
+    $arrayOfDistrictInfo = $district->getDistrictInfoById($districtIdEl);
+
+    $districtName = $arrayOfDistrictInfo['name'];
+
     $townNameEl = $_POST['town-name'];
 
-    $town->addTown($townNameEl, $districtIdEl);
+    $town->addTown($townNameEl, $districtIdEl, $districtName);
 }
 
 // Todo: Need to show all the info of Town
 if (isset($_POST['request']) && $_POST['request'] == 'showAllTownInfo') {
 
-    $query = "SELECT table_town.town_id, table_town.name AS town_name, table_town.district_id, table_district.name AS district_name FROM table_town LEFT JOIN table_district ON table_town.district_id = table_district.district_id";
+    // $query = "SELECT table_town.town_id, table_town.name 
+    // AS town_name, table_town.district_id, table_district.name 
+    // AS district_name FROM table_town 
+    // LEFT JOIN table_district ON table_town.district_id = table_district.district_id";
 
     $serialNo = 1;
 
-    $results = $db->getMultipleData($query);
+    $results = $town->viewAllTownData();
 
     $outputOfUI = "";
 
@@ -269,7 +277,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllTownInfo') {
     foreach ($results as $arrayOfTownInfo) {
 
         $townId = $arrayOfTownInfo['town_id'];
-        $townName = $arrayOfTownInfo['town_name'];
+        $townName = $arrayOfTownInfo['name'];
         $districtId = $arrayOfTownInfo['district_id'];
         $districtName = $arrayOfTownInfo['district_name'];
 
@@ -298,9 +306,13 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllTownInfo') {
 // Todo: Need to show the town detail in update modal
 if (isset($_GET['passedTownId'])) {
 
-    $passedTownId = $_GET['passedTownId'];
+    $passedTownId = $_GET['passedTownId']; // Town Id
 
-    $isTownDataExist = $town->getTownInfoById($passedTownId);
+    $arrayOfTownDetail = $town->getTownInfoById($passedTownId);
 
-    echo json_encode($isTownDataExist);
+    echo json_encode($arrayOfTownDetail);
+}
+
+// Todo: Need to show all the district name in 
+if (isset($_POST['request']) && $_POST['request'] == 'showAllDistrictInTownEditForm') {
 }

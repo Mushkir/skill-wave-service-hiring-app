@@ -15,7 +15,7 @@
                 District
             </label>
             <select class="border rounded-lg outline-none w-full py-2 px-3 text-gray-700 leading-tight bg-gray-200" id="update-district-name" name="update-district-name">
-                <option value="#">Ampara</option>
+                <option value=""></option>
                 <option value="#">Ampara</option>
                 <option value="#">Ampara</option>
                 <option value="#">Ampara</option>
@@ -26,10 +26,10 @@
 
         <!-- Town Name -->
         <div class="mb-5">
-            <input type="hidden" name="town-id">
+            <input type="hidden" name="town-id" id="town-id">
             <label for="update-town-name" class="block text-[#e3dbd1] mb-2">Town Name</label>
             <div>
-                <input type="text" name="update-town-name" id="" class="shadow appearance-none border rounded-lg outline-none w-full py-2 px-3 text-gray-700 leading-tight bg-gray-200">
+                <input type="text" name="update-town-name" id="update-town-name" class="shadow appearance-none border rounded-lg outline-none w-full py-2 px-3 text-gray-700 leading-tight bg-gray-200">
             </div>
 
         </div>
