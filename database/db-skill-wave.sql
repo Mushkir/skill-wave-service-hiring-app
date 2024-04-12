@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 09, 2024 at 02:54 PM
+-- Generation Time: Apr 12, 2024 at 11:35 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -48,7 +48,8 @@ INSERT INTO `admin` (`admin_id`, `name`, `username`, `password`, `image`, `email
 (5, 'hisowuqaky', 'hisowuqaky', '$2y$10$4ueevNcsahEhPNUv3buViu.KeoWXe82DDf1OE9U6At2.NVMSLKt3i', '8b7f270b6847f6d0697b70f1f9839b9e.jpg', 'volef@example.com'),
 (6, 'mikareby', 'mikareby', '$2y$10$TGDzDUy.hyL.POPJJPIRAeSQGcilKKW5LqqY4QvmNGfgIKNpVpOBW', '39d20177166a0c85a22b2b5c19a5ebea.png', 'feqyxujam@example.com'),
 (7, 'sigupyho', 'sigupyho', '$2y$10$EnY4XUQL.VaEbjXLU4hdFOWc47K/aphLih9HFtr0f4tpnjeJsBrkG', '5e8289f166e6ecba71d477d862be3150.png', 'duryra@example.com'),
-(8, 'Kishor Ramesh', 'hygufem', '$2y$10$Kz99l22ivAxql7jukUBYw.Q.yeb.4cKierU0lDdZEZgDi4AyeY/W.', 'f068014f2e7260f3d463f0a116bda28e.jpeg', 'nohuz@example.com');
+(8, 'Kishor Ramesh', 'hygufem', '$2y$10$Kz99l22ivAxql7jukUBYw.Q.yeb.4cKierU0lDdZEZgDi4AyeY/W.', 'f068014f2e7260f3d463f0a116bda28e.jpeg', 'nohuz@example.com'),
+(9, 'Gayathri Selvan', 'tahano', '$2y$10$vM5xULtnPEFStUPutJkPUuV5siLymKZt0CDW0h4C8Pwd7z9ZnHtyu', '92194c6044c86f159ae56c83bbfd803b.jpg', 'cofirase@example.com');
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,6 @@ CREATE TABLE `table_district` (
 --
 
 INSERT INTO `table_district` (`district_id`, `name`) VALUES
-(1, 'Ampara'),
 (2, 'Anuradhapura'),
 (3, 'Badulla'),
 (4, 'Batticaloa'),
@@ -87,22 +87,13 @@ INSERT INTO `table_district` (`district_id`, `name`) VALUES
 (7, 'Gampaha'),
 (8, 'Hambantota'),
 (9, 'Jaffna'),
-(10, 'Kalutara'),
-(11, 'Kandy'),
-(12, 'Kegalle'),
 (13, 'Kilinochchi'),
 (14, 'Kurunegala'),
 (15, 'Mannar'),
 (16, 'Matale'),
 (17, 'Matara'),
-(18, 'Monaragala'),
-(19, 'Mullaitivu'),
-(20, 'Nuwara Eliya'),
-(21, 'Polonnaruwa'),
-(22, 'Puttalam'),
-(23, 'Ratnapura'),
-(24, 'Trincomalee'),
-(25, 'Vavuniya');
+(31, 'Kalkuda'),
+(32, 'Thaalanguda');
 
 -- --------------------------------------------------------
 
@@ -223,6 +214,15 @@ CREATE TABLE `table_town` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `table_town`
+--
+
+INSERT INTO `table_town` (`town_id`, `name`, `district_id`) VALUES
+(1, 'Kalmunai', 4),
+(2, 'Sainthamaruthu', 4),
+(5, 'Vasanth Devi', 5);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -299,7 +299,7 @@ ALTER TABLE `table_town`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `table_&_providers_detail`
@@ -311,7 +311,7 @@ ALTER TABLE `table_&_providers_detail`
 -- AUTO_INCREMENT for table `table_district`
 --
 ALTER TABLE `table_district`
-  MODIFY `district_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `district_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `table_feedback`
@@ -353,7 +353,7 @@ ALTER TABLE `table_service_seeker`
 -- AUTO_INCREMENT for table `table_town`
 --
 ALTER TABLE `table_town`
-  MODIFY `town_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `town_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
