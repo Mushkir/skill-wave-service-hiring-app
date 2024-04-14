@@ -99,7 +99,7 @@ class Town extends Database
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':name' => $townName, ':districtId' => $districtId, ':town_id' => $townId, ':district_name' => $districtName]);
+            $statement->execute([':name' => $townName, ':districtId' => $districtId, ':id' => $townId, ':district_name' => $districtName]);
 
             $updatedTownData = $this->getTownInfoById($townId);
 

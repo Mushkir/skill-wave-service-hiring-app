@@ -31,7 +31,7 @@
 
         <div class="flex items-center justify-end gap-5 pt-4">
             <button class="bg-[#C7B7A3] text-[#6D2932] py-2 px-5 rounded-lg hover:bg-[#b3a492] hover:transition 500" id="updateDistrict">
-                Save
+                Update and Save
             </button>
 
             <button type="button" id="closeBtn" class="border-2 text-[#C7B7A3] border-[#C7B7A3] px-5 py-1.5 rounded-lg hover:bg-[#C7B7A3] hover:text-[#6D2932] hover:transition 500" onclick="closeModal()">Close</button>

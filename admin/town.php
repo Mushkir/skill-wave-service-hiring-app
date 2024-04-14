@@ -47,9 +47,9 @@
 <script>
     $(document).ready(function() {
 
-        showDistricts();
-        showAllTownInfo();
-        showAllDistrictInTownEdit();
+        showDistricts(); // It will show all the district name in Town insert form.
+        showAllTownInfo(); // It will show all the details of Town in Table in Town Page.
+        showAllDistrictInTownEdit(); // It will show all the district name in Town edit form. 
 
         // * Function for display all district name in Town section UI (<select></select>).
         function showDistricts() {
@@ -247,6 +247,54 @@
                     console.log("XHR Response: " + xhr.responseText);
                 }
             })
+        })
+
+        // * Request script to update town info
+        $(document).on("submit", "#editTownForm", function(e) {
+            e.preventDefault();
+
+            const editTownFormEl = document.querySelector("#editTownForm")
+
+            const formData = new FormData(editTownFormEl)
+
+            formData.append("request", "updateTownInfo");
+
+            Swal.fire({
+                title: "Are you sure to update?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, update it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '../ajax-file/ajax.php',
+                        contentType: false,
+                        processData: false,
+                        type: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            // console.log(response);
+                            Swal.fire({
+                                title: "Updated!",
+                                text: "Your file has been updated.",
+                                icon: "success"
+                            });
+
+                            showAllTownInfo();
+                            $("#editTownForm").addClass("hidden");
+                            $("#editTownForm")[0].reset();
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Status: " + status);
+                            console.log("XHR Response: " + xhr.responseText);
+                        }
+                    })
+                }
+            });
+
         })
     })
 </script>

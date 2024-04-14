@@ -330,3 +330,31 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllDistrictInTownEditF
 
     echo $output;
 }
+
+// Todo: Need to do update town process
+if (isset($_POST['request']) && $_POST['request'] == 'updateTownInfo') {
+
+    // * Needed record to update values in Town
+    // * 1. town_id
+    // * 2. town_name
+    // * 3. district_id
+    // * 4. district_name
+
+    $passedTownIdEl = $_POST['town-id']; // * town_id
+    $passedTownNameEl = $_POST['update-town-name']; // * town_name
+
+    /*
+
+     * Here distirct_id will comes from select element value attribute. So, through the district_id need to get
+     * district name
+
+    */
+
+    $districtIdEl = $_POST["update-district-name"];
+
+    $arrayOfDistrictDetail = $district->getDistrictInfoById($districtIdEl);
+
+    $updateDistrictName = $arrayOfDistrictDetail['name'];
+
+    $town->updateTownInfo($passedTownIdEl, $passedTownNameEl, $districtIdEl, $updateDistrictName);
+}
