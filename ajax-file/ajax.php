@@ -315,4 +315,18 @@ if (isset($_GET['passedTownId'])) {
 
 // Todo: Need to show all the district name in 
 if (isset($_POST['request']) && $_POST['request'] == 'showAllDistrictInTownEditForm') {
+
+    $output = "";
+
+    $arrayOfDistrictData = $district->viewDistrict();
+
+    foreach ($arrayOfDistrictData as $row) {
+
+        $districtId = $row['district_id'];
+        $districtName = $row['name'];
+
+        $output .= '<option value="' . $districtId . '">' . $districtName . '</option>';
+    }
+
+    echo $output;
 }

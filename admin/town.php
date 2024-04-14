@@ -104,7 +104,9 @@
                 },
                 type: 'POST',
                 success: function(response) {
-                    console.log(response);
+
+                    $("#update-district-name").html(response)
+
                 },
                 error: function(xhr, status, error) {
 
@@ -220,10 +222,10 @@
                 },
                 success: function(response) {
 
-                    console.log(response);
+                    // console.log(response);
                     // 3. Get the data from server.
                     const townDataInJson = JSON.parse(response)
-                    console.log(townDataInJson);
+                    // console.log(townDataInJson);
 
                     const {
                         town_id,

@@ -16,11 +16,6 @@
             </label>
             <select class="border rounded-lg outline-none w-full py-2 px-3 text-gray-700 leading-tight bg-gray-200" id="update-district-name" name="update-district-name">
                 <option value=""></option>
-                <option value="#">Ampara</option>
-                <option value="#">Ampara</option>
-                <option value="#">Ampara</option>
-                <option value="#">Ampara</option>
-                <option value="#">Ampara</option>
             </select>
         </div>
 
