@@ -135,20 +135,56 @@ class ServiceSeeker extends Database
         }
     }
 
-    // * Count Total SS
-    public function countTotalServiceSeekers()
+    // * Function for get values based on requirements
+    public function getServiceSeekerInfo($key, $value)
     {
-        $query = "SELECT * FROM {$this->tableName}";
+        $query = "SELECT * FROM {$this->tableName} WHERE $key = :value";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute();
+            $statement->execute([':value' => $value]);
 
-            $totalRows = $statement->rowCount();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-            return $totalRows;
+            return $result;
+        } catch (PDOException $ex) {
+
+            echo "Error from getServiceSeekerInfo(): " . $ex->getMessage();
+        }
+    }
+
+    // * Count Total SS
+    public function countTotalServiceSeekers($key = "", $value = "")
+    {
+        $query = "SELECT * FROM {$this->tableName}";
+
+        try {
+
+            if (!empty($key) && !empty($value)) {
+
+                $query .= " WHERE $key = :value";
+
+                $statement = $this->connection->prepare($query);
+
+                $statement->execute([':value' => $value]);
+
+                $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                $numberOfRows = $statement->rowCount();
+            } else {
+
+                $statement = $this->connection->prepare($query);
+
+                $statement->execute();
+
+                $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                $numberOfRows = $statement->rowCount();
+            }
+
+            return $numberOfRows;
         } catch (PDOException $ex) {
 
             echo "Error from countTotalServiceSeekers(): " . $ex->getMessage();
@@ -158,7 +194,12 @@ class ServiceSeeker extends Database
     // * Function for Get latitude value of City Name.
     public function getLatitudeValue($cityName)
     {
-        include('../env.php'); // It includes Google Geocoding API Key.
+        // ! For debugging.
+        // include('../../env.php'); // It includes Google Geocoding API Key.
+
+        // ! For App.
+        include('../env.php');
+
         // * https://maps.googleapis.com/maps/api/geocode/json?address=Washington&key=YOUR_API_KEY
 
         $city = urlencode($cityName);
@@ -175,7 +216,7 @@ class ServiceSeeker extends Database
 
         $latitudeValue = $locationObj->results[0]->geometry->location->lat;
 
-        echo $latitudeValue;
+        return $latitudeValue;
     }
 
     // * Function for Get longitude of City Name.
@@ -198,11 +239,10 @@ class ServiceSeeker extends Database
 
         $longitudeValue = $locationObj->results[0]->geometry->location->lng;
 
-        echo $longitudeValue;
+        return $longitudeValue;
     }
 }
 
 
 // $ss = new ServiceSeeker();
-
-// $ss->getLongitudeValue("Nintavur");
+// echo var_dump($ss->countTotalServiceSeekers("username", "to"));

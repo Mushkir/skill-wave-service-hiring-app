@@ -51,7 +51,7 @@
             </span>
 
             <div class="flex justify-center items-center mt-10">
-                <button class="bg-primary-color-10 px-5 py-2 rounded-full sm:rounded-md text-cus-maron font-semibold hover:bg-primary-color-9">
+                <button class="bg-primary-color-10 px-5 py-2 rounded-full sm:rounded-md text-cus-maron font-semibold hover:bg-primary-color-9" id="btnShowServiceProviders">
                     View Our Experts
                 </button>
             </div>
@@ -330,6 +330,15 @@
     <!-- End of Footer -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
+    <script>
+        const btnShowServiceProvidersEl = document.querySelector("#btnShowServiceProviders");
+
+        btnShowServiceProvidersEl.addEventListener("click", () => {
+
+            window.open('./find-service-provider.php', '_blank');
+        })
+    </script>
 
 
 </body>

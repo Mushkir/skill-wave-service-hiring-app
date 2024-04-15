@@ -394,5 +394,37 @@ if (isset($_GET['request']) && $_GET['request'] == 'getAdminUsername') {
 // Todo: Sign-up process of Service Seekers.
 if (isset($_POST['request']) && $_POST['request'] == 'serviceSeekerSignUp') {
 
-    print_r($_REQUEST);
+    $serviceSeekerFullNameEl = $_POST['ss-fullname'];
+    $serviceSeekerEmailEl = $_POST['ss-email'];
+    $serviceSeekerContactNoEl = $_POST['ss-contact-no'];
+    $serviceSeekerUsernameEl = $_POST['ss-username'];
+    $serviceSeekerPasswordEl = $_POST['ss-password'];
+    $serviceSeekerGenderEl = $_POST['ss-gender'];
+    $serviceSeekerAddressLineEl = $_POST['ss-address-line'];
+    $serviceSeekerCityEl = $_POST['ss-city'];
+    $serviceSeekerIdentityCardEl = $_POST['ss-id-card-no'];
+    $serviceSeekerImageEl = $_FILES['ss-image'];
+
+    $responseStatus;
+
+    // ! Need to check does the username already exist?
+    $isUsernameExist = $serviceSeeker->countTotalServiceSeekers("username", $serviceSeekerUsernameEl);
+
+    // ! Need to check does the email address already exist?
+    // ! Need to check does the phone number already exist?
+
+
+    echo var_dump($serviceSeeker->countTotalServiceSeekers("username", $serviceSeekerUsernameEl));
+
+    // $encryptedPassword = password_hash($serviceSeekerPasswordEl, PASSWORD_DEFAULT);
+
+    // // * Latitude Value
+    // $latitudeValue = $serviceSeeker->getLatitudeValue($serviceSeekerCityEl);
+
+    // // * Longitude Value
+    // $longitudeValue = $serviceSeeker->getLongitudeValue($serviceSeekerCityEl);
+
+    // $ssProfileImg = $db->imageUpload($serviceSeekerImageEl);
+
+    // $serviceSeeker->addServiceSeeker($serviceSeekerFullNameEl, $serviceSeekerEmailEl, $serviceSeekerContactNoEl, $serviceSeekerUsernameEl, $encryptedPassword, $serviceSeekerGenderEl, $serviceSeekerAddressLineEl, $serviceSeekerCityEl, $latitudeValue, $longitudeValue, $serviceSeekerIdentityCardEl, $ssProfileImg);
 }

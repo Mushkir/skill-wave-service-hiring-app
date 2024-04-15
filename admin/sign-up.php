@@ -201,7 +201,7 @@
                         processData: false,
                         contentType: false,
                         success: function(response) {
-                            console.log("Response: " + response);
+                            // console.log("Response: " + response);
                             if (response == "11") {
                                 Swal.fire({
 

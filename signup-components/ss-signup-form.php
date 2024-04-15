@@ -93,7 +93,7 @@
         <div class="w-full">
             <label for="ss-city" class="font-semibold text-cus-maron">City<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-city" id="ss-city" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: nintavur" required />
+                <input type="text" name="ss-city" id="ss-city" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: nintavur" value="Nintavur" required />
             </div>
         </div>
     </div>
@@ -102,9 +102,9 @@
     <div class="sm:flex gap-x-10">
         <!-- Full Name -->
         <div class="w-full">
-            <label for="file-input" class="font-semibold text-cus-maron">Upload File<span class="text-red-500">*</span></label>
+            <label for="ss-image" class="font-semibold text-cus-maron">Upload File<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input class="block w-full mt-2 rounded cursor-pointer focus:outline-none bg-white" id="file-input" type="file" name="file-input" />
+                <input class="block w-full mt-2 rounded cursor-pointer focus:outline-none bg-white" id="ss-image" type="file" name="ss-image" />
             </div>
         </div>
 
@@ -296,7 +296,7 @@
 
         // File
         validator.addField(
-            "#file-input",
+            "#ss-image",
             [{
                     rule: "minFilesCount",
                     value: 1,
