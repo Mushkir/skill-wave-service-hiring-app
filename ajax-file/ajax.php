@@ -6,11 +6,13 @@ require_once('../classes/common/Database.php');
 require_once('../classes/app/Admin.php');
 require_once('../classes/app/District.php');
 require_once('../classes/app/Town.php');
+require_once('../classes/app/ServiceSeeker.php');
 
 $db = new Database();
 $admin = new Admin();
 $district = new District();
 $town = new Town();
+$serviceSeeker = new ServiceSeeker();
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -56,8 +58,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
         $admin->addAdmin($adminNameEl, $adminUsernameEl, $encryptedPassword, $adminProfileImg, $adminEmailEl);
     }
 }
-
-
 
 // Todo: Admin Login Process
 if (isset($_POST['action']) && $_POST['action'] == 'adminLoginRequest') {
@@ -388,4 +388,11 @@ if (isset($_GET['request']) && $_GET['request'] == 'getAdminUsername') {
     } else {
         echo 'Admin username not found in session';
     }
+}
+
+// * <------------------------------------ Service Seekers ------------------------------------>
+// Todo: Sign-up process of Service Seekers.
+if (isset($_POST['request']) && $_POST['request'] == 'serviceSeekerSignUp') {
+
+    print_r($_REQUEST);
 }

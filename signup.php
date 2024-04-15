@@ -85,6 +85,7 @@
                 }
                 ?>
             </div>
+            <!-- <a href=""></a> -->
         </section>
     </main>
     <!-- End of Main -->
@@ -105,25 +106,8 @@
     <!-- JS Code of Show & Hide Password -->
     <script src="./assets/js/show-and-hide-password.script.js"></script>
 
-    <!-- Login Page Navigate Script -->
-    <script>
-        // * JavaScript code for Login page navigation.
-        const loginButtonEl = document.querySelector("#btnLogin");
-
-        loginButtonEl.addEventListener("click", () => {
-            window.location.href = "./login.php";
-        });
-    </script>
-
-    <!-- Just Validate Dev validation code -->
-    <script src="./assets/js/form.validation.js"></script>
-
     <!-- Custom validation for Username -->
     <script src="./assets/js/usernameCustomError.validation.js"></script>
-
-
-
-
 </body>
 
 </html>

@@ -23,7 +23,7 @@
         <div class="w-full">
             <label for="ss-contact-no" class="font-semibold text-cus-maron">Contact No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="tel" name="ss-contact-no" id="ss-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94 777195282" required />
+                <input type="tel" name="ss-contact-no" id="ss-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94777195282" value="+94777195282" required />
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="w-full">
             <label for="ss-username" class="font-semibold text-cus-maron">Username<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-username" id="ss-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required onkeyup="showCustomError()" />
+                <input type="text" name="ss-username" id="ss-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: mushkir_mohamed" required onkeyup="showCustomError()" />
                 <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden"></span>
             </div>
         </div>
@@ -112,17 +112,259 @@
         <div class="w-full">
             <label for="ss-id-card-no" class="font-semibold text-cus-maron">NIC No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-id-card-no" id="ss-id-card-no" class="font-normal w-full bg-white border-none rounded mt-2" placeholder="Ex: 199631401505" required />
+                <input type="text" name="ss-id-card-no" id="ss-id-card-no" class="font-normal w-full bg-white border-none rounded mt-2" placeholder="Ex: 199631401505" value="199631401505" required />
             </div>
         </div>
     </div>
 
     <!-- Modal toggle -->
     <div class="mt-10 sm:mt-5 w-full">
-        <button id="successButton" data-modal-target="successModal" data-modal-toggle="successModal" class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-cus-maron" type="submit">
+        <button class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-cus-maron">
             Create Account
         </button>
     </div>
 
-    <!-- Main Model code need to write here -->
 </form>
+
+<!-- JQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        const serviceSeekersSignUpFormEl = document.querySelector("#serviceSeekersSignUpForm");
+
+        const validator = new window.JustValidate(serviceSeekersSignUpFormEl);
+
+        // Name
+        validator.addField(
+            "#ss-fullname",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 20,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Email
+        validator.addField(
+            "#ss-email",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "email",
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Contact No.
+        validator.addField(
+            "#ss-contact-no",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "number",
+                },
+                {
+                    rule: "minLength",
+                    value: 12,
+                },
+                {
+                    rule: "maxLength",
+                    value: 13,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Username
+        validator.addField(
+            "#ss-username",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 15,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Password
+        validator.addField(
+            "#ss-password",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 8,
+                },
+                {
+                    rule: "maxLength",
+                    value: 15,
+                },
+                {
+                    rule: "strongPassword",
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Confirm Password
+        validator.addField(
+            "#ss-confirm-password",
+            [{
+                    rule: "required",
+                },
+                {
+                    validator: (value, fields) => {
+                        if (fields["#ss-password"] && fields["#ss-password"].elem) {
+                            const repeatPasswordValue = fields["#ss-password"].elem.value;
+
+                            return value === repeatPasswordValue;
+                        }
+
+                        return true;
+                    },
+                    errorMessage: "Passwords should be the same",
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Gender
+        validator.addField(
+            "#ss-gender",
+            [{
+                rule: "required",
+            }, ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Address line
+        validator.addField(
+            "#ss-address-line",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // City
+        validator.addField(
+            "#ss-city",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // File
+        validator.addField(
+            "#file-input",
+            [{
+                    rule: "minFilesCount",
+                    value: 1,
+                },
+                {
+                    rule: "files",
+                    value: {
+                        files: {
+                            extensions: ["jpeg", "jpg", "png"],
+                            types: ["image/jpeg", "image/jpg", "image/png"],
+                        },
+                    },
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // NIC
+        validator.addField(
+            "#ss-id-card-no",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "number",
+                },
+                {
+                    rule: "minLength",
+                    value: 12,
+                },
+                {
+                    rule: "maxLength",
+                    value: 12,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        validator.onSuccess((e) => {
+            e.preventDefault();
+
+            // JQuery script to send request to signup
+            $(document).on("submit", serviceSeekersSignUpFormEl, function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                const formData = new FormData(serviceSeekersSignUpFormEl);
+                formData.append("request", "serviceSeekerSignUp");
+
+                $.ajax({
+
+                    url: './ajax-file/ajax.php',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+                        // Todo: Need to do ss crud operations.
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                })
+            })
+        })
+    })
+</script>

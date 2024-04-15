@@ -1,10 +1,10 @@
 <?php
 // * SS: ServiceSeeker
 // ! For App
-// require_once '';
+require_once '../classes/common/Database.php';
 
 // ! For Debugging
-require_once '../common/Database.php';
+// require_once '../common/Database.php';
 
 
 class ServiceSeeker extends Database
