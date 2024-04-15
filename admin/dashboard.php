@@ -1,8 +1,6 @@
 <?php
-
 session_start();
-echo $_SESSION['adminUsername'];
-
+// echo $_SESSION['adminUsername'];
 ?>
 
 <!DOCTYPE html>

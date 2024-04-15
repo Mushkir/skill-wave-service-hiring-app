@@ -1,7 +1,7 @@
 To do:
 Top 1: Need to implement Admin Dashboard with District and Town adding ui - 40% COMPLETE.
 Top 2: Need to implement District and Town details adding by admin feature - COMPLETE.
-1. Need to implement Service Seeker signup process.
+1. Need to implement Service Seeker signup process. - ONGOING.
 2. Need to implement Service Seeker login process.
 3. Need to implement Service Provider signup process.
 4. Need to implement Service Provider login process.
