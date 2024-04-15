@@ -52,7 +52,7 @@
                 <div class="w-full">
                     <label for="username" class="font-semibold text-cus-maron">Username</label>
                     <div class="mb-5">
-                        <input type="text" name="username" id="username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required onkeyup="showCustomError()" />
+                        <input type="text" name="username" id="username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: mushkir_mohamed" required onkeyup="showCustomError()" />
                         <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden"></span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                 <div class="w-full">
                     <label for="password" class="font-semibold text-cus-maron">Password</label>
                     <div class="mb-3">
-                        <input type="password" name="password" id="password" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: Password" required />
+                        <input type="password" name="password" id="password" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Enter your password" required />
                     </div>
                 </div>
 
@@ -111,8 +111,82 @@
     <!-- Show and Hide Password -->
     <script src="./assets/js/show-and-hide-password.script.js"></script>
 
-    <!-- Form Validation script -->
-    <script src="./assets/js/form.validation.js"></script>
+    <!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- JQuery script -->
+    <script>
+        $(document).ready(function() {
+
+            const mainLoginFormEl = document.querySelector("#mainLoginForm")
+            const validator = new window.JustValidate(mainLoginFormEl);
+
+            // Name
+            validator.addField(
+                "#username",
+                [{
+                        rule: "required",
+                    },
+                    {
+                        rule: "minLength",
+                        value: 3,
+                    },
+                ], {
+                    errorLabelCssClass: ["errorMsg"],
+                }
+            );
+
+            //   Password
+            validator.addField(
+                "#password",
+                [{
+                    rule: "required",
+                }, ], {
+                    errorLabelCssClass: ["errorMsg"],
+                }
+            );
+
+            // User Category
+            validator.addField(
+                "#user-category",
+                [{
+                    rule: "required",
+                }, ], {
+                    errorLabelCssClass: ["errorMsg"],
+                }
+            );
+
+            validator.onSuccess((e) => {
+                e.preventDefault();
+
+                const formData = new FormData(mainLoginFormEl);
+
+                formData.append("request", "loginProcess")
+
+                $(document).on("submit", mainLoginFormEl, function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    $.ajax({
+                        url: './ajax-file/ajax.php',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Status: " + status);
+                            console.log("XHR Response: " + xhr.responseText);
+                        }
+                    })
+
+                })
+            })
+        })
+    </script>
+
 
     <!-- Username Custom Error -->
     <script src="./assets/js/usernameCustomError.validation.js"></script>

@@ -15,6 +15,9 @@
     <!-- Just Validate Dev CDN -->
     <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- * Flowbite CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 

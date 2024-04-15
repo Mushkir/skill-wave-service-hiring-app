@@ -118,7 +118,7 @@
                             name
                         } = districtJsonData
 
-                        console.log(name);
+                        // console.log(name);
                         Swal.fire({
 
                             title: "New District.",

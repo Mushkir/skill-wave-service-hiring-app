@@ -407,24 +407,60 @@ if (isset($_POST['request']) && $_POST['request'] == 'serviceSeekerSignUp') {
 
     $responseStatus;
 
+    $encryptedPassword = password_hash($serviceSeekerPasswordEl, PASSWORD_DEFAULT);
+
+    // * Latitude Value
+    $latitudeValue = $serviceSeeker->getLatitudeValue($serviceSeekerCityEl);
+
+    // * Longitude Value
+    $longitudeValue = $serviceSeeker->getLongitudeValue($serviceSeekerCityEl);
+
+
+    $ssProfileImg = $db->imageUpload($serviceSeekerImageEl);
+
     // ! Need to check does the username already exist?
     $isUsernameExist = $serviceSeeker->countTotalServiceSeekers("username", $serviceSeekerUsernameEl);
 
     // ! Need to check does the email address already exist?
+    $isEmailExist = $serviceSeeker->countTotalServiceSeekers("email_address", $serviceSeekerEmailEl);
+
     // ! Need to check does the phone number already exist?
+    $isContactNoExist = $serviceSeeker->countTotalServiceSeekers("contact_no", $serviceSeekerContactNoEl);
+
+    // ! Need to check does the id card number already exist?
+    $isIdCardNoExist = $serviceSeeker->countTotalServiceSeekers("identity_card_no", $serviceSeekerIdentityCardEl);
 
 
-    echo var_dump($serviceSeeker->countTotalServiceSeekers("username", $serviceSeekerUsernameEl));
+    if ($isUsernameExist > 0 && $isEmailExist > 0 && $isContactNoExist > 0 && $isIdCardNoExist > 0) {
 
-    // $encryptedPassword = password_hash($serviceSeekerPasswordEl, PASSWORD_DEFAULT);
+        $responseStatus = "1111";
+    } else if ($isUsernameExist > 0) {
 
-    // // * Latitude Value
-    // $latitudeValue = $serviceSeeker->getLatitudeValue($serviceSeekerCityEl);
+        $responseStatus = "1000";
+    } else if ($isEmailExist > 0) {
 
-    // // * Longitude Value
-    // $longitudeValue = $serviceSeeker->getLongitudeValue($serviceSeekerCityEl);
+        $responseStatus = "0100";
+    } else if ($isContactNoExist > 0) {
 
-    // $ssProfileImg = $db->imageUpload($serviceSeekerImageEl);
+        $responseStatus = "0010";
+    } else if ($isIdCardNoExist > 0) {
 
-    // $serviceSeeker->addServiceSeeker($serviceSeekerFullNameEl, $serviceSeekerEmailEl, $serviceSeekerContactNoEl, $serviceSeekerUsernameEl, $encryptedPassword, $serviceSeekerGenderEl, $serviceSeekerAddressLineEl, $serviceSeekerCityEl, $latitudeValue, $longitudeValue, $serviceSeekerIdentityCardEl, $ssProfileImg);
+        $responseStatus = "0001";
+    } else {
+
+        $responseStatus = "2000";
+    }
+
+
+    if ($responseStatus == "2000") {
+
+        $serviceSeeker->addServiceSeeker($serviceSeekerFullNameEl, $serviceSeekerEmailEl, $serviceSeekerContactNoEl, $serviceSeekerUsernameEl, $encryptedPassword, $serviceSeekerGenderEl, $serviceSeekerAddressLineEl, $serviceSeekerCityEl, $latitudeValue, $longitudeValue, $serviceSeekerIdentityCardEl, $ssProfileImg);
+    }
+}
+
+// Todo: Login Users based on their role.
+if (isset($_POST['request']) && $_POST['request'] == 'loginProcess') {
+
+    print_r($_REQUEST);
+    $userRoleEl = $_POST['user-category'];
 }

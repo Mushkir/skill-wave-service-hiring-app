@@ -23,7 +23,7 @@
         <div class="w-full">
             <label for="ss-contact-no" class="font-semibold text-cus-maron">Contact No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="tel" name="ss-contact-no" id="ss-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94777195282" value="+94777195282" required />
+                <input type="tel" name="ss-contact-no" id="ss-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94777195282" required />
             </div>
         </div>
     </div>
@@ -356,8 +356,64 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        console.log(response);
-                        // Todo: Need to do ss crud operations.
+                        if (response == '1111') {
+
+                            Swal.fire({
+                                title: "Username, Email, Contact No, and Identity card number exist!",
+                                text: "We regret to inform you that the username, email, contact number, and identity card number are already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            });
+
+                        } else if (response == '1000') {
+
+                            Swal.fire({
+                                title: "Username and Email Exist!",
+                                text: "We regret to inform you that the username and email are already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            })
+
+                        } else if (response == '0100') {
+
+                            Swal.fire({
+                                title: "Email Address Exist!",
+                                text: "We regret to inform you that the email address is already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            });
+
+                        } else if (response == '0010') {
+
+                            Swal.fire({
+                                title: "Contact number Exist!",
+                                text: "We regret to inform you that the Contact number is already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            });
+
+                        } else if (response == '0001') {
+
+                            Swal.fire({
+                                title: "Identity card number Exist!",
+                                text: "We regret to inform you that the Identity card number is already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            });
+                        } else {
+                            const JsonData = JSON.parse(response);
+                            const {
+                                name
+                            } = JsonData
+                            Swal.fire({
+
+                                title: "Account Created!",
+                                text: `Dear ${name}! Your account has been created successfully!`,
+                                icon: "success"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+
+                                    $("#serviceSeekersSignUpForm")[0].reset();
+                                    window.location.href = '../login.php';
+                                }
+                            })
+                        }
+
                     },
                     error: function(xhr, status, error) {
                         console.log("Status: " + status);
