@@ -296,12 +296,63 @@
             });
 
         })
+
+        // * Request to delete town info
+        $(document).on("click", "#deleteTownBtn", function(e) {
+            e.preventDefault();
+
+            const deleleTownId = $(this).attr("href")
+
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: 'GET',
+                data: {
+                    townId: deleleTownId
+                },
+                success: function(response) {
+                    // console.log(response);
+
+                    Swal.fire({
+                        title: `Are you sure to delete ${response} town?`,
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '../ajax-file/ajax.php',
+                                type: 'GET',
+                                data: {
+                                    townId: deleleTownId,
+                                    "confirmDelete": true
+                                },
+                                success: function(resp) {
+
+                                    // console.log(resp);
+                                    Swal.fire({
+                                        title: "Deleted!",
+                                        text: `${response} town has been deleted.`,
+                                        icon: "success"
+                                    });
+                                    showAllTownInfo();
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log("Status: " + status);
+                                    console.log("XHR Response: " + xhr.responseText);
+                                }
+                            })
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+        })
     })
 </script>
-
-<!-- 
-error: function(xhr, status, error) {
-
-console.log("Status: " + status);
-console.log("XHR Response: " + xhr.responseText);}
--->

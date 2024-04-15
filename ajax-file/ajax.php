@@ -58,6 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
 }
 
 
+
 // Todo: Admin Login Process
 if (isset($_POST['action']) && $_POST['action'] == 'adminLoginRequest') {
 
@@ -357,4 +358,34 @@ if (isset($_POST['request']) && $_POST['request'] == 'updateTownInfo') {
     $updateDistrictName = $arrayOfDistrictDetail['name'];
 
     $town->updateTownInfo($passedTownIdEl, $passedTownNameEl, $districtIdEl, $updateDistrictName);
+}
+
+// Todo: Delete town info
+if (isset($_GET['townId'])) {
+
+    $passedTownId = $_GET['townId'];
+
+    $arrayOfTownData = $town->getTownInfoById($passedTownId);
+
+    $townName = $arrayOfTownData['name'];
+
+    echo $townName;
+
+    if (isset($_GET['confirmDelete']) == true) {
+
+        $town->deleteTownInfo($passedTownId);
+    }
+}
+
+// Todo: Retrieve Admin Username from Session and Logout.
+if (isset($_GET['request']) && $_GET['request'] == 'getAdminUsername') {
+    if (isset($_SESSION['adminUsername'])) {
+
+        session_unset();
+        session_destroy();
+
+        echo "404";
+    } else {
+        echo 'Admin username not found in session';
+    }
 }

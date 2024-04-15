@@ -1,3 +1,10 @@
+<?php
+
+session_start();
+echo $_SESSION['adminUsername'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -183,7 +190,7 @@
                                 </li>
 
                                 <li class="mt-2 text-[#62242d] px-[16px] py-1 hover:bg-[#6D2932] hover:text-white">
-                                    <a href="logout.php" class="flex items-center gap-2">
+                                    <a href="" id="admin-logout" class="flex items-center gap-2">
                                         <div>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                                                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
@@ -231,6 +238,12 @@
             </section>
         </section>
     </section>
+
+    <!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- DataTables CDN -->
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 
     <!-- Dropdown script -->
     <script>
@@ -291,6 +304,34 @@
         if (documentPathHref == `${PATH_HREF}settings`) {
             settingsMenuEl.classList.add("activeSideBar")
         }
+    </script>
+
+    <!-- Logout Jquery -->
+    <script>
+        $(document).ready(function() {
+
+            $(document).on("click", "#admin-logout", function(e) {
+
+                e.preventDefault();
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'GET',
+                    data: {
+                        "request": 'getAdminUsername'
+                    },
+                    success: function(response) {
+                        if (response == 404) {
+                            window.location.href = '../index.php';
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                })
+            })
+        })
     </script>
 
 
