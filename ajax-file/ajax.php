@@ -458,9 +458,17 @@ if (isset($_POST['request']) && $_POST['request'] == 'serviceSeekerSignUp') {
     }
 }
 
-// Todo: Login Users based on their role.
+// Todo: Login Users based on their role. - Pending due to service providers signup process.
 if (isset($_POST['request']) && $_POST['request'] == 'loginProcess') {
 
-    print_r($_REQUEST);
+    $usernameEl = $_POST['username'];
+    $passwordEl = $_POST['password'];
     $userRoleEl = $_POST['user-category'];
+
+    // * 1. need to get the input values (username, password) from login form.
+    // * 2. need to check if the user role, based on the role need to check in the database, is the data exist / not?
+    // * 3. if it is exists, need to login and move to profile page, otherwise show error msg.
+
+    if ($userRoleEl == 'Service Provider') {
+    }
 }

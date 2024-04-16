@@ -120,6 +120,8 @@
 
             const mainLoginFormEl = document.querySelector("#mainLoginForm")
             const validator = new window.JustValidate(mainLoginFormEl);
+            let sellectedCategory = "";
+            selectedCategory = $("#user-category").val();
 
             // Name
             validator.addField(
@@ -159,29 +161,31 @@
             validator.onSuccess((e) => {
                 e.preventDefault();
 
+                selectedCategory = $("#user-category").val();
+
                 const formData = new FormData(mainLoginFormEl);
 
-                formData.append("request", "loginProcess")
+                formData.append("request", "loginProcess");
 
-                $(document).on("submit", mainLoginFormEl, function(e) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
+                formData.set("user-category", selectedCategory);
 
-                    $.ajax({
-                        url: './ajax-file/ajax.php',
-                        type: 'POST',
-                        contentType: false,
-                        processData: false,
-                        data: formData,
-                        success: function(response) {
-                            console.log(response);
-                        },
-                        error: function(xhr, status, error) {
-                            console.log("Status: " + status);
-                            console.log("XHR Response: " + xhr.responseText);
-                        }
-                    })
+                $.ajax({
+                    url: './ajax-file/ajax.php',
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                })
 
+                $("#user-category").on("change", function() {
+                    selectedCategory = $(this).val();
                 })
             })
         })
