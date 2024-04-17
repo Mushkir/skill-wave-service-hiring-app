@@ -46,7 +46,6 @@
         }
     </style>
 
-
 </head>
 
 <body>
@@ -88,7 +87,6 @@
                 }
                 ?>
             </div>
-            <!-- <a href=""></a> -->
         </section>
     </main>
     <!-- End of Main -->

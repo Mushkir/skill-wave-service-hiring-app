@@ -13,13 +13,14 @@ class Database
         try {
 
             $this->connection = new PDO($this->dsn, $this->username, $this->password);
+
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $ex) {
             echo "Error: " . $ex->getMessage();
         }
     }
 
-    // Function for Upload Image file
+    // * Function for Upload Image file
     public function imageUpload($imgFile)
     {
         try {
@@ -71,7 +72,7 @@ class Database
         }
     }
 
-    // Function for JOIN Queries
+    // * Function for JOIN Queries
     public function getMultipleData($query)
     {
         try {
@@ -95,4 +96,6 @@ class Database
             echo "Error from getMultipleData(): " . $ex->getMessage();
         }
     }
+
+    
 }
