@@ -396,7 +396,9 @@
                                 icon: "error"
                             });
                         } else {
-                            const JsonData = JSON.parse(response);
+
+                            const resp = response
+                            const JsonData = JSON.parse(resp);
                             const {
                                 name
                             } = JsonData

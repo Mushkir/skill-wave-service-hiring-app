@@ -1,5 +1,6 @@
 <?php
-
+// ! SP: Service Providers
+// ! SS: Service Seekers
 session_start();
 
 require_once('../classes/common/Database.php');
@@ -7,12 +8,14 @@ require_once('../classes/app/Admin.php');
 require_once('../classes/app/District.php');
 require_once('../classes/app/Town.php');
 require_once('../classes/app/ServiceSeeker.php');
+require_once('../classes/app/ServiceProvide.php');
 
 $db = new Database();
 $admin = new Admin();
 $district = new District();
 $town = new Town();
 $serviceSeeker = new ServiceSeeker();
+$serviceProvider = new ServiceProvider();
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -451,10 +454,140 @@ if (isset($_POST['request']) && $_POST['request'] == 'serviceSeekerSignUp') {
         $responseStatus = "2000";
     }
 
+    echo $responseStatus;
 
     if ($responseStatus == "2000") {
 
         $serviceSeeker->addServiceSeeker($serviceSeekerFullNameEl, $serviceSeekerEmailEl, $serviceSeekerContactNoEl, $serviceSeekerUsernameEl, $encryptedPassword, $serviceSeekerGenderEl, $serviceSeekerAddressLineEl, $serviceSeekerCityEl, $latitudeValue, $longitudeValue, $serviceSeekerIdentityCardEl, $ssProfileImg);
+    }
+}
+
+// Todo: Need to show All district info in SP signup form
+if (isset($_POST['request']) && $_POST['request'] == 'listAllDistricts') {
+
+    $listOfDistrict = "";
+
+    $districtDataSet = $district->viewDistrict();
+
+    $listOfDistrict .= '<option value="">District</option>';
+
+    foreach ($districtDataSet as $data) {
+
+        $districtId =  $data['district_id'];
+        $districtName = $data['name'];
+
+        $listOfDistrict .= '<option value="' . $districtId . '">' . $districtName . '</option>';
+    }
+
+    echo $listOfDistrict;
+}
+
+// * <------------------------------------ Service Providers ------------------------------------>
+
+// Todo: Need to show All town info in SP signup form
+if (isset($_POST['request']) && $_POST['request'] == 'listAllTownInfo') {
+
+    $listOfTown = "";
+
+    $townDataSet = $town->viewAllTownData();
+
+    $listOfTown .= '<option value="">Town</option>';
+
+    foreach ($townDataSet as $data) {
+
+        $townId = $data['town_id'];
+        $townName = $data['name'];
+
+        $listOfTown .= '<option value="' . $townId . '">' . $townName . '</option>';
+    }
+
+    echo $listOfTown;
+}
+
+// Todo: SP signup process
+if (isset($_POST['request']) && $_POST['request'] == 'serviceProviderSignUp') {
+
+    $spFullNameEl = $_POST['sp-fullname'];
+    $spEmailEl = $_POST['sp-email'];
+    $spContactNoEl = $_POST['sp-contact-no'];
+    $spUsernameEl = $_POST['sp-username'];
+    $spPasswordEl = $_POST['sp-password'];
+    $spGenderEl = $_POST['sp-gender'];
+    $spAddressLineEl = $_POST['sp-addresp-line'];
+    $spDistrictEl = $_POST['sp-district'];
+    $spTownEl = $_POST['sp-town'];
+    $spQualificationEl = $_POST['sp-qualification'];
+    $spSkillsEl = $_POST['sp-skills'];
+    $spProfileImgEl = $_FILES['file-input'];
+    $spDescEl = $_POST['sp-desc'];
+    $spKeywordsEl = $_POST['sp-keywords'];
+    $spPriceInfoEl = $_POST['sp-starting-price'];
+
+
+    // If service provider has qualifications such as Doctor, Engineer, etc, this value will take those values.
+    /* While Ordinary workers signup process, if they don't have any qualifications, they will consider as "OW." It meanse
+    "Ordinary Worker."
+    */
+    $qualificationValue = "";
+
+    if ($spQualificationEl == "") {
+
+        $qualificationValue = "OW";
+    } else {
+
+        $qualificationValue = $spQualificationEl;
+    }
+
+    $encryptedPassword = password_hash($spPasswordEl, PASSWORD_DEFAULT);
+
+    $status = "available";
+
+    $arrayOfTownInfo = $town->getTownInfoById($spTownEl);
+
+    $townName = $arrayOfTownInfo['name'];
+
+    // * Lat val
+    $latitudeValue = $serviceProvider->getServiceProviderLatitudeValue($townName);
+
+    // * Lng val
+    $longitudeValue = $serviceProvider->getServiceProviderLongitudeValue($townName);
+
+    $resp;
+
+    // ! Verify by Email
+    $isUserEmailExist = $serviceProvider->countTotalServiceProviders("email_address", $spEmailEl);
+
+    // ! Verify by Contact No
+    $isUserContactNumExist = $serviceProvider->countTotalServiceProviders("contact_no", $spContactNoEl);
+
+    // ! Verify by Username
+    $isUsernameExist = $serviceProvider->countTotalServiceProviders("username", $spUsernameEl);
+
+    if ($isUserEmailExist > 0 && $isUserContactNumExist > 0 && $isUsernameExist > 0) {
+
+        $resp = "111";
+    } else if ($isUserEmailExist > 0) {
+
+        $resp = "100";
+    } else if ($isUserContactNumExist > 0) {
+
+        $resp = "010";
+    } else if ($isUsernameExist > 0) {
+
+        $resp = "001";
+    } else {
+
+        $resp = "200";
+    }
+
+    // return $resp;
+    echo $resp;
+
+    if ($resp == "200") {
+
+        $spProfilePic = $db->imageUpload($spProfileImgEl);
+
+        $serviceProvider->addServiceProvider($spFullNameEl, $spEmailEl, $spContactNoEl, $spUsernameEl, $encryptedPassword, $spGenderEl, $spAddressLineEl, $spDistrictEl, $spTownEl, $latitudeValue, $longitudeValue, $qualificationValue, $spSkillsEl, $spProfilePic, $spDescEl, $spKeywordsEl, $spPriceInfoEl, $status);
     }
 }
 

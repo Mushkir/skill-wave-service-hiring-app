@@ -1,31 +1,31 @@
 <?php
 // * SP: Service Provider
 // ! For App
+require_once('../classes/common/Database.php');
 
 // ! For Debugging.
-require_once '../common/Database.php';
-require_once '';
+// require_once '../common/Database.php';
 
 class ServiceProvider extends Database
 {
     protected $tableName = "table_service_provider";
 
     // * Function for add new SP
-    public function addServiceProvider($spName, $spEmail, $spContactNo, $spUsername, $spPassword, $spGender, $spAddressLine, $spTownId, $latitudeValue, $longitudeValue, $spQualification, $spSkills, $image, $serviceDescription, $keywords, $pricePackge, $status)
+    public function addServiceProvider($spName, $spEmail, $spContactNo, $spUsername, $spPassword, $spGender, $spAddressLine, $spDistrictId, $spTownId, $latitudeValue, $longitudeValue, $spQualification, $spSkills, $image, $serviceDescription, $keywords, $pricePackge, $status)
     {
-        $query = "INSERT INTO {$this->tableName} (name, email_address, contact_no, username, password, gender, address_line, 
+        $query = "INSERT INTO {$this->tableName} (name, email_address, contact_no, username, password, gender, address_line, district_id, 
         town_id, latitude_value, longitutde_value, qualification, skills, image, description, keywords, price, status) 
         
         VALUES 
 
-        (:name, :email_address, :contact_no, :username, :password, :gender, :address_line, :town_id, :latitude_value, 
+        (:name, :email_address, :contact_no, :username, :password, :gender, :address_line, :district_id, :town_id, :latitude_value, 
         :longitutde_value, :qualification, :skills, :image, :description, :keywords, :price, :status)";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':name' => $spName, ':email_address' => $spEmail, ':contact_no' => $spContactNo, ':username' => $spUsername, ':password' => $spPassword, ':gender' => $spGender, ':address_line' => $spAddressLine, ':town_id' => $spTownId, ':latitude_value' => $latitudeValue, ':longitutde_value' => $longitudeValue, ':qualification' => $spQualification, ':skills' => $spSkills, ':image' => $image, ':description' => $serviceDescription, ':keywords' => $keywords, ':price' => $pricePackge, ':status' => $status]);
+            $statement->execute([':name' => $spName, ':email_address' => $spEmail, ':contact_no' => $spContactNo, ':username' => $spUsername, ':password' => $spPassword, ':gender' => $spGender, ':address_line' => $spAddressLine, ':district_id' => $spDistrictId, ':town_id' => $spTownId, ':latitude_value' => $latitudeValue, ':longitutde_value' => $longitudeValue, ':qualification' => $spQualification, ':skills' => $spSkills, ':image' => $image, ':description' => $serviceDescription, ':keywords' => $keywords, ':price' => $pricePackge, ':status' => $status]);
 
             $insertedId = $this->connection->lastInsertId();
 
@@ -94,15 +94,15 @@ class ServiceProvider extends Database
     }
 
     // * Update SP Info by id
-    public function updateServiceProviderInfo($serviceProviderId, $spName, $spEmail, $spContactNo, $spUsername, $spPassword, $spGender, $spAddressLine, $spTownId, $latitudeValue, $longitudeValue, $spQualification, $spSkills, $image, $serviceDescription, $keywords, $pricePackge, $status)
+    public function updateServiceProviderInfo($serviceProviderId, $spName, $spEmail, $spContactNo, $spUsername, $spPassword, $spGender, $spAddressLine, $spDistrictId, $spTownId, $latitudeValue, $longitudeValue, $spQualification, $spSkills, $image, $serviceDescription, $keywords, $pricePackge, $status)
     {
-        $query = "UPDATE {$this->tableName} SET name = :name, email_address = :email_address, contact_no = :contact_no, username = :username, password = :password, gender = :gender, address_line = :address_line, town_id = :town_id, latitude_value = :latitude_value, longitutde_value = :longitutde_value, qualification = :qualification, skills = :skills, image = :image, description = :description, keywords = :keywords, price = :price, status = :status WHERE service_provider_id = :service_provider_id";
+        $query = "UPDATE {$this->tableName} SET name = :name, email_address = :email_address, contact_no = :contact_no, username = :username, password = :password, gender = :gender, address_line = :address_line, district_id = :district_id, town_id = :town_id, latitude_value = :latitude_value, longitutde_value = :longitutde_value, qualification = :qualification, skills = :skills, image = :image, description = :description, keywords = :keywords, price = :price, status = :status WHERE service_provider_id = :service_provider_id";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':service_provider_id' => $serviceProviderId, ':name' => $spName, ':email_address' => $spEmail, ':contact_no' => $spContactNo, ':username' => $spUsername, ':password' => $spPassword, ':gender' => $spGender, ':address_line' => $spAddressLine, ':town_id' => $spTownId, ':latitude_value' => $latitudeValue, ':longitutde_value' => $longitudeValue, ':qualification' => $spQualification, ':skills' => $spSkills, ':image' => $image, ':description' => $serviceDescription, ':keywords' => $keywords, ':price' => $pricePackge, ':status' => $status]);
+            $statement->execute([':service_provider_id' => $serviceProviderId, ':name' => $spName, ':email_address' => $spEmail, ':contact_no' => $spContactNo, ':username' => $spUsername, ':password' => $spPassword, ':gender' => $spGender, ':address_line' => $spAddressLine, ':district_id' => $spDistrictId, ':town_id' => $spTownId, ':latitude_value' => $latitudeValue, ':longitutde_value' => $longitudeValue, ':qualification' => $spQualification, ':skills' => $spSkills, ':image' => $image, ':description' => $serviceDescription, ':keywords' => $keywords, ':price' => $pricePackge, ':status' => $status]);
 
             $updatedData = $this->getServiceProviderInfoById($serviceProviderId);
 

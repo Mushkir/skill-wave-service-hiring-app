@@ -33,7 +33,7 @@
         <div class="w-full">
             <label for="sp-username" class="font-semibold text-cus-maron">Username<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="sp-username" id="sp-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: @mushkir" required onkeyup="showCustomError()" />
+                <input type="text" name="sp-username" id="sp-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: john_devil" required onkeyup="showCustomError()" />
                 <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden"></span>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 <label for="sp-district" class="font-semibold text-cus-maron">District<span class="text-red-500">*</span></label>
                 <div class="mb-5">
                     <select name="sp-district" id="sp-district" class="w-full bg-white border-none rounded mt-2 outline-none px-5 py-2">
-                        <option value="">District</option>
+
                     </select>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                 <label for="sp-town" class="font-semibold text-cus-maron">Town<span class="text-red-500">*</span></label>
                 <div class="mb-5">
                     <select name="sp-town" id="sp-town" class="w-full bg-white border-none rounded mt-2 outline-none px-5 py-2">
-                        <option value="">Town</option>
+
                     </select>
                 </div>
             </div>
@@ -164,12 +164,410 @@
         </div>
     </div>
 
-    <!-- Modal toggle -->
+    <!-- Submit Button -->
     <div class="mt-5 w-full">
-        <button id="successButton" data-modal-target="successModal" data-modal-toggle="successModal" class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-cus-maron" type="submit">
+        <button class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-cus-maron">
             Create Account
         </button>
     </div>
-
-    <!-- Main Model code need to write here -->
 </form>
+
+<!-- JQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<!-- JQuery script -->
+<script>
+    $(document).ready(function() {
+
+        listAllDistrict();
+        listAllTownInfo();
+
+        // * Show all district name in service provider signup form "District" select element.
+        function listAllDistrict() {
+            $.ajax({
+
+                url: './ajax-file/ajax.php',
+                data: {
+                    "request": "listAllDistricts"
+                },
+                type: "POST",
+                success: function(response) {
+                    // console.log(response);
+                    $("#sp-district").html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+        }
+
+        // * Show all town name in service provider signup form "District" select element.
+        function listAllTownInfo() {
+
+            $.ajax({
+
+                url: './ajax-file/ajax.php',
+                type: 'POST',
+                data: {
+                    "request": "listAllTownInfo"
+                },
+                success: function(response) {
+                    // console.log(response);
+                    $("#sp-town").html(response);
+
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+        }
+
+
+
+        const serviceProvidersSignUpFormEl = document.querySelector("#serviceProvidersSignUpForm");
+        const validator = new window.JustValidate("#serviceProvidersSignUpForm");
+
+        // Name
+        validator.addField(
+            "#sp-fullname",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 20,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Email
+        validator.addField(
+            "#sp-email",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "email",
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Contact No.
+        validator.addField(
+            "#sp-contact-no",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "number",
+                },
+                {
+                    rule: "minLength",
+                    value: 12,
+                },
+                {
+                    rule: "maxLength",
+                    value: 13,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Username
+        validator.addField(
+            "#sp-username",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 15,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Password
+        validator.addField(
+            "#sp-password",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 8,
+                },
+                {
+                    rule: "maxLength",
+                    value: 15,
+                },
+                {
+                    rule: "strongPassword",
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Confirm Password
+        validator.addField(
+            "#sp-confirm-password",
+            [{
+                    rule: "required",
+                },
+                {
+                    validator: (value, fields) => {
+                        if (fields["#sp-password"] && fields["#sp-password"].elem) {
+                            const repeatPasswordValue = fields["#sp-password"].elem.value;
+
+                            return value === repeatPasswordValue;
+                        }
+
+                        return true;
+                    },
+                    errorMessage: "Passwords should be the same",
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Gender
+        validator.addField(
+            "#sp-gender",
+            [{
+                rule: "required",
+            }, ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Address line
+        validator.addField(
+            "#sp-addresp-line",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // District
+        validator.addField(
+            "#sp-district",
+            [{
+                rule: "required",
+            }, ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Town
+        validator.addField(
+            "#sp-town",
+            [{
+                rule: "required",
+            }, ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Qualification
+        // validator.addField(
+        //     "#sp-qualification",
+        //     [{
+        //             rule: "required",
+        //         },
+        //         {
+        //             rule: "minLength",
+        //             value: 3,
+        //         },
+        //         {
+        //             rule: "maxLength",
+        //             value: 20,
+        //         },
+        //     ], {
+        //         errorLabelCssClass: ["errorMsg"],
+        //     }
+        // );
+
+        // Skills
+        validator.addField(
+            "#sp-skills",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 50,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // File
+        validator.addField(
+            "#file-input",
+            [{
+                    rule: "minFilesCount",
+                    value: 1,
+                },
+                {
+                    rule: "files",
+                    value: {
+                        files: {
+                            extensions: ["jpeg", "jpg", "png"],
+                            types: ["image/jpeg", "image/jpg", "image/png"],
+                        },
+                    },
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Description
+        validator.addField(
+            "#sp-desc",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 500,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Keywords
+        validator.addField(
+            "#sp-keywords",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "minLength",
+                    value: 3,
+                },
+                {
+                    rule: "maxLength",
+                    value: 500,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        // Starting Price
+        validator.addField(
+            "#sp-starting-price",
+            [{
+                    rule: "required",
+                },
+                {
+                    rule: "number",
+                },
+                {
+                    rule: "minLength",
+                    value: 1,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            }
+        );
+
+        validator.onSuccess((e) => {
+
+                e.preventDefault()
+
+                $(document).on("submit", serviceProvidersSignUpFormEl, function(e) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+
+                        const formData = new FormData(serviceProvidersSignUpFormEl);
+                        formData.append("request", "serviceProviderSignUp");
+
+                        $.ajax({
+                                url: './ajax-file/ajax.php',
+                                type: 'POST',
+                                processData: false,
+                                contentType: false,
+                                data: formData,
+                                success: function(response) {
+                                    // const serviceProviderJsonData = JSON.parse(response);
+                                    console.log(response);
+                                    if (response == "111") {
+                                        Swal.fire({
+                                            title: "Username, Email, and Contact number exist!",
+                                            text: "We regret to inform you that the username, email, and contact number are already taken. Kindly choose a different one. Thank you!",
+                                            icon: "error"
+                                        });
+                                    }
+
+                                    if (response == "100") {
+                                        Swal.fire({
+                                            title: "Email Exist!",
+                                            text: "We regret to inform you that the email address is already taken. Kindly choose a different one. Thank you!",
+                                            icon: "error"
+                                        })
+                                    }
+
+                                    if (response == "010") {
+                                        Swal.fire({
+                                            title: "Conact Number Exist!",
+                                            text: "We regret to inform you that the contact number is already taken. Kindly choose a different one. Thank you!",
+                                            icon: "error"
+                                        })
+                                    }
+
+                                    if (response == "001") {
+                                        Swal.fire({
+                                            title: "Username Exist!",
+                                            text: "We regret to inform you that the username is already taken. Kindly choose a different one. Thank you!",
+                                            icon: "error"
+                                        })
+                                    }
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log("Status: " + status);
+                                console.log("XHR Response: " + xhr.responseText);
+                            }
+                        }
+                    )
+                })
+        });
+    })
+</script>
