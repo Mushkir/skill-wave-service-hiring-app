@@ -590,9 +590,8 @@ if (isset($_POST['request']) && $_POST['request'] == 'serviceProviderSignUp') {
     }
 }
 
-// Todo: Login Users based on their role. - Pending due to service providers signup process.
+// Todo: Login Users based on their role.
 if (isset($_POST['request']) && $_POST['request'] == 'loginProcess') {
-
     $usernameEl = $_POST['username'];
     $passwordEl = $_POST['password'];
     $userRoleEl = $_POST['user-category'];
@@ -600,87 +599,56 @@ if (isset($_POST['request']) && $_POST['request'] == 'loginProcess') {
     $userStatus;
     $passwordStatus;
 
-    // * 1. need to get the input values (username, password) from login form.
-    // * 2. need to check if the user role, based on the role need to check in the database, is the data exist / not?
-    // * 3. if it is exists, need to login and move to profile page, otherwise show error msg.
     if ($userRoleEl == 'Service Provider') {
 
         $isUsernameExist = $serviceProvider->countTotalServiceProviders("username", $usernameEl);
 
-        if ($isUsernameExist > 0 && $isUsernameExist == 1) {
+        if ($isUsernameExist <= 0) {
 
-            $userExist = "1";
+            $userExist = "User not found";
         } else {
 
-            $userExist = "0";
-        }
-
-        echo $userExist;
-
-        if ($userExist == "1") {
-
-            // * Need to check Password
             $arrayOfServiceProviderInfo = $serviceProvider->getServiceProviderInfo("username", $usernameEl);
 
             $serviceProviderName = $arrayOfServiceProviderInfo['name'];
-            $encryptedServiceProviderPassword = $arrayOfServiceProviderInfo['password'];
+
+            $encryptedPassword = $arrayOfServiceProviderInfo['password'];
 
             $_SESSION['serviceProviderName'] = $serviceProviderName;
 
-            if (password_verify($passwordEl, $encryptedServiceProviderPassword)) {
+            if (password_verify($passwordEl, $encryptedPassword)) {
 
-                $passwordStatus = "1"; // Username Exist = 1, Password status = 1. So, Totally 11.
+                $userExist = json_encode($arrayOfServiceProviderInfo);
             } else {
 
-                $passwordStatus = "0"; // Username Exist = 1, Password status = 0. So, Totally 10.
-            }
-
-            echo $passwordStatus;
-
-            if ($passwordStatus == "1") {
-
-                $_SESSION['serviceProviderName'] = $serviceProviderName;
-
-                echo $userStatus = "SP1";
-
-                // echo json_encode($arrayOfServiceProviderInfo);
+                $userExist = "Password Mismatched"; // Indicate that password is incorrect for a service provider
             }
         }
+        echo $userExist;
     } else {
-
         $isServiceSeekerExist = $serviceSeeker->countTotalServiceSeekers("username", $usernameEl);
 
         if ($isServiceSeekerExist <= 0) {
 
-            $userExist = "userNotExist";
+            $userExist = "User not found";
         } else {
 
             $arrayOfServiceSeeker = $serviceSeeker->getServiceSeekerInfo("username", $usernameEl);
 
             $serviceSeekerName = $arrayOfServiceSeeker['name'];
+
             $hashPassword = $arrayOfServiceSeeker['password'];
 
             $_SESSION['serviceSeekerName'] = $serviceSeekerName;
 
             if (password_verify($passwordEl, $hashPassword)) {
 
-                $passwordStatus = true;
-            } else {
-
-                $passwordStatus = false;
-            }
-
-            if ($passwordStatus == false) {
-
-                $userExist = "Unmatched Password";
-            } else {
-
-                $_SESSION['serviceSeekerName'] = $serviceSeekerName;
-
                 $userExist = json_encode($arrayOfServiceSeeker);
+            } else {
+
+                $userExist = "Password Mismatched"; // Indicate that password is incorrect for a service seeker
             }
         }
-
         echo $userExist;
     }
 }

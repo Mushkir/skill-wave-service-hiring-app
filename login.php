@@ -181,79 +181,84 @@
                     processData: false,
                     data: formData,
                     success: function(response) {
-                        // console.log(response);
-
-                        // Condition for Service Providers verification
-                        if (response == "0") {
+                        if (response === "User not found" || response === "Password Mismatched") {
                             Swal.fire({
-                                title: "Username doesn't exist!",
-                                text: "We regret to inform you that the username doesn't exist. Please reverify your username. Thank you!",
-                                icon: "error"
-                            });
-                        }
-
-                        if (response == "10") {
-                            Swal.fire({
-                                title: "Password doesn't match!",
-                                text: "We regret to inform you that the password doesn't match. Please reverify your password. Thank you!",
-                                icon: "error"
-                            });
-                        }
-
-                        if (response == "11SP1") {
-
-                            Swal.fire({
-                                title: "Username and Password verified!",
-                                text: "Dear User! Your login process has been done successfully under the Service Providers Category!",
-                                icon: "success"
-                            }).then((result) => {
-
-                                if (result.isConfirmed) {
-
-                                    $("#mainLoginForm")[0].reset();
-                                    window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php";
-                                }
-                            });
-                        }
-
-                        // Condition for Service Seekers verification
-                        if (response == "userNotExist") {
-                            Swal.fire({
-                                title: "Username doesn't exist!",
-                                text: "Dear Service Seeker! We regret to inform you that the username doesn't exist. Please reverify your username. Thank you!",
+                                title: "Login Failed",
+                                text: "Incorrect username or password. Please try again.",
                                 icon: "error"
                             });
                         } else {
-
-                            if (response == "Unmatched Password") {
-                                Swal.fire({
-                                    title: "Password doesn't exist!",
-                                    text: "Dear Service Seeker! We regret to inform you that the Password doesn't exist. Please reverify your password. Thank you!",
-                                    icon: "error"
-                                });
+                            if (selectedCategory === "Service Provider") {
+                                window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php";
                             } else {
-
-                                const serviceSeekerJsonData = JSON.parse(response);
-
-                                const {
-                                    name
-                                } = serviceSeekerJsonData
-
-                                Swal.fire({
-                                    title: "Username and Password verified!",
-                                    text: `Dear ${name}! Your login process has been done successfully under the Service Seekers Category!`,
-                                    icon: "success"
-                                }).then((result) => {
-
-                                    if (result.isConfirmed) {
-
-                                        $("#mainLoginForm")[0].reset();
-                                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php";
-                                    }
-                                });
+                                window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php";
                             }
                         }
                     },
+                    // success: function(response) {
+                    //     // console.log(response);
+
+                    //     if (response == "User not found") {
+                    //         Swal.fire({
+                    //             title: "Username doesn't exist!",
+                    //             text: "Dear Service Provider! We regret to inform you that the username doesn't exist. Please reverify your username. Thank you!",
+                    //             icon: "error"
+                    //         });
+                    //     } else {
+
+                    //         if (response == "Password Mismatched") {
+                    //             Swal.fire({
+                    //                 title: "Password doesn't exist!",
+                    //                 text: "Dear Service Provider! We regret to inform you that the Password doesn't exist. Please reverify your password. Thank you!",
+                    //                 icon: "error"
+                    //             });
+                    //         } else {
+                    //             Swal.fire({
+                    //                 title: "Username and Password verified!",
+                    //                 text: "Dear Service Provider! Your login process has been done successfully!",
+                    //                 icon: "success"
+                    //             }).then((result) => {
+
+                    //                 if (result.isConfirmed) {
+
+                    //                     $("#mainLoginForm")[0].reset();
+                    //                     window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php";
+                    //                 }
+                    //             });
+                    //         }
+                    //     }
+
+                    //     if (response == "userNotExist") {
+                    //         Swal.fire({
+                    //             title: "Username doesn't exist!",
+                    //             text: "Dear Service Seeker! We regret to inform you that the username doesn't exist. Please reverify your username. Thank you!",
+                    //             icon: "error"
+                    //         });
+                    //     } else {
+
+                    //         if (response == "Unmatched Password") {
+                    //             Swal.fire({
+                    //                 title: "Password doesn't exist!",
+                    //                 text: "Dear Service Seeker! We regret to inform you that the Password doesn't exist. Please reverify your password. Thank you!",
+                    //                 icon: "error"
+                    //             });
+                    //         } else {
+                    //             Swal.fire({
+                    //                 title: "Username and Password verified!",
+                    //                 text: "Dear Service Seeker! Your login process has been done successfully!",
+                    //                 icon: "success"
+                    //             }).then((result) => {
+
+                    //                 if (result.isConfirmed) {
+
+                    //                     $("#mainLoginForm")[0].reset();
+                    //                     window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php";
+                    //                 }
+                    //             });
+
+                    //         }
+                    //     }
+                    // },
                     error: function(xhr, status, error) {
                         console.log("Status: " + status);
                         console.log("XHR Response: " + xhr.responseText);
