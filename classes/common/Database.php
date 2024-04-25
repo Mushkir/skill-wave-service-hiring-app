@@ -96,6 +96,4 @@ class Database
             echo "Error from getMultipleData(): " . $ex->getMessage();
         }
     }
-
-    
 }

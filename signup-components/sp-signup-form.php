@@ -393,25 +393,6 @@
             }
         );
 
-        // Qualification
-        // validator.addField(
-        //     "#sp-qualification",
-        //     [{
-        //             rule: "required",
-        //         },
-        //         {
-        //             rule: "minLength",
-        //             value: 3,
-        //         },
-        //         {
-        //             rule: "maxLength",
-        //             value: 20,
-        //         },
-        //     ], {
-        //         errorLabelCssClass: ["errorMsg"],
-        //     }
-        // );
-
         // Skills
         validator.addField(
             "#sp-skills",
@@ -510,64 +491,70 @@
 
         validator.onSuccess((e) => {
 
-                e.preventDefault()
+            e.preventDefault()
 
-                $(document).on("submit", serviceProvidersSignUpFormEl, function(e) {
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
+            $(document).on("submit", serviceProvidersSignUpFormEl, function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
 
-                        const formData = new FormData(serviceProvidersSignUpFormEl);
-                        formData.append("request", "serviceProviderSignUp");
+                const formData = new FormData(serviceProvidersSignUpFormEl);
+                formData.append("request", "serviceProviderSignUp");
 
-                        $.ajax({
-                                url: './ajax-file/ajax.php',
-                                type: 'POST',
-                                processData: false,
-                                contentType: false,
-                                data: formData,
-                                success: function(response) {
-                                    // const serviceProviderJsonData = JSON.parse(response);
-                                    console.log(response);
-                                    if (response == "111") {
-                                        Swal.fire({
-                                            title: "Username, Email, and Contact number exist!",
-                                            text: "We regret to inform you that the username, email, and contact number are already taken. Kindly choose a different one. Thank you!",
-                                            icon: "error"
-                                        });
-                                    }
+                $.ajax({
+                    url: './ajax-file/ajax.php',
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(response) {
+                        // const serviceProviderJsonData = JSON.parse(response);
+                        // console.log(response);
+                        if (response == "111") {
+                            Swal.fire({
+                                title: "Username, Email, and Contact number exist!",
+                                text: "We regret to inform you that the username, email, and contact number are already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            });
+                        } else if (response == "100") {
+                            Swal.fire({
+                                title: "Email Exist!",
+                                text: "We regret to inform you that the email address is already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            })
+                        } else if (response == "010") {
+                            Swal.fire({
+                                title: "Contact Number Exist!",
+                                text: "We regret to inform you that the contact number is already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            })
+                        } else if (response == "001") {
+                            Swal.fire({
+                                title: "Username Exist!",
+                                text: "We regret to inform you that the username is already taken. Kindly choose a different one. Thank you!",
+                                icon: "error"
+                            })
+                        } else {
+                            Swal.fire({
+                                title: "Account Created!",
+                                text: "Dear Service Provider! Your Sign up process has been processed successfully!",
+                                icon: "success"
+                            }).then((result) => {
 
-                                    if (response == "100") {
-                                        Swal.fire({
-                                            title: "Email Exist!",
-                                            text: "We regret to inform you that the email address is already taken. Kindly choose a different one. Thank you!",
-                                            icon: "error"
-                                        })
-                                    }
+                                if (result.isConfirmed) {
 
-                                    if (response == "010") {
-                                        Swal.fire({
-                                            title: "Conact Number Exist!",
-                                            text: "We regret to inform you that the contact number is already taken. Kindly choose a different one. Thank you!",
-                                            icon: "error"
-                                        })
-                                    }
-
-                                    if (response == "001") {
-                                        Swal.fire({
-                                            title: "Username Exist!",
-                                            text: "We regret to inform you that the username is already taken. Kindly choose a different one. Thank you!",
-                                            icon: "error"
-                                        })
-                                    }
+                                    $("#serviceProvidersSignUpForm")[0].reset();
+                                    window.location.href = "/skill-wave-service-hiring-app/login.php";
                                 }
-                            },
-                            error: function(xhr, status, error) {
-                                console.log("Status: " + status);
-                                console.log("XHR Response: " + xhr.responseText);
-                            }
+                            })
                         }
-                    )
-                })
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                }, )
+            })
         });
     })
 </script>

@@ -580,7 +580,6 @@ if (isset($_POST['request']) && $_POST['request'] == 'serviceProviderSignUp') {
         $resp = "200";
     }
 
-    // return $resp;
     echo $resp;
 
     if ($resp == "200") {
