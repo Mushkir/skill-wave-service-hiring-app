@@ -39,29 +39,55 @@ class ServiceProvider extends Database
     }
 
     // * View all SP info
-    public function readAllServiceProviderInfo()
+    public function readAllServiceProviderInfo($limit = "")
     {
         $query = "SELECT * FROM {$this->tableName}";
 
-        try {
+        if (!empty($limit)) {
+            $query .= " ORDER BY RAND() LIMIT $limit";
 
-            $statement = $this->connection->prepare($query);
+            try {
 
-            $statement->execute();
+                $statement = $this->connection->prepare($query);
 
-            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+                $statement->execute();
 
-            $spDataSet = [];
+                $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($results as $dataSet) {
+                $limitDataSet = [];
 
-                $spDataSet[] = $dataSet;
+                foreach ($results as $data) {
+
+                    $limitDataSet[] = $data;
+                }
+
+                return $limitDataSet;
+            } catch (PDOException $ex) {
+
+                echo "Error from readAllServiceProviderInfo()" . $ex->getMessage();
             }
+        } else {
 
-            return $spDataSet;
-        } catch (PDOException $ex) {
+            try {
 
-            echo "Error from readAllServiceProviderInfo(): " . $ex->getMessage();
+                $statement = $this->connection->prepare($query);
+
+                $statement->execute();
+
+                $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                $spDataSet = [];
+
+                foreach ($results as $dataSet) {
+
+                    $spDataSet[] = $dataSet;
+                }
+
+                return $spDataSet;
+            } catch (PDOException $ex) {
+
+                echo "Error from readAllServiceProviderInfo(): " . $ex->getMessage();
+            }
         }
     }
 

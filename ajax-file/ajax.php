@@ -652,3 +652,117 @@ if (isset($_POST['request']) && $_POST['request'] == 'loginProcess') {
         echo $userExist;
     }
 }
+
+// Todo: Show Service Providers randomly
+if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders") {
+
+    $output = "";
+
+    // * Storyline
+    // * 1. Need to check records exist or not in Service Providers Table
+    $isServiceProviderExist = $serviceProvider->countTotalServiceProviders();
+
+    if ($isServiceProviderExist > 0) {
+
+        $tooltipNumber = 1;
+
+        // * 2. If it is yes, Fetch all the data from DB.
+        $arrayOfServiceProviders = $serviceProvider->readAllServiceProviderInfo(9);
+
+        foreach ($arrayOfServiceProviders as $dataSetOfServiceProviders) {
+
+            $serviceProviderId = $dataSetOfServiceProviders['service_provider_id'];
+            $serviceProviderName = $dataSetOfServiceProviders['name'];
+            $serviceProviderContactNo = $dataSetOfServiceProviders['contact_no'];
+            $serviceProviderSkills = $dataSetOfServiceProviders['skills'];
+            $serviceProviderLatitudeValue = $dataSetOfServiceProviders['latitude_value'];
+            $serviceProviderLongitudeValue = $dataSetOfServiceProviders['longitutde_value'];
+            $serviceProviderImage = $dataSetOfServiceProviders['image'];
+
+            $locationValue = $serviceProviderLatitudeValue . ", " . $serviceProviderLongitudeValue;
+
+            $output .= '<div class="lg:max-w-md w-full md:w-[300px] mt-10 bg-cus-maron rounded-md overflow-hidden">
+            <!-- Banner Profile -->
+            <div class="relative">
+                <!-- Cover Photo -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUQnWPLujwoqkHL3VDRXLndGKIN9-O1El3Ew&usqp=CAU" alt="Banner Profile" class="w-full rounded-t-md h-20 object-cover" />
+
+                <!-- Profile Pic -->
+
+                <img src="ajax-file/uploads/' . $serviceProviderImage . '" alt="Profile Picture" class="absolute bottom-0 left-2/4 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white" />
+            </div>
+            <!-- User Info with Verified Button -->
+            <div class="block">
+                <h2 class="text-xl font-bold text-[#F9F6EE] mt-16 text-center">
+                    ' . $serviceProviderName . '
+                </h2>
+            </div>
+            <!-- Bio -->
+            <p class="mt-2 text-center text-primary-color-10 px-1.5">
+            ' . $serviceProviderSkills . '
+            </p>
+            <!-- Social Links -->
+            <div class="flex items-center mt-4 space-x-4 justify-center">
+                <div>
+                    <!-- Tap to call -->
+                    <div>
+                        <a href="tel:' . $serviceProviderContactNo . '" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-0' . $tooltipNumber++ . '" title="' . $serviceProviderContactNo . '">
+                            <i class="fa-solid fa-phone"></i>
+                            Tap to Call
+                        </a>
+                    </div>
+
+                    <!-- Tooltip Code -->
+                    <div id="tooltip-default-' . $tooltipNumber++ . '" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                        ' . $serviceProviderContactNo . '
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- Tap to call -->
+                    <div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=' . $serviceProviderLatitudeValue . ',' . $serviceProviderLongitudeValue . '" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn-' . $tooltipNumber++ . '">
+                            <i class="fa-solid fa-map-pin"></i>
+                            Show Location
+                        </a>
+                    </div>
+
+                    <!-- Tooltip Code -->
+                    <div id="tooltip-default-newn-' . $tooltipNumber++ . '" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                        Tap to Open Google Maps
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Separator Line -->
+            <hr class="my-4 border-t border-gray-300" />
+            <!-- Stats -->
+            <div class="flex justify-between text-primary-color-10 px-1.5 sm:px-5 pb-3">
+                <div class="text-center flex flex-col">
+                    <span class="font-bold text-lg">90%</span>
+                    <span class="text-xs">Success Percentage</span>
+                </div>
+                <div class="text-center flex flex-col">
+                    <span class="font-bold text-lg">95%</span>
+                    <span class="text-xs">Positive Ratings</span>
+                </div>
+                <div class="text-center flex flex-col">
+                    <span class="font-bold text-lg">350</span>
+                    <a href="#" class="text-xs underline">Total Feedbacks</a>
+                </div>
+            </div>
+        </div>';
+        }
+    } else {
+    }
+    // echo var_dump();
+
+    // * 3. Loop it and send to frontend
+
+
+
+
+
+    echo $output;
+}
