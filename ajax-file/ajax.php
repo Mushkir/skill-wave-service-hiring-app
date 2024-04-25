@@ -756,13 +756,7 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
         }
     } else {
     }
-    // echo var_dump();
 
     // * 3. Loop it and send to frontend
-
-
-
-
-
     echo $output;
 }
