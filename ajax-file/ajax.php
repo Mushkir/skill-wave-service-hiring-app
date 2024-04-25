@@ -596,11 +596,57 @@ if (isset($_POST['request']) && $_POST['request'] == 'loginProcess') {
     $usernameEl = $_POST['username'];
     $passwordEl = $_POST['password'];
     $userRoleEl = $_POST['user-category'];
+    $userExist;
+    $userStatus;
+    $passwordStatus;
 
     // * 1. need to get the input values (username, password) from login form.
     // * 2. need to check if the user role, based on the role need to check in the database, is the data exist / not?
     // * 3. if it is exists, need to login and move to profile page, otherwise show error msg.
-
     if ($userRoleEl == 'Service Provider') {
+
+        $isUsernameExist = $serviceProvider->countTotalServiceProviders("username", $usernameEl);
+
+        if ($isUsernameExist > 0 && $isUsernameExist == 1) {
+
+            $userExist = "1";
+        } else {
+
+            $userExist = "0";
+        }
+
+        echo $userExist;
+
+        if ($userExist == "1") {
+
+            // * Need to check Password
+            $arrayOfServiceProviderInfo = $serviceProvider->getServiceProviderInfo("username", $usernameEl);
+
+            $serviceProviderName = $arrayOfServiceProviderInfo['name'];
+            $encryptedServiceProviderPassword = $arrayOfServiceProviderInfo['password'];
+
+            $_SESSION['serviceProviderName'] = $serviceProviderName;
+
+            if (password_verify($passwordEl, $encryptedServiceProviderPassword)) {
+
+                $passwordStatus = "1"; // Username Exist = 1, Password status = 1. So, Totally 11.
+            } else {
+
+                $passwordStatus = "0"; // Username Exist = 1, Password status = 0. So, Totally 10.
+            }
+
+            echo $passwordStatus;
+
+            if ($passwordStatus == "1") {
+
+                $_SESSION['serviceProviderName'] = $serviceProviderName;
+
+                echo $userStatus = "SP1";
+
+                // echo json_encode($arrayOfServiceProviderInfo);
+            }
+        }
+    } else {
+        echo "SS";
     }
 }

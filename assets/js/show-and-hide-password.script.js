@@ -5,8 +5,10 @@ const eyeClosedIconForConfirmPasswordEl = document.querySelector(
 
 const PAGE_URL = document.location.href;
 
+console.log(PAGE_URL);
+
 // Login Page Show Password
-if (PAGE_URL === "http://localhost/skillWaveWebApp/login.php") {
+if (PAGE_URL === "http://localhost/skill-wave-service-hiring-app/login.php") {
   const showPasswordEl = document.querySelector("#show-password");
   const userPasswordEl = document.querySelector("#password");
 
@@ -20,7 +22,7 @@ if (PAGE_URL === "http://localhost/skillWaveWebApp/login.php") {
 }
 
 // Service Seeker SignUp Page
-if (PAGE_URL === "http://localhost/skillWaveWebApp/signup.php?ssSignUp") {
+if (PAGE_URL === "http://localhost/skill-wave-service-hiring-app/signup.php?ssSignUp") {
   // * Function for Show and Hide the Password
   eyeClosedIconEl.addEventListener("click", () => {
     // * Password Element
@@ -39,7 +41,7 @@ if (PAGE_URL === "http://localhost/skillWaveWebApp/signup.php?ssSignUp") {
 }
 
 // Service Providers SignUp Page
-if (PAGE_URL === "http://localhost/skillWaveWebApp/signup.php?spSignUp") {
+if (PAGE_URL === "http://localhost/skill-wave-service-hiring-app/signup.php?spSignUp") {
   // * Function for Show and Hide the Password
   eyeClosedIconEl.addEventListener("click", () => {
     // * Password Element

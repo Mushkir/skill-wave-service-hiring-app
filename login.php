@@ -10,6 +10,9 @@
     <!-- Just Validate Dev CDN -->
     <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- * Google Font CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -177,6 +180,38 @@
                     data: formData,
                     success: function(response) {
                         console.log(response);
+
+                        if (response == "0") {
+                            Swal.fire({
+                                title: "Username doesn't exist!",
+                                text: "We regret to inform you that the username doesn't exist. Please reverify your username. Thank you!",
+                                icon: "error"
+                            });
+                        }
+
+                        if (response == "10") {
+                            Swal.fire({
+                                title: "Password doesn't match!",
+                                text: "We regret to inform you that the password doesn't match. Please reverify your password. Thank you!",
+                                icon: "error"
+                            });
+                        }
+
+                        if (response == "11SP1") {
+
+                            Swal.fire({
+                                title: "Username and Password verified!",
+                                text: "Dear User! Your login process has been done successfully under the Service Providers Category!",
+                                icon: "success"
+                            }).then((result) => {
+
+                                if (result.isConfirmed) {
+
+                                    $("#mainLoginForm")[0].reset();
+                                    window.location.href = "/skill-wave-service-hiring-app/service_providers/dashboaard.php";
+                                }
+                            });
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.log("Status: " + status);
