@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -179,8 +181,9 @@
                     processData: false,
                     data: formData,
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
 
+                        // Condition for Service Providers verification
                         if (response == "0") {
                             Swal.fire({
                                 title: "Username doesn't exist!",
@@ -208,9 +211,47 @@
                                 if (result.isConfirmed) {
 
                                     $("#mainLoginForm")[0].reset();
-                                    window.location.href = "/skill-wave-service-hiring-app/service_providers/dashboaard.php";
+                                    window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php";
                                 }
                             });
+                        }
+
+                        // Condition for Service Seekers verification
+                        if (response == "userNotExist") {
+                            Swal.fire({
+                                title: "Username doesn't exist!",
+                                text: "Dear Service Seeker! We regret to inform you that the username doesn't exist. Please reverify your username. Thank you!",
+                                icon: "error"
+                            });
+                        } else {
+
+                            if (response == "Unmatched Password") {
+                                Swal.fire({
+                                    title: "Password doesn't exist!",
+                                    text: "Dear Service Seeker! We regret to inform you that the Password doesn't exist. Please reverify your password. Thank you!",
+                                    icon: "error"
+                                });
+                            } else {
+
+                                const serviceSeekerJsonData = JSON.parse(response);
+
+                                const {
+                                    name
+                                } = serviceSeekerJsonData
+
+                                Swal.fire({
+                                    title: "Username and Password verified!",
+                                    text: `Dear ${name}! Your login process has been done successfully under the Service Seekers Category!`,
+                                    icon: "success"
+                                }).then((result) => {
+
+                                    if (result.isConfirmed) {
+
+                                        $("#mainLoginForm")[0].reset();
+                                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php";
+                                    }
+                                });
+                            }
                         }
                     },
                     error: function(xhr, status, error) {

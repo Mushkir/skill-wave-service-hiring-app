@@ -397,15 +397,15 @@
                             });
                         } else {
 
-                            const resp = response
-                            const JsonData = JSON.parse(resp);
-                            const {
-                                name
-                            } = JsonData
+                            // const resp = response
+                            // const JsonData = JSON.parse(resp);
+                            // const {
+                            //     name
+                            // } = JsonData
                             Swal.fire({
 
                                 title: "Account Created!",
-                                text: `Dear ${name}! Your account has been created successfully!`,
+                                text: `Dear Service Seeker! Your account has been created successfully!`,
                                 icon: "success"
                             }).then((result) => {
                                 if (result.isConfirmed) {

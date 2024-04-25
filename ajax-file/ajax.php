@@ -647,6 +647,40 @@ if (isset($_POST['request']) && $_POST['request'] == 'loginProcess') {
             }
         }
     } else {
-        echo "SS";
+
+        $isServiceSeekerExist = $serviceSeeker->countTotalServiceSeekers("username", $usernameEl);
+
+        if ($isServiceSeekerExist <= 0) {
+
+            $userExist = "userNotExist";
+        } else {
+
+            $arrayOfServiceSeeker = $serviceSeeker->getServiceSeekerInfo("username", $usernameEl);
+
+            $serviceSeekerName = $arrayOfServiceSeeker['name'];
+            $hashPassword = $arrayOfServiceSeeker['password'];
+
+            $_SESSION['serviceSeekerName'] = $serviceSeekerName;
+
+            if (password_verify($passwordEl, $hashPassword)) {
+
+                $passwordStatus = true;
+            } else {
+
+                $passwordStatus = false;
+            }
+
+            if ($passwordStatus == false) {
+
+                $userExist = "Unmatched Password";
+            } else {
+
+                $_SESSION['serviceSeekerName'] = $serviceSeekerName;
+
+                $userExist = json_encode($arrayOfServiceSeeker);
+            }
+        }
+
+        echo $userExist;
     }
 }
