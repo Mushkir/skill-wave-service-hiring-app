@@ -96,4 +96,23 @@ class Database
             echo "Error from getMultipleData(): " . $ex->getMessage();
         }
     }
+
+    public function countMultipleData($query)
+    {
+        try {
+
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->execute();
+
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $numberOfRows = $stmt->rowCount();
+
+            return $numberOfRows;
+        } catch (PDOException $ex) {
+
+            echo "Error from getMultipleData(): " . $ex->getMessage();
+        }
+    }
 }

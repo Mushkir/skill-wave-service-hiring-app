@@ -34,8 +34,6 @@
             border-radius: 4px;
         }
     </style>
-
-    <script defer src="./assets/js/activeState.js"></script>
 </head>
 
 <body class="flex flex-col min-h-screen">
@@ -56,21 +54,19 @@
                         <div>
                             <input type="search" id="search-sp" name="search-sp" class="block w-full p-4 ps-10 text-sm rounded-md bg-cus-maron text-primary-color-10 placeholder-primary-color-10 focus:ring-white" placeholder="Ex: Mechanic, Plumber ..." required />
                         </div>
-                        <button type="submit" class="absolute end-2.5 bottom-2.5 bg-primary-color-10 font-medium rounded text-sm px-5 py-2 text-cus-maron hover:bg-primary-color-9">
+                        <!-- <button type="submit" class="absolute end-2.5 bottom-2.5 bg-primary-color-10 font-medium rounded text-sm px-5 py-2 text-cus-maron hover:bg-primary-color-9">
                             Search
-                        </button>
+                        </button> -->
                     </div>
                 </form>
             </div>
 
-            <div class="mb-10 flex items-center justify-between flex-wrap sm:gap-10" id="serviceProviderDiv">
+
+            <div class="mb-10 flex items-center justify-between flex-wrap sm:gap-10" id="serviceProviderWrapper">
                 <!-- Profile card component -->
 
             </div>
 
-            <button class="bg-cus-maron mb-10 text-primary-color-10 px-5 py-2 block mx-auto hover:bg-cus-maron-100 hover:text-boneWhite w-full sm:w-36 rounded-full sm:rounded" id="btnViewMore">
-                <i class="fa-solid fa-eye"></i> View more
-            </button>
         </section>
     </main>
     <!-- End of Main -->
@@ -88,16 +84,6 @@
     <!-- Flowbite CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
-    <!-- View More button script -->
-    <script>
-        const viewMoreBtnEl = document.querySelector("#btnViewMore");
-
-        viewMoreBtnEl.addEventListener("click", () => {
-
-            window.open('view-all-service-providers.php', '_self')
-        })
-    </script>
-
     <!-- JQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -105,24 +91,24 @@
     <script>
         $(document).ready(function() {
 
-            randomServiceProviders();
+            showAllServiceProviders()
 
-            function randomServiceProviders() {
+            function showAllServiceProviders() {
                 $.ajax({
 
                     url: './ajax-file/ajax.php',
                     type: 'POST',
                     data: {
-                        "request": "listRandomServiceProviders"
+                        "request": "showAllServiceProviders"
                     },
                     success: function(response) {
-
-                        $("#serviceProviderDiv").html(response)
+                        $("#serviceProviderWrapper").html(response)
                     },
                     error: function(xhr, status, error) {
 
-                        console.log("Status" + status);
-                        console.log("XHR Response" + xhr.responseText);
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
                     }
                 })
             }
@@ -144,15 +130,16 @@
                         success: function(response) {
 
                             console.log(response);
-                            $("#serviceProviderDiv").html(response)
+                            $("#serviceProviderWrapper").html(response)
                         },
                         error: function(xhr, status, error) {}
                     })
                 } else {
 
-                    randomServiceProviders();
+                    showAllServiceProviders();
                 }
             })
+
 
         })
     </script>

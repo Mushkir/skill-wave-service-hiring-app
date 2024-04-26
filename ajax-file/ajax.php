@@ -689,7 +689,7 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
 
                 <!-- Profile Pic -->
 
-                <img src="ajax-file/uploads/' . $serviceProviderImage . '" alt="Profile Picture" class="absolute bottom-0 left-2/4 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white" />
+                <img src="ajax-file/uploads/' . $serviceProviderImage . '" alt="' . $serviceProviderName . ' Picture" class="absolute bottom-0 left-2/4 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white" />
             </div>
             <!-- User Info with Verified Button -->
             <div class="block">
@@ -722,7 +722,7 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
                 <div>
                     <!-- Tap to call -->
                     <div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=' . $serviceProviderLatitudeValue . ',' . $serviceProviderLongitudeValue . '" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn-' . $tooltipNumber++ . '">
+                        <a href="https://www.google.com/maps/search/?api=1&query=' . $serviceProviderLatitudeValue . ',' . $serviceProviderLongitudeValue . '" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn-' . $tooltipNumber++ . '" target="_blank">
                             <i class="fa-solid fa-map-pin"></i>
                             Show Location
                         </a>
@@ -759,4 +759,216 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
 
     // * 3. Loop it and send to frontend
     echo $output;
+}
+
+// Todo: Show all service providers
+if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') {
+
+    $output = "";
+
+    $query = "SELECT * FROM table_service_provider WHERE status = 'available'";
+
+    $arrayOfAvailableServiceProviders = $db->getMultipleData($query);
+
+    foreach ($arrayOfAvailableServiceProviders as $dataSet) {
+
+        $availableSpId = $dataSet['service_provider_id'];
+        $availableSpName = $dataSet['name'];
+        $availableSpContactNo = $dataSet['contact_no'];
+        $availableSpSkills = $dataSet['skills'];
+        $availableSpLatitudeValue = $dataSet['latitude_value'];
+        $availableSpLongitudeValue = $dataSet['longitutde_value'];
+        $availableSpImage = $dataSet['image'];
+
+        $output .= '<div class="lg:max-w-md w-full md:w-[300px] mt-10 bg-cus-maron rounded-md overflow-hidden">
+        <!-- Banner Profile -->
+        <div class="relative">
+            <!-- Cover Photo -->
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUQnWPLujwoqkHL3VDRXLndGKIN9-O1El3Ew&usqp=CAU" alt="Banner Profile" class="w-full rounded-t-md h-20 object-cover" />
+
+            <!-- Profile Pic -->
+            <div class="relative">
+                <img src="ajax-file/uploads/' . $availableSpImage . '" alt="Profile Picture" class="absolute bottom-0 left-2/4 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white" />
+
+                <div class="bg-green-500 w-[15px] h-[15px] rounded-full absolute left-[179px] top-5">
+                </div>
+            </div>
+
+        </div>
+        <!-- User Info with Verified Button -->
+        <div class="block">
+            <h2 class="text-xl font-bold text-[#F9F6EE] mt-16 text-center">
+                ' . $availableSpName . '
+            </h2>
+        </div>
+        <!-- Bio -->
+        <p class="mt-2 text-center text-primary-color-10 px-1.5">
+            ' . $availableSpSkills . '
+        </p>
+        <!-- Social Links -->
+        <div class="flex items-center mt-4 space-x-4 justify-center">
+            <div>
+                <!-- Tap to call -->
+                <div>
+                    <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default">
+                        <i class="fa-solid fa-phone"></i>
+                        Tap to Call
+                    </a>
+                </div>
+
+                <!-- Tooltip Code -->
+                <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                    +94777195282
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </div>
+
+            <div>
+                <!-- Tap to call -->
+                <div>
+                    <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn">
+                        <i class="fa-solid fa-map-pin"></i>
+                        Show Location
+                    </a>
+                </div>
+
+                <!-- Tooltip Code -->
+                <div id="tooltip-default-newn" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                    Tap to Open Google Maps
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </div>
+        </div>
+        <!-- Separator Line -->
+        <hr class="my-4 border-t border-gray-300" />
+        <!-- Stats -->
+        <div class="flex justify-between text-primary-color-10 px-1.5 sm:px-5 pb-3">
+            <div class="text-center flex flex-col">
+                <span class="font-bold text-lg">90%</span>
+                <span class="text-xs">Success Percentage</span>
+            </div>
+            <div class="text-center flex flex-col">
+                <span class="font-bold text-lg">95%</span>
+                <span class="text-xs">Positive Ratings</span>
+            </div>
+            <div class="text-center flex flex-col">
+                <span class="font-bold text-lg">350</span>
+                <a href="#" class="text-xs underline">Total Feedbacks</a>
+            </div>
+        </div>
+    </div>';
+    }
+
+    echo $output;
+}
+
+// Todo: Live search of SP
+if (isset($_POST['request']) && $_POST['request'] == 'searchSp') {
+
+    $searchValue = $_POST['searchSp'];
+
+    $query = "SELECT * FROM table_service_provider WHERE keywords LIKE '%{$searchValue}%' OR name LIKE '%{$searchValue}%' AND status = 'available'";
+
+    $isDataExist = $db->countMultipleData($query);
+
+    if ($isDataExist > 0) {
+
+        $output = "";
+
+        $fetchedServiceProviderInfo = $db->getMultipleData($query);
+
+        foreach ($fetchedServiceProviderInfo as $dataset) {
+
+            $spId = $dataset['service_provider_id'];
+            $spName = $dataset['name'];
+            $spContactNo = $dataset['contact_no'];
+            $spSkills = $dataset['skills'];
+            $spLatitudeValue = $dataset['latitude_value'];
+            $spLongitudeValue = $dataset['longitutde_value'];
+            $spImage = $dataset['image'];
+
+            $output .= '<div class="lg:max-w-md w-full md:w-[300px] mt-10 bg-cus-maron rounded-md overflow-hidden">
+            <!-- Banner Profile -->
+            <div class="relative">
+                <!-- Cover Photo -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUQnWPLujwoqkHL3VDRXLndGKIN9-O1El3Ew&usqp=CAU" alt="Banner Profile" class="w-full rounded-t-md h-20 object-cover" />
+    
+                <!-- Profile Pic -->
+                <div class="relative">
+                    <img src="ajax-file/uploads/' . $spImage . '" alt="Profile Picture" class="absolute bottom-0 left-2/4 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white" />
+    
+                    <div class="bg-green-500 w-[15px] h-[15px] rounded-full absolute left-[179px] top-5">
+                    </div>
+                </div>
+    
+            </div>
+            <!-- User Info with Verified Button -->
+            <div class="block">
+                <h2 class="text-xl font-bold text-[#F9F6EE] mt-16 text-center">
+                    ' . $spName . '
+                </h2>
+            </div>
+            <!-- Bio -->
+            <p class="mt-2 text-center text-primary-color-10 px-1.5">
+                ' . $spSkills . '
+            </p>
+            <!-- Social Links -->
+            <div class="flex items-center mt-4 space-x-4 justify-center">
+                <div>
+                    <!-- Tap to call -->
+                    <div>
+                        <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default">
+                            <i class="fa-solid fa-phone"></i>
+                            Tap to Call
+                        </a>
+                    </div>
+    
+                    <!-- Tooltip Code -->
+                    <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                        +94777195282
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+    
+                <div>
+                    <!-- Tap to call -->
+                    <div>
+                        <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn">
+                            <i class="fa-solid fa-map-pin"></i>
+                            Show Location
+                        </a>
+                    </div>
+    
+                    <!-- Tooltip Code -->
+                    <div id="tooltip-default-newn" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                        Tap to Open Google Maps
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Separator Line -->
+            <hr class="my-4 border-t border-gray-300" />
+            <!-- Stats -->
+            <div class="flex justify-between text-primary-color-10 px-1.5 sm:px-5 pb-3">
+                <div class="text-center flex flex-col">
+                    <span class="font-bold text-lg">90%</span>
+                    <span class="text-xs">Success Percentage</span>
+                </div>
+                <div class="text-center flex flex-col">
+                    <span class="font-bold text-lg">95%</span>
+                    <span class="text-xs">Positive Ratings</span>
+                </div>
+                <div class="text-center flex flex-col">
+                    <span class="font-bold text-lg">350</span>
+                    <a href="#" class="text-xs underline">Total Feedbacks</a>
+                </div>
+            </div>
+        </div>';
+        }
+
+        echo $output;
+    } else {
+
+        echo "<h3 class='mx-auto mt-20 font-semibold text-3xl text-red-600'>No service provider info found!</h3>";
+    }
 }

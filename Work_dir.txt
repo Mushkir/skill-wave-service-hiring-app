@@ -1,5 +1,5 @@
 To do:
-1. Make "Find Service Provider" Page dynamically - COMPLETED.
+1. Make "Find Service Provider" Page dynamically and make it live search - COMPLETED.
 2. Service Provider Profile Dashboard.
 3. Service Seeker Profile Dashboard.
 4. Find Services.
