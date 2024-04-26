@@ -189,7 +189,17 @@
                             });
                         } else {
                             if (selectedCategory === "Service Provider") {
-                                window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php";
+                                Swal.fire({
+                                    title: "Login Success",
+                                    text: "Dear Service Provider! Your login process has been done successfully!",
+                                    icon: "success"
+                                }).then((result) => {
+
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php";
+                                    }
+                                });
+
                             } else {
                                 window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php";
                             }

@@ -97,6 +97,36 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                             Edit Profile
                         </a>
                     </li>
+
+                    <!-- Find Service Provider -->
+                    <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                        <a href="../view-all-service-providers.php" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                            <!-- Icon -->
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+                                    <path fill="currentColor" d="M12.5 8A1.5 1.5 0 0 1 14 9.5v.5c0 1.742-1.452 3.53-3.958 3.921l-1.48-1.48A4.5 4.5 0 0 0 9 10.5A4.5 4.5 0 0 0 8.242 8zM9 1.5A2.75 2.75 0 1 1 9 7a2.75 2.75 0 0 1 0-5.5M4.5 14c.786 0 1.512-.26 2.096-.697l2.55 2.55a.5.5 0 1 0 .708-.707l-2.55-2.55A3.5 3.5 0 1 0 4.5 14m0-1a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5" />
+                                </svg>
+                            </div>
+
+                            <!-- Name -->
+                            Find Service
+                        </a>
+                    </li>
+
+                    <!-- Logout -->
+                    <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                        <a href="#" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="ss-logout">
+                            <!-- Icon -->
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M3.5 9.568v4.864c0 2.294 0 3.44.722 4.153c.655.647 1.674.706 3.596.712c-.101-.675-.122-1.48-.128-2.428a.734.734 0 0 1 .735-.734a.735.735 0 0 1 .744.726c.006 1.064.033 1.818.14 2.39c.103.552.267.87.507 1.108c.273.27.656.445 1.38.54c.744.1 1.73.101 3.145.101h.985c1.415 0 2.401-.002 3.146-.1c.723-.096 1.106-.272 1.378-.541c.273-.27.451-.648.548-1.362c.1-.734.102-1.709.102-3.105V8.108c0-1.397-.002-2.37-.102-3.105c-.097-.714-.275-1.093-.547-1.362c-.273-.27-.656-.445-1.38-.54C17.728 3 16.742 3 15.327 3h-.985c-1.415 0-2.401.002-3.146.1c-.723.096-1.106.272-1.379.541c-.24.237-.404.556-.507 1.108c-.107.572-.134 1.326-.14 2.39a.735.735 0 0 1-.744.726a.734.734 0 0 1-.735-.734c.006-.948.027-1.753.128-2.428c-1.922.006-2.94.065-3.596.712c-.722.713-.722 1.86-.722 4.153m2.434 2.948a.723.723 0 0 1 0-1.032l1.97-1.946a.746.746 0 0 1 1.046 0a.723.723 0 0 1 0 1.032l-.71.7h7.086c.408 0 .74.327.74.73c0 .403-.332.73-.74.73H8.24l.71.7a.723.723 0 0 1 0 1.032a.746.746 0 0 1-1.046 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+
+                            <!-- Name -->
+                            Logout
+                        </a>
+                    </li>
                 </ul>
             </div>
         </section>

@@ -5,7 +5,7 @@ const eyeClosedIconForConfirmPasswordEl = document.querySelector(
 
 const PAGE_URL = document.location.href;
 
-console.log(PAGE_URL);
+// console.log(PAGE_URL);
 
 // Login Page Show Password
 if (PAGE_URL === "http://localhost/skill-wave-service-hiring-app/login.php") {
