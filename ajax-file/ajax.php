@@ -972,3 +972,17 @@ if (isset($_POST['request']) && $_POST['request'] == 'searchSp') {
         echo "<h3 class='mx-auto mt-20 font-semibold text-3xl text-red-600'>No service provider info found!</h3>";
     }
 }
+
+// Todo: SS Logout
+if (isset($_GET['request']) && $_GET['request'] == 'getSsUsername') {
+    if (isset($_SESSION['serviceSeekerName'])) {
+
+        session_unset();
+        session_destroy();
+
+        echo "404";
+    } else {
+
+        echo "Service seeker not found";
+    }
+}

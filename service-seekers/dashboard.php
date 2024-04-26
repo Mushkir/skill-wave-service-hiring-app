@@ -144,7 +144,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                                 </li>
 
                                 <li class="mt-2 text-[#62242d] px-[16px] py-1 hover:bg-[#6D2932] hover:text-white">
-                                    <a href="" id="admin-logout" class="flex items-center gap-2">
+                                    <a href="#" id="ss-logout" class="flex items-center gap-2">
                                         <div>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                                                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
@@ -236,7 +236,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
     <script>
         $(document).ready(function() {
 
-            $(document).on("click", "#admin-logout", function(e) {
+            $(document).on("click", "#ss-logout", function(e) {
 
                 e.preventDefault();
 
@@ -244,9 +244,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                     url: '../ajax-file/ajax.php',
                     type: 'GET',
                     data: {
-                        "request": 'getAdminUsername'
+                        "request": 'getSsUsername'
                     },
                     success: function(response) {
+
                         if (response == 404) {
                             window.location.href = '../index.php';
                         }
