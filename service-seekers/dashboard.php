@@ -149,15 +149,15 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                 <div class="hover:cursor-pointer z-40 absolute top-0 right-0" id="ss-profile">
                     <div>
                         <div class="flex justify-end items-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" class="w-10 h-10 object-cover rounded-full" />
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" class="w-10 h-10 object-cover rounded-full" id="ss-profile-img" />
                         </div>
 
                         <!-- Dropdown menu -->
                         <div class="mt-2 bg-primary-color-10 py-[10px] rounded-lg hidden" id="ss-profile-dropdown">
                             <ul>
-                                <li class="text-[#62242d] px-[16px]">Mohamed Mushkir</li>
+                                <li class="text-[#62242d] px-[16px]" id="ss-fullname">Mohamed Mushkir</li>
                                 <li class="text-[#8a535a] px-[16px] mb-4">
-                                    <p class="text-[14px]">mushkirmohamed@gmail.com</p>
+                                    <p class="text-[14px]" id="ss-email">mushkirmohamed@gmail.com</p>
                                 </li>
 
                                 <hr />
@@ -267,9 +267,57 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
         }
     </script>
 
-    <!-- Logout Jquery -->
+    <!-- Jquery script -->
     <script>
         $(document).ready(function() {
+
+            showLoggedInUserProfile()
+
+            function showLoggedInUserProfile() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "showLoggedInUserInfo"
+                    },
+                    success: function(response) {
+                        if (response == "404") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Unauthorized Access",
+                                text: "You can't able to proceed without authorized access!",
+                            }).then((result) => {
+                                console.log(result);
+                                if (result.isConfirmed == true) {
+                                    window.location.href = "../login.php";
+                                }
+                            });
+
+                        } else {
+                            const ssDataInJson = JSON.parse(response);
+                            const {
+                                name,
+                                email_address,
+                                image
+                            } = ssDataInJson
+
+                            $("#ss-profile-img")[0].src = `/skill-wave-service-hiring-app/ajax-file/uploads/${image}`;
+                            $("#ss-profile-img").alt = `${name}'s image`;
+                            $("#ss-fullname")[0].textContent = name;
+                            $("#ss-email")[0].textContent = email_address;
+                            console.dir();
+
+
+                        }
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+                })
+            }
 
             $(document).on("click", "#ss-logout", function(e) {
 
@@ -293,6 +341,8 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                     }
                 })
             })
+
+
         })
     </script>
 
