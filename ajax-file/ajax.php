@@ -988,7 +988,7 @@ if (isset($_GET['request']) && $_GET['request'] == 'getSsUsername') {
 }
 
 // Todo: Show SS Profile Info
-if (isset($_POST['request']) && $_POST['request'] == 'getServiceSeekerInfo' || $_POST['request'] == 'showLoggedInUserInfo') {
+if (isset($_GET['request']) && $_GET['request'] == 'getServiceSeekerInfo' || $_GET['request'] == 'showLoggedInUserInfo') {
 
     $result;
 

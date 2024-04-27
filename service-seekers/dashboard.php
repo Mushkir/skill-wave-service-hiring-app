@@ -271,12 +271,35 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
     <script>
         $(document).ready(function() {
 
-            showLoggedInUserProfile()
+            showLoggedInUserProfile();
+
+            $(document).on("click", "#ss-logout", function(e) {
+
+                e.preventDefault();
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'GET',
+                    data: {
+                        "request": 'getSsUsername'
+                    },
+                    success: function(response) {
+
+                        if (response == 404) {
+                            window.location.href = '../index.php';
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                })
+            })
 
             function showLoggedInUserProfile() {
                 $.ajax({
                     url: '../ajax-file/ajax.php',
-                    type: 'POST',
+                    type: 'GET',
                     data: {
                         "request": "showLoggedInUserInfo"
                     },
@@ -305,9 +328,6 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                             $("#ss-profile-img").alt = `${name}'s image`;
                             $("#ss-fullname")[0].textContent = name;
                             $("#ss-email")[0].textContent = email_address;
-                            console.dir();
-
-
                         }
                     },
                     error: function(xhr, status, error) {
@@ -318,29 +338,6 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                     }
                 })
             }
-
-            $(document).on("click", "#ss-logout", function(e) {
-
-                e.preventDefault();
-
-                $.ajax({
-                    url: '../ajax-file/ajax.php',
-                    type: 'GET',
-                    data: {
-                        "request": 'getSsUsername'
-                    },
-                    success: function(response) {
-
-                        if (response == 404) {
-                            window.location.href = '../index.php';
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log("Status: " + status);
-                        console.log("XHR Response: " + xhr.responseText);
-                    }
-                })
-            })
 
 
         })

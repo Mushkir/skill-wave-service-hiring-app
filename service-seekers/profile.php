@@ -67,7 +67,7 @@
         function showServiceSeekerProfileInfo() {
             $.ajax({
                 url: '../ajax-file/ajax.php',
-                type: 'POST',
+                type: 'GET',
                 data: {
                     "request": "getServiceSeekerInfo"
                 },
@@ -102,7 +102,7 @@
                         // console.log(ssDataInJson);
 
                         $("#ssFullname")[0].textContent = name;
-                        $("#ssAddress")[0].textContent = `📍 ${address_line}, ${city}`;
+                        $("#ssAddress")[0].textContent = `📍 ${address_line}, ${city}.`;
                         $("#ssEmail")[0].textContent = email_address;
                         $("#ssUsername")[0].textContent = username;
                         $("#ssGender")[0].textContent = gender;
