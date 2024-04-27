@@ -53,20 +53,6 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                 <!-- Menu List Item -->
                 <ul>
-                    <!-- Overview -->
-                    <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                        <a href="dashboard.php?overview" class="flex items-center gap-4  pl-5 p-3 rounded-r-xl" id="dashboardMenu">
-                            <!-- Icon -->
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M13 9V3h8v6zM3 13V3h8v10zm10 8V11h8v10zM3 21v-6h8v6z" />
-                                </svg>
-                            </div>
-
-                            <!-- Name -->
-                            Overview
-                        </a>
-                    </li>
 
                     <!-- Profile -->
                     <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
@@ -110,6 +96,21 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                             <!-- Name -->
                             Find Service
+                        </a>
+                    </li>
+
+                    <!-- Delete Service Provider -->
+                    <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                        <a href="dashboard.php?delete" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                            <!-- Icon -->
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382zM14.382 4l1 2H8.618l1-2zM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+
+                            <!-- Name -->
+                            Delete Account
                         </a>
                     </li>
 
@@ -195,9 +196,9 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
             <section class="mt-8 -z-10">
                 <?php
-                if (isset($_GET['overview'])) {
-                    include('overview.php');
-                }
+                // if (isset($_GET['overview'])) {
+                //     include('overview.php');
+                // }
 
                 if (isset($_GET['profile'])) {
                     include('profile.php');
@@ -205,6 +206,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                 if (isset($_GET['editProfile'])) {
                     include('edit-profile.php');
+                }
+
+                if (isset($_GET['delete'])) {
+                    include('delete-profile.php');
                 }
                 ?>
             </section>
@@ -249,9 +254,9 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
         const PATH_HREF = "http://localhost/skill-wave-service-hiring-app/service-seekers/dashboard.php?"
         const documentPathHref = document.location.href;
 
-        if (documentPathHref == `${PATH_HREF}overview`) {
-            dashboardMenuEl.classList.add("activeSideBar")
-        }
+        // if (documentPathHref == `${PATH_HREF}overview`) {
+        //     dashboardMenuEl.classList.add("activeSideBar")
+        // }
 
         if (documentPathHref == `${PATH_HREF}profile`) {
             profileMenuEl.classList.add("activeSideBar");

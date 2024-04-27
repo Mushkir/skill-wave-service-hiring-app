@@ -201,7 +201,7 @@
                                 });
 
                             } else {
-                                window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php";
+                                window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?profile";
                             }
                         }
                     },

@@ -986,3 +986,27 @@ if (isset($_GET['request']) && $_GET['request'] == 'getSsUsername') {
         echo "Service seeker not found";
     }
 }
+
+// Todo: Show SS Profile Info
+if (isset($_POST['request']) && $_POST['request'] == 'getServiceSeekerInfo') {
+
+    $result;
+
+    if (isset($_SESSION['serviceSeekerName'])) {
+
+        $sessionSpName = $_SESSION['serviceSeekerName'];
+
+        $isUserExist = $serviceSeeker->countTotalServiceSeekers("name", $sessionSpName);
+
+        if ($isUserExist > 0 && $isUserExist == 1) {
+
+            $arrayOfServiceSeekerInfo = $serviceSeeker->getServiceSeekerInfo("name", $sessionSpName);
+            $result = json_encode($arrayOfServiceSeekerInfo);
+        }
+    } else {
+
+        $result = "404";
+    }
+
+    echo $result;
+}
