@@ -299,11 +299,12 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
             function showLoggedInUserProfile() {
                 $.ajax({
                     url: '../ajax-file/ajax.php',
-                    type: 'GET',
+                    type: 'POST',
                     data: {
-                        "request": "showLoggedInUserInfo"
+                        "req": "showLoggedInUserInfo"
                     },
                     success: function(response) {
+                        // console.log(response);
                         if (response == "404") {
                             Swal.fire({
                                 icon: "error",

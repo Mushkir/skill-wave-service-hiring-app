@@ -988,20 +988,103 @@ if (isset($_GET['request']) && $_GET['request'] == 'getSsUsername') {
 }
 
 // Todo: Show SS Profile Info
-if (isset($_GET['request']) && $_GET['request'] == 'getServiceSeekerInfo' || $_GET['request'] == 'showLoggedInUserInfo') {
+if (isset($_GET['request']) and $_GET['request'] == 'getServiceSeekerInfo') {
 
     $result;
 
     if (isset($_SESSION['serviceSeekerName'])) {
 
-        $sessionSpName = $_SESSION['serviceSeekerName'];
+        $sessionSsName = $_SESSION['serviceSeekerName'];
 
-        $isUserExist = $serviceSeeker->countTotalServiceSeekers("name", $sessionSpName);
+        $isUserExist = $serviceSeeker->countTotalServiceSeekers("name", $sessionSsName);
 
         if ($isUserExist > 0 && $isUserExist == 1) {
 
-            $arrayOfServiceSeekerInfo = $serviceSeeker->getServiceSeekerInfo("name", $sessionSpName);
+            $arrayOfServiceSeekerInfo = $serviceSeeker->getServiceSeekerInfo("name", $sessionSsName);
             $result = json_encode($arrayOfServiceSeekerInfo);
+        }
+    } else {
+
+        $result = "404";
+    }
+
+    echo $result;
+}
+
+// Todo: Show SS Profile Info in dashboard top right corner
+if (isset($_GET['request']) and $_GET['request'] == 'showLoggedInUserInfo') {
+
+    $result;
+
+    if (isset($_SESSION['serviceSeekerName'])) {
+
+        $sessionSsName = $_SESSION['serviceSeekerName'];
+
+        $isUserExist = $serviceSeeker->countTotalServiceSeekers("name", $sessionSsName);
+
+        if ($isUserExist > 0 && $isUserExist == 1) {
+
+            $arrayOfServiceSeekerInfo = $serviceSeeker->getServiceSeekerInfo("name", $sessionSsName);
+            $result = json_encode($arrayOfServiceSeekerInfo);
+        }
+    } else {
+
+        $result = "404";
+    }
+
+    echo $result;
+}
+
+// Todo: Show LoggedIn SP Info in dashboard top right corner - Waiting...
+// if (isset($_GET['loggedInUsername'])) {
+
+//     if (isset($_SESSION['serviceProviderName'])) {
+
+//         // echo $_SESSION['serviceProviderName'];
+//     }
+// }
+
+// Todo: Show Loggedin SP profile info in profile dashboard
+if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderProfileInfo') {
+
+    $result;
+
+    if (isset($_SESSION['serviceProviderName'])) {
+
+        $sessionSpName = $_SESSION['serviceProviderName'];
+
+        $isSpInfoExist = $serviceProvider->countTotalServiceProviders("name", $sessionSpName);
+
+        if ($isSpInfoExist > 0 && $isSpInfoExist == 1) {
+
+            $arrayOfSpInfo = $serviceProvider->getServiceProviderInfo("name", $sessionSpName);
+
+            $spName = $arrayOfSpInfo['name'];
+            $spEmailAddress = $arrayOfSpInfo['email_address'];
+            $spContactNo = $arrayOfSpInfo['contact_no'];
+            $spUsername = $arrayOfSpInfo['username'];
+            $spGender = $arrayOfSpInfo['gender'];
+            $spAddress = $arrayOfSpInfo['address_line'];
+            $spDistrictId = $arrayOfSpInfo['district_id'];
+            $spTownId = $arrayOfSpInfo['town_id'];
+            $spSkills = $arrayOfSpInfo['skills'];
+            // $spStatus = $arrayOfSpInfo['status'];
+            $spPrice = $arrayOfSpInfo['price'];
+            $spImage = $arrayOfSpInfo['image'];
+
+            // * Get the Town and District name using Id
+            $districtData = $district->getDistrictInfoById($spDistrictId);
+            $townData = $town->getTownInfoById($spTownId);
+
+            $districtName = $districtData['name'];
+            $townName = $townData['name'];
+
+            // * Store all the required values inside an array object
+            $arrayOfResult = serialize(array("name" => $spName, "email" => $spEmailAddress, "contactNo" => $spContactNo, "username" => $spUsername, "gender" => $spGender, "address" => $spAddress, "skills" => $spSkills, "price" => $spPrice, "districtName" => $districtName, "townName" => $townName, "profileImg" => $spImage));
+            $arrayOfResultInString = unserialize($arrayOfResult);
+
+            // * Return those array using json_encode()
+            $result = json_encode($arrayOfResultInString);
         }
     } else {
 

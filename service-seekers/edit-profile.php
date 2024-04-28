@@ -1,1 +1,2 @@
-<?php echo "From Edit Profile";
+<?php
+@session_start();

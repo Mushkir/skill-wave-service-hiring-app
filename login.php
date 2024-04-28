@@ -196,12 +196,21 @@
                                 }).then((result) => {
 
                                     if (result.isConfirmed) {
-                                        window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php";
+                                        window.location.href = "/skill-wave-service-hiring-app/service-providers/dashboard.php?spProfile";
                                     }
                                 });
 
                             } else {
-                                window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?profile";
+                                Swal.fire({
+                                    title: "Login Success",
+                                    text: "Dear Service Seeker! Your login process has been done successfully!",
+                                    icon: "success"
+                                }).then((result) => {
+
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?profile";
+                                    }
+                                });
                             }
                         }
                     },
