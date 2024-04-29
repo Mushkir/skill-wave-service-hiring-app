@@ -706,9 +706,9 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
                 <div>
                     <!-- Tap to call -->
                     <div>
-                        <a href="tel:' . $serviceProviderContactNo . '" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-0' . $tooltipNumber++ . '" title="' . $serviceProviderContactNo . '">
-                            <i class="fa-solid fa-phone"></i>
-                            Tap to Call
+                        <a href="' . $serviceProviderId . '" id="booking-btn" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-0' . $tooltipNumber++ . '" title="Tap to contact ' . $serviceProviderName . '">
+                        <i class="fa-solid fa-handshake-angle"></i>
+                            Need help
                         </a>
                     </div>
 
@@ -812,7 +812,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
                 <div>
                     <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default">
                         <i class="fa-solid fa-phone"></i>
-                        Tap to Call
+                        Get Service
                     </a>
                 </div>
 
@@ -1035,14 +1035,35 @@ if (isset($_GET['request']) and $_GET['request'] == 'showLoggedInUserInfo') {
     echo $result;
 }
 
-// Todo: Show LoggedIn SP Info in dashboard top right corner - Waiting...
-// if (isset($_GET['loggedInUsername'])) {
+// Todo: Show LoggedIn SP Info in dashboard top right corner.
+if (isset($_GET['loggedInUsername'])) {
 
-//     if (isset($_SESSION['serviceProviderName'])) {
+    $result;
 
-//         // echo $_SESSION['serviceProviderName'];
-//     }
-// }
+    if (isset($_SESSION['serviceProviderName'])) {
+
+        $spSessionName = $_SESSION['serviceProviderName'];
+
+        $arrayOfSpName = $serviceProvider->getServiceProviderInfo("name", $spSessionName);
+
+        $spId = $arrayOfSpName['service_provider_id'];
+        $spName = $arrayOfSpName['name'];
+        $spEmailAddress = $arrayOfSpName['email_address'];
+        $spProfileImg = $arrayOfSpName['image'];
+
+        // * Storing values in an array.
+        $spObject = serialize(array("sericeProviderID" => $spId, "name" => $spName, "email" => $spEmailAddress, "image" => $spProfileImg));
+
+        $arrayOfSpInfoInString = unserialize($spObject);
+
+        $result = json_encode($arrayOfSpInfoInString);
+    } else {
+
+        $result = "404";
+    }
+
+    echo $result;
+}
 
 // Todo: Show Loggedin SP profile info in profile dashboard
 if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderProfileInfo') {
@@ -1059,6 +1080,7 @@ if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderP
 
             $arrayOfSpInfo = $serviceProvider->getServiceProviderInfo("name", $sessionSpName);
 
+            $spID = $arrayOfSpInfo['service_provider_id'];
             $spName = $arrayOfSpInfo['name'];
             $spEmailAddress = $arrayOfSpInfo['email_address'];
             $spContactNo = $arrayOfSpInfo['contact_no'];
@@ -1068,7 +1090,6 @@ if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderP
             $spDistrictId = $arrayOfSpInfo['district_id'];
             $spTownId = $arrayOfSpInfo['town_id'];
             $spSkills = $arrayOfSpInfo['skills'];
-            // $spStatus = $arrayOfSpInfo['status'];
             $spPrice = $arrayOfSpInfo['price'];
             $spImage = $arrayOfSpInfo['image'];
 
@@ -1080,7 +1101,7 @@ if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderP
             $townName = $townData['name'];
 
             // * Store all the required values inside an array object
-            $arrayOfResult = serialize(array("name" => $spName, "email" => $spEmailAddress, "contactNo" => $spContactNo, "username" => $spUsername, "gender" => $spGender, "address" => $spAddress, "skills" => $spSkills, "price" => $spPrice, "districtName" => $districtName, "townName" => $townName, "profileImg" => $spImage));
+            $arrayOfResult = serialize(array("spId" => $spID, "name" => $spName, "email" => $spEmailAddress, "contactNo" => $spContactNo, "username" => $spUsername, "gender" => $spGender, "address" => $spAddress, "skills" => $spSkills, "price" => $spPrice, "districtName" => $districtName, "townName" => $townName, "profileImg" => $spImage));
             $arrayOfResultInString = unserialize($arrayOfResult);
 
             // * Return those array using json_encode()
@@ -1092,4 +1113,10 @@ if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderP
     }
 
     echo $result;
+}
+
+if (isset($_GET['userId'])) {
+
+
+    echo $_GET['userId'];
 }

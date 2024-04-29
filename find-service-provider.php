@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -152,6 +154,14 @@
 
                     randomServiceProviders();
                 }
+            })
+
+            $("body").on("click", "#booking-btn", function(e) {
+                e.preventDefault();
+
+                const userId = $(this).attr("href");
+
+                window.location.href = `./show-selected-sp-info.php?userId=${userId}`;
             })
 
         })
