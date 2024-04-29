@@ -109,6 +109,7 @@
 
             randomServiceProviders();
 
+            // * Function for display service providers randomly
             function randomServiceProviders() {
                 $.ajax({
 
@@ -129,6 +130,7 @@
                 })
             }
 
+            // * Live search
             $("#search-sp").keyup(function() {
 
                 const searchInputEl = $(this).val()
@@ -148,7 +150,12 @@
                             console.log(response);
                             $("#serviceProviderDiv").html(response)
                         },
-                        error: function(xhr, status, error) {}
+                        error: function(xhr, status, error) {
+
+                            console.log("Status: " + status);
+                            console.log("XHR Response: " + xhr.responseText);
+                            console.error("Error: " + error);
+                        }
                     })
                 } else {
 
@@ -156,6 +163,7 @@
                 }
             })
 
+            // * Passing service provider id to relvent which is selected by service seekers to confirm hiring process.
             $("body").on("click", "#booking-btn", function(e) {
                 e.preventDefault();
 

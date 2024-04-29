@@ -708,7 +708,7 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
                     <div>
                         <a href="' . $serviceProviderId . '" id="booking-btn" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-0' . $tooltipNumber++ . '" title="Tap to contact ' . $serviceProviderName . '">
                         <i class="fa-solid fa-handshake-angle"></i>
-                            Need help
+                            Tap to Hire
                         </a>
                     </div>
 
@@ -1115,8 +1115,51 @@ if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderP
     echo $result;
 }
 
-if (isset($_GET['userId'])) {
+// Todo: Show selected SP in hiring confirmation page.
+if (isset($_GET['selectedSpId'])) {
 
+    $passedSpId = $_GET['selectedSpId'];
 
-    echo $_GET['userId'];
+    $result;
+
+    $isSpInfoExist = $serviceProvider->countTotalServiceProviders("service_provider_id", $passedSpId);
+
+    if ($isSpInfoExist > 0 && $isSpInfoExist == 1) {
+
+        $arrayOfSpInfo = $serviceProvider->getServiceProviderInfoById($passedSpId);
+        $spProfileImg = $arrayOfSpInfo['image'];
+        $spName = $arrayOfSpInfo['name'];
+        $spUsername = $arrayOfSpInfo['username'];
+        $spEmail = $arrayOfSpInfo['email_address'];
+        $spGender = $arrayOfSpInfo['gender'];
+        $spAddress = $arrayOfSpInfo['address_line'];
+        $spDistrictId = $arrayOfSpInfo['district_id'];
+        $spTownId = $arrayOfSpInfo['town_id'];
+        $spSkills = $arrayOfSpInfo['skills'];
+        $spServiceDesc = $arrayOfSpInfo['description'];
+        $spServicePrice = $arrayOfSpInfo['price'];
+
+        $districtInfo = $district->getDistrictInfoById($spDistrictId);
+        $townInfo = $town->getTownInfoById($spTownId);
+
+        $districtName = $districtInfo['name'];
+        $townName = $townInfo['name'];
+
+        $spInfoArray = serialize(array(
+            "image" => $spProfileImg, "name" => $spName, "username" => $spUsername, "email" => $spEmail, "gender" => $spGender, "address" => $spAddress, "district" => $districtName, "town" => $townName,
+            "skills" => $spSkills, "description" => $spServiceDesc, "price" => $spServicePrice
+        ));
+
+        $stringSpInfoArray = unserialize($spInfoArray);
+
+        $result = json_encode($stringSpInfoArray);
+
+        // $result = json_encode($arrayOfSpInfo);
+        // echo var_dump($arrayOfSpInfo);
+    } else {
+
+        $result = "404";
+    }
+
+    echo $result;
 }
