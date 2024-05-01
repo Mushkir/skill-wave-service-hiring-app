@@ -1,5 +1,4 @@
 To do:
-1. Make "Find Service Provider" Page dynamically and make it live search - COMPLETED.
-2. Service Provider Profile Dashboard - COMPLETED.
-3. Service Seeker Profile Dashboard - COMPLETED.
-4. Find Services - ON PROCESS.
+9. Need to show SS hiring history in Profile (Hiring History) in Table form.
+10. Need to give view and delete feature to those Hiring history.
+11. 

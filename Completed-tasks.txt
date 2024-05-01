@@ -4,3 +4,7 @@ Top 2: Need to implement District and Town details adding by admin feature - COM
 2. Need to implement Service Seeker login process - COMPLETE.
 3. Need to implement Service Provider signup process. - COMPLETE
 4. Need to implement Service Provider login process. - COMPLETE
+5. Make "Find Service Provider" Page dynamically and make it live search - COMPLETED.
+6. Service Provider Profile Dashboard - COMPLETED.
+7. Service Seeker Profile Dashboard - COMPLETED.
+8. Find Services - COMPLETED.

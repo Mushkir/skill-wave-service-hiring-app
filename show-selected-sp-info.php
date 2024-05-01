@@ -152,6 +152,7 @@ if (!isset($_SESSION['serviceSeekerName'])) {
 
                 <div class="mt-8 sm:flex justify-center items-center sm:space-x-5 mb-5">
                     <a href="#" id="confirmBtn" class="bg-[#C7B7A3] text-center sm:w-[250px] mb-5 block px-5 py-2 rounded-lg text-[#6D2932] hover:font-semibold hover:bg-[#e3dbd1]">Confirm to get service</a>
+                    <a href="/skill-wave-service-hiring-app/service-seekers/dashboard.php?profile" id="navigateProfileBtn" class="bg-[#C7B7A3] hidden text-center sm:w-[250px] mb-5 px-5 py-2 rounded-lg text-[#6D2932] hover:font-semibold hover:bg-[#e3dbd1]">Go to Profile</a>
                     <a href="./find-service-provider.php" class="border text-center sm:w-[300px] mb-5 block border-[#C7B7A3] rounded-lg px-5 py-2 text-[#C7B7A3] hover:bg-[#C7B7A3] hover:text-[#6D2932] hover:font-semibold" id="backBtn">Back to Service Providers Page</a>
                 </div>
             </div>
@@ -192,7 +193,6 @@ if (!isset($_SESSION['serviceSeekerName'])) {
                     },
                     success: function(response) {
                         // console.log(response);
-
                         if (response == "404") {
                             Swal.fire({
                                 title: "Technical Issue!",
@@ -319,13 +319,23 @@ if (!isset($_SESSION['serviceSeekerName'])) {
                                             }).then((result) => {
 
                                                 if (result.isConfirmed == true) {
+                                                    // * Story: 
+                                                    // * 1. When hiring confirmed, the SP contact number should show in Profile card to call.
                                                     $("#sp-contact-no")[0].classList.remove("hidden");
                                                     $("#sp-contact-no")[0].classList.add("block", "text-center");
-                                                    $("#sp-contact-no")[0].href = `tel:${serviceProviderContactNumber}`
+                                                    $("#sp-contact-no")[0].href = `tel:${serviceProviderContactNumber}`;
                                                     $("#sp-contact-no")[0].textContent = serviceProviderContactNumber;
+
+                                                    // * 2. "Confirm to get service button need to hide."
+                                                    $("#confirmBtn")[0].classList.remove("block");
+                                                    $("#confirmBtn")[0].classList.add("hidden");
+
+                                                    // * 3. Go to Profile button need to show.
+                                                    $("#navigateProfileBtn")[0].classList.remove("hidden");
+                                                    $("#navigateProfileBtn")[0].classList.add("block");
+
                                                 }
                                             })
-
                                         },
                                         error: function(xhr, status, error) {
 

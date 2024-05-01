@@ -84,6 +84,27 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                         </a>
                     </li>
 
+                    <!-- Hiring Log -->
+                    <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                        <a href="dashboard.php?hiringProcess" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="hiringLogMenu">
+                            <!-- Icon -->
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                    <g fill="none">
+                                        <circle cx="12" cy="12" r="9" fill="currentColor" opacity=".16" />
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364A9 9 0 1 0 3 12.004V14" />
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 12l2 2l2-2m6-4v5h5" />
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <!-- Name -->
+                            <div class="relative">
+                                Hiring History<sup class="bg-white text-[#6D2932] px-1 rounded-full">5</sup>
+                            </div>
+                        </a>
+                    </li>
+
                     <!-- Find Service Provider -->
                     <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
                         <a href="../find-service-provider.php" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
@@ -208,6 +229,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                     include('edit-profile.php');
                 }
 
+                if (isset($_GET['hiringProcess'])) {
+                    include('hiring-log.php');
+                }
+
                 if (isset($_GET['delete'])) {
                     include('delete-profile.php');
                 }
@@ -249,7 +274,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
         const dashboardMenuEl = document.querySelector("#dashboardMenu");
         const profileMenuEl = document.querySelector("#profileMenu");
         const editProfileMenuEl = document.querySelector("#editProfileMenu");
-
+        const hiringLogMenuEl = document.querySelector("#hiringLogMenu");
         // console.log(document.location.href);
         const PATH_HREF = "http://localhost/skill-wave-service-hiring-app/service-seekers/dashboard.php?"
         const documentPathHref = document.location.href;
@@ -264,6 +289,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
         if (documentPathHref == `${PATH_HREF}editProfile`) {
             editProfileMenuEl.classList.add("activeSideBar");
+        }
+
+        if (documentPathHref == `${PATH_HREF}hiringProcess`) {
+            hiringLogMenuEl.classList.add("activeSideBar");
         }
     </script>
 
