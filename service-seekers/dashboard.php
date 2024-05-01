@@ -86,7 +86,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                     <!-- Find Service Provider -->
                     <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                        <a href="../view-all-service-providers.php" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                        <a href="../find-service-provider.php" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
                             <!-- Icon -->
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">

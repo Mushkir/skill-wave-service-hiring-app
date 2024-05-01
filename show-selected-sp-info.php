@@ -1,6 +1,15 @@
 <?php
-$selectedSpId = $_GET['userId'];
-// echo $_GET['userId'];
+$selectedSpId = $_GET['userId']; // ! Selected Service Provider's Id
+session_start();
+
+// * Checking Service seeker logged in or not using SESSION.
+$loggedInSsName;
+
+if (!isset($_SESSION['serviceSeekerName'])) {
+    $loggedInSsName = "";
+} else {
+    $loggedInSsName = $_SESSION['serviceSeekerName'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,34 +55,38 @@ $selectedSpId = $_GET['userId'];
 
 <body class="flex flex-col min-h-screen bg-[#6D2932]">
     <!-- Header Part -->
-    <?php include('./components/navbar.php') ?>
+    <?php include('./components/navbar.php'); ?>
     <!-- End -->
 
     <!-- Main -->
-    <main class="mt-[6.25rem] min-h-screen">
+    <main class="mt-[150px] min-h-screen">
         <section class="mt-10 sm:mt-20 px-3 sm:px-5 md:px-20">
             <div>
-                <h3 class=" text-center text-xl mb-8 text-[#C7B7A3] font-semibold">Dear Service Seeker! Here confirm your service hiring process to connect with our Expert</h3>
+                <h3 class=" text-center text-xl mb-8 text-[#C7B7A3] font-semibold">Dear Service Seeker! Here confirm your service hiring process to connect with our Expert.</h3>
                 <div class="flex justify-center items-center">
                     <!-- Profile Picture Card -->
-                    <div class="bg-white p-5 w-[550px] h-[515px] rounded-xl">
+                    <div class="bg-white p-5 w-full sm:w-[550px] sm:h-[515px] rounded-xl">
                         <!-- Profile Img -->
                         <div class="rounded-lg">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpbzPe1HdyFoLu4qK_e12GtP3sJxMeVWexNvzFsPB_A&s" class="rounded-lg w-full h-[180px] object-cover" id="serviceProviderProfileImg" alt="" />
                         </div>
 
-                        <div class="flex items-center justify-between mt-2">
+                        <div class="sm:flex items-center justify-between mt-2">
                             <!-- Name -->
                             <h3 class="text-lg text-center mt-2 text-[#6D2932]">
                                 <strong class="capitalize" id="spName">Mohamed Mushkir</strong>
                             </h3>
 
-                            <div class="bg-green-500 mt-2 px-3 py-1 rounded-full text-sm">
+
+                            <a href="tel:+94777195282" class="mt-2 text-center hidden" id="sp-contact-no">+94777195282</a>
+
+
+                            <div class="bg-green-500 mt-2 px-3 py-1 rounded-full text-sm text-center">
                                 Available
                             </div>
                         </div>
 
-                        <div class="h-[240px] overflow-y-scroll">
+                        <div class="mt-5 h-[240px] overflow-y-scroll">
                             <!-- Username -->
                             <div class="text-[12px] mt-4 mb-4 flex justify-between bg-gray-100 py-2 rounded-lg">
                                 <span class="px-1.5 font-semibold">Username: </span>
@@ -137,9 +150,9 @@ $selectedSpId = $_GET['userId'];
                     </div>
                 </div>
 
-                <div class="mt-8 sm:flex justify-center items-center sm:space-x-5 space-y-5 sm:space-y-0 mb-5">
-                    <a href="#" id="confirmBtn" class="bg-[#C7B7A3] text-center w-full sm:w-[250px] block px-5 py-2 rounded-lg text-[#6D2932] hover:font-semibold hover:bg-[#e3dbd1]">Confirm to get service</a>
-                    <a href="./find-service-provider.php" class="border text-center w-full sm:w-[300px] block border-[#C7B7A3] rounded-lg px-5 py-2 text-[#C7B7A3] hover:bg-[#C7B7A3] hover:text-[#6D2932] hover:font-semibold" id="backBtn">Back to Service Providers Page</a>
+                <div class="mt-8 sm:flex justify-center items-center sm:space-x-5 mb-5">
+                    <a href="#" id="confirmBtn" class="bg-[#C7B7A3] text-center sm:w-[250px] mb-5 block px-5 py-2 rounded-lg text-[#6D2932] hover:font-semibold hover:bg-[#e3dbd1]">Confirm to get service</a>
+                    <a href="./find-service-provider.php" class="border text-center sm:w-[300px] mb-5 block border-[#C7B7A3] rounded-lg px-5 py-2 text-[#C7B7A3] hover:bg-[#C7B7A3] hover:text-[#6D2932] hover:font-semibold" id="backBtn">Back to Service Providers Page</a>
                 </div>
             </div>
         </section>
@@ -194,10 +207,9 @@ $selectedSpId = $_GET['userId'];
                         } else {
 
                             const spData = JSON.parse(response);
-
                             // console.log(spData);
-
-                            const {
+                            let {
+                                serviceProviderId,
                                 image,
                                 name,
                                 username,
@@ -211,6 +223,7 @@ $selectedSpId = $_GET['userId'];
                                 price
                             } = spData;
 
+                            serviceProviderId = $("#confirmBtn").attr("href");
                             $("#serviceProviderProfileImg")[0].src = `/skill-wave-service-hiring-app/ajax-file/uploads/${image}`;
                             $("#spName")[0].textContent = name;
                             $("#spUsername")[0].textContent = username;
@@ -237,6 +250,104 @@ $selectedSpId = $_GET['userId'];
                     }
                 })
             }
+
+            // * Story
+            // * 1. Need to check if the service seeker loggedin or not. if not need to ask to login.
+            // * 2. If logged in, need to ask confirm the order.
+            // * 3. If it is yes, it need to take loggedIn userId and selected service provider id and, store those hiring process in Services table with on process status.
+            // * 4. After that need to allow service provider to take call to SP. 
+            $("body").on("click", "#confirmBtn", function(e) {
+
+                e.preventDefault();
+
+                // If the user loggedin, then only it need to do confirmation, otherwise, it need to ask to login / signup.
+                $.ajax({
+                    url: './ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "verifyUserLoggedIn"
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        // No. 1
+                        if (response == "401") {
+                            Swal.fire({
+                                title: "Unable to Confirm!",
+                                text: "Dear Service Seeker! Please log in to continue your hiring process!",
+                                icon: "info"
+                            }).then((result) => {
+
+                                if (result.isConfirmed == true) {
+                                    window.location.href = './login.php';
+                                }
+                            });
+                        } else {
+                            // No. 2
+                            Swal.fire({
+                                title: "Are you sure?",
+                                text: `Dear ${response}! Are you sure to confirm this hiring process?`,
+                                icon: "question",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Confirm"
+                            }).then((result) => {
+                                // No. 3
+                                if (result.isConfirmed) {
+                                    $.ajax({
+
+                                        url: './ajax-file/ajax.php',
+                                        type: 'GET',
+                                        data: {
+                                            "selectedServiceProviderId": <?php echo $selectedSpId; ?>,
+                                            "getLoggedInSsId": encodeURIComponent('<?php echo $loggedInSsName; ?>')
+                                        },
+                                        success: function(res) {
+                                            // No. 4
+                                            const jsonData = JSON.parse(res);
+
+                                            const {
+                                                servicProviderName,
+                                                serviceProviderContactNumber,
+                                                serviceSeekerName
+                                            } = jsonData
+
+                                            Swal.fire({
+                                                title: "Hiring Confirmed!",
+                                                text: `Dear ${serviceSeekerName}! Your hiring request confirmed. Now you can connect with ${servicProviderName} via call!`,
+                                                icon: "success"
+                                            }).then((result) => {
+
+                                                if (result.isConfirmed == true) {
+                                                    $("#sp-contact-no")[0].classList.remove("hidden");
+                                                    $("#sp-contact-no")[0].classList.add("block", "text-center");
+                                                    $("#sp-contact-no")[0].href = `tel:${serviceProviderContactNumber}`
+                                                    $("#sp-contact-no")[0].textContent = serviceProviderContactNumber;
+                                                }
+                                            })
+
+                                        },
+                                        error: function(xhr, status, error) {
+
+                                            console.log("Status: " + status);
+                                            console.log("XHR Response: " + xhr.responseText);
+                                            console.error("Error: " + error);
+                                        }
+                                    })
+                                }
+                            });
+
+                        }
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+                })
+            })
+
         })
     </script>
 </body>

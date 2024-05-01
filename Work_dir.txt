@@ -1,10 +1,5 @@
 To do:
 1. Make "Find Service Provider" Page dynamically and make it live search - COMPLETED.
-2. Service Provider Profile Dashboard - ONGOING.
+2. Service Provider Profile Dashboard - COMPLETED.
 3. Service Seeker Profile Dashboard - COMPLETED.
-4. Find Services.
-
-
-Future Enhancement
-1. Need to write validation for SP search bar.
-2. Need to create Admin Panel - Future Work.
+4. Find Services - ON PROCESS.

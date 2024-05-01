@@ -1,6 +1,6 @@
 <?php
-// ! SP: Service Providers
-// ! SS: Service Seekers
+// ! SP / Sp: Service Providers
+// ! SS / Ss: Service Seekers
 session_start();
 
 require_once('../classes/common/Database.php');
@@ -9,6 +9,7 @@ require_once('../classes/app/District.php');
 require_once('../classes/app/Town.php');
 require_once('../classes/app/ServiceSeeker.php');
 require_once('../classes/app/ServiceProvide.php');
+require_once('../classes/app/Services.php');
 
 $db = new Database();
 $admin = new Admin();
@@ -16,6 +17,7 @@ $district = new District();
 $town = new Town();
 $serviceSeeker = new ServiceSeeker();
 $serviceProvider = new ServiceProvider();
+$Services = new Services();
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -1012,7 +1014,7 @@ if (isset($_GET['request']) and $_GET['request'] == 'getServiceSeekerInfo') {
 }
 
 // Todo: Show SS Profile Info in dashboard top right corner
-if (isset($_GET['request']) and $_GET['request'] == 'showLoggedInUserInfo') {
+if (isset($_POST['req']) and $_POST['req'] == 'showLoggedInUserInfo') {
 
     $result;
 
@@ -1127,6 +1129,8 @@ if (isset($_GET['selectedSpId'])) {
     if ($isSpInfoExist > 0 && $isSpInfoExist == 1) {
 
         $arrayOfSpInfo = $serviceProvider->getServiceProviderInfoById($passedSpId);
+
+        $spId = $arrayOfSpInfo['service_provider_id'];
         $spProfileImg = $arrayOfSpInfo['image'];
         $spName = $arrayOfSpInfo['name'];
         $spUsername = $arrayOfSpInfo['username'];
@@ -1146,6 +1150,7 @@ if (isset($_GET['selectedSpId'])) {
         $townName = $townInfo['name'];
 
         $spInfoArray = serialize(array(
+            "serviceProviderId" => $spId,
             "image" => $spProfileImg, "name" => $spName, "username" => $spUsername, "email" => $spEmail, "gender" => $spGender, "address" => $spAddress, "district" => $districtName, "town" => $townName,
             "skills" => $spSkills, "description" => $spServiceDesc, "price" => $spServicePrice
         ));
@@ -1153,9 +1158,6 @@ if (isset($_GET['selectedSpId'])) {
         $stringSpInfoArray = unserialize($spInfoArray);
 
         $result = json_encode($stringSpInfoArray);
-
-        // $result = json_encode($arrayOfSpInfo);
-        // echo var_dump($arrayOfSpInfo);
     } else {
 
         $result = "404";
@@ -1163,3 +1165,89 @@ if (isset($_GET['selectedSpId'])) {
 
     echo $result;
 }
+
+// Todo: Need to verify if the service seeker loggedin or not. If not, need to redirect to Login page
+if (isset($_POST['request']) && $_POST['request'] == 'verifyUserLoggedIn') {
+
+    // * Story
+    // * 1. Need to check if the service seeker loggedin or not. if not need to ask to login.
+    // * If logged in, need to ask confirm the order.
+    // * If it is yes, it need to take loggedIn userId and selected service provider id and, store those hiring process in Services table with on process status.
+    // * After that need to allow service provider to take call to SP. 
+
+    $sessionStatus;
+
+    if (!isset($_SESSION['serviceSeekerName'])) {
+
+        $sessionStatus = "401";
+    } else {
+
+        $loggedInServiceSeekerName = $_SESSION['serviceSeekerName'];
+
+        $isSsDataExist = $serviceSeeker->countTotalServiceSeekers("name", $loggedInServiceSeekerName);
+
+        if ($isSsDataExist > 0 && $isSsDataExist == 1) {
+
+            $arrayOfServiceSeeker = $serviceSeeker->getServiceSeekerInfo("name", $loggedInServiceSeekerName);
+
+            $sessionStatus = $arrayOfServiceSeeker['name'];
+        }
+    }
+
+    echo $sessionStatus;
+}
+
+// Todo: Get Logged-in SS Id to confirm hiring process.
+if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])) {
+
+    $loggedInSsName = $_GET['getLoggedInSsId']; // Ex: Mushkir%20Mohamed
+
+    $selectedSpId = $_GET['selectedServiceProviderId']; // Service Provider id
+
+    $nameInArray = explode("%20", $loggedInSsName); // Changing the name
+
+    $serviceSeekerName = implode(" ", $nameInArray);
+
+    // Get the ss id using recieved ss name.
+    $arrayOfSsInfo = $serviceSeeker->getServiceSeekerInfo("name", $serviceSeekerName);
+
+    // Confirm the service hiring (Insert data in table_services)
+    // Required Data: 
+    // 1. provider_id - 1
+    // 2. seeker_id - 1
+    $serviceSeekerId = $arrayOfSsInfo['service_seeker_id'];
+    $serviceSeekerName = $arrayOfSsInfo['name'];
+
+    // 3. desc - Currently Pending and it need to update by Service Provider while payment process.
+    $description = "Pending";
+
+    // 4. service_charge - (Need to get from DB. While payment process it need to update)
+    $arrayOfSpData = $serviceProvider->getServiceProviderInfoById($selectedSpId);
+
+    $spName = $arrayOfSpData['name'];
+
+    $spContactNo = $arrayOfSpData['contact_no'];
+
+    $serviceCharge = $arrayOfSpData['price'];
+
+    // 5. service_status
+    $status = "on process"; // It will update after payment process.
+
+    // * Save the hiring process in table_services table.
+    $confirmedHiringProcess = $Services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $status);
+
+    if ($confirmedHiringProcess == true) {
+
+        $arrayOfResult = serialize(array("servicProviderName" => $spName, "serviceSeekerName" => $serviceSeekerName, "serviceProviderContactNumber" => $spContactNo));
+
+        $stringArray = unserialize($arrayOfResult);
+
+        echo json_encode($stringArray);
+    }
+}
+
+// Todo: 
+/*
+1. Need to get ss id and return it.
+2. Store those data in Service Table.
+*/
