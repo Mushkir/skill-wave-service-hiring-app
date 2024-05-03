@@ -3,6 +3,10 @@ To do:
 10. Need to give view and delete feature to those Hiring history.
 11. Make the hiring log number as dynamically - COMPLETED.
 12. Need to inform to SP to change status as "Busy" - ON GOING.
+    12.1 Need to display all summary - COMPLETED.
+    12.2 Need to make dynamically in menu - COMPLETED.
+    12.3 Need to check if the new request (Pending state) came / not? If it is came, need to alert to SP while logging-in - COMPLETED.
+    12.4 SP need to Choose one order. if he choose the order, their state need to change as "Busy".
 
 
 

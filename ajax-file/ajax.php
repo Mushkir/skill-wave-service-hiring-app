@@ -395,7 +395,6 @@ if (isset($_GET['request']) && $_GET['request'] == 'getAdminUsername') {
     }
 }
 
-// * <------------------------------------ Service Seekers ------------------------------------>
 // Todo: Sign-up process of Service Seekers.
 if (isset($_POST['request']) && $_POST['request'] == 'serviceSeekerSignUp') {
 
@@ -483,8 +482,6 @@ if (isset($_POST['request']) && $_POST['request'] == 'listAllDistricts') {
 
     echo $listOfDistrict;
 }
-
-// * <------------------------------------ Service Providers ------------------------------------>
 
 // Todo: Need to show All town info in SP signup form
 if (isset($_POST['request']) && $_POST['request'] == 'listAllTownInfo') {
@@ -1345,8 +1342,10 @@ if (isset($_POST['request']) && $_POST['request'] == 'countTotalPendingHiringPro
 // Todo: Need to show all service provider service summary in dashboard.
 if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSummary') {
 
+    $result = "";
+
     if (isset($_SESSION['serviceProviderName'])) {
-        $result = "";
+
         // * Steps:
         // * 1. Need to get logged-in username using SESSION.
         $sessionSpName = $_SESSION['serviceProviderName'];
@@ -1422,4 +1421,66 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
     }
 
     echo $result;
+}
+
+// Todo: Need to count and show all pending service summary of logged-in SP in dashboard.
+if (isset($_POST['request']) && $_POST['request'] == 'countPendingServices') {
+
+    $count;
+
+    if (isset($_SESSION['serviceProviderName'])) {
+
+        $sessionSpName = $_SESSION['serviceProviderName'];
+
+        $arrayOfServiceProviderInfo = $serviceProvider->getServiceProviderInfo("name", $sessionSpName);
+        $serviceProviderId = $arrayOfServiceProviderInfo['service_provider_id'];
+
+        $query = "SELECT * FROM table_services WHERE provider_id = $serviceProviderId AND service_status = 'on process'";
+
+        $result = $db->countMultipleData($query);
+
+        if ($result == 0) {
+
+            $count = 0;
+        } else {
+            $count = $result;
+        }
+    } else {
+
+        $count = 401;
+    }
+
+    echo $count;
+}
+
+// Todo: Need to check is there any new request / not while logging-in.
+if (isset($_POST["request"]) && $_POST["request"] == 'checkNewServiceHiringRequest') {
+
+    if (isset($_SESSION['serviceProviderName'])) {
+
+        // * 1. Get the service provider name using SESSION.
+        $sessionSpName = $_SESSION['serviceProviderName'];
+
+        // * 2. Get the ID of the SP
+        $arrayOfSpInfo = $serviceProvider->getServiceProviderInfo('name', $sessionSpName);
+        $spId = $arrayOfSpInfo['service_provider_id'];
+
+        // * 3. Check in 'table_services' table any new request required / not.
+        $query = "SELECT * FROM table_services WHERE provider_id = $spId AND service_status = 'on process'";
+        $resultOfCount = $db->countMultipleData($query);
+
+        // * 4. If it is request > 0, need to alert to user.
+        if ($resultOfCount == 1) {
+
+            $req = 1;
+        } else if ($resultOfCount > 1) {
+
+            $req = $resultOfCount;
+        } else {
+
+            $req = 0;
+        }
+
+        echo $req;
+    }
 }

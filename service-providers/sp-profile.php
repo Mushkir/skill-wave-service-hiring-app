@@ -110,6 +110,8 @@
 
         showLoggedInServiceProviderProfileInfo()
 
+        checkServiceHiringRequest()
+
         function showLoggedInServiceProviderProfileInfo() {
 
             $.ajax({
@@ -184,5 +186,47 @@
 
             window.location.href = `/skill-wave-service-hiring-app/service-providers/edit-profile.php?userId=${userId}`;
         })
+
+        function checkServiceHiringRequest() {
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: "POST",
+                data: {
+                    "request": "checkNewServiceHiringRequest"
+                },
+                success: function(response) {
+                    let newResponse = "";
+                    response < 9 ? newResponse = `0${response}` : newResponse
+                    if (response == 1) {
+                        Swal.fire({
+                            title: "New Service Request!",
+                            text: `You have ${newResponse} new service hiring request!`,
+                            icon: "info"
+                        }).then((result) => {
+                            if (result.isConfirmed == true) {
+                                window.location.href = '/skill-wave-service-hiring-app/service-providers/dashboard.php?summary';
+                            }
+                        });
+                    } else if (response > 1) {
+                        Swal.fire({
+                            title: "New Service Request!",
+                            text: `You have ${newResponse} new service hiring requests!`,
+                            icon: "info"
+                        }).then((result) => {
+                            if (result.isConfirmed == true) {
+                                window.location.href = '/skill-wave-service-hiring-app/service-providers/dashboard.php?summary';
+                            }
+                        });
+                    } else {
+                        window.location.href = '/skill-wave-service-hiring-app/service-providers/dashboard.php?spProfile';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                    console.log("Error: " + error);
+                }
+            })
+        }
     })
 </script>

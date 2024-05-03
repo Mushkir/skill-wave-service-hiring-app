@@ -93,7 +93,9 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                             </div>
 
                             <!-- Name -->
-                            Service Summary
+                            <div class="relative">
+                                Service Summary<sup class="bg-black text-white px-1 rounded-full" id="countSummary">5</sup>
+                            </div>
                         </a>
                     </li>
 
@@ -278,6 +280,9 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
 
             showServiceProviderInfoInCorner()
 
+            // * Function for count and show on process services in Menu
+            countPendingServices();
+
             function showServiceProviderInfoInCorner() {
 
                 $.ajax({
@@ -323,6 +328,44 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                     }
                 })
             }
+
+            function countPendingServices() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "countPendingServices"
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        console.dir()
+                        if (response == 0) {
+                            $("#countSummary")[0].classList.add("hidden")
+                        } else if (response == 401) {
+                            Swal.fire({
+                                title: "Access Denied!",
+                                text: "Can not proceed unauthorized access! Please Sign-Up or Login!",
+                                icon: "error"
+                            }).then((result) => {
+
+                                if (result.isConfirmed == true) {
+                                    window.location.href = '/skill-wave-service-hiring-app/signup.php?spSignUp';
+                                }
+                            })
+
+                        } else {
+
+                            $("#countSummary")[0].textContent = response;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+                })
+            }
+
         })
     </script>
 
