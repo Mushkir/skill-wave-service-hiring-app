@@ -146,7 +146,12 @@ class ServiceSeeker extends Database
 
             $statement->execute([':value' => $value]);
 
-            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($statement->rowCount() > 0) {
+
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+            } else {
+                $result = "404";
+            }
 
             return $result;
         } catch (PDOException $ex) {

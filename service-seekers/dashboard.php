@@ -100,7 +100,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                             <!-- Name -->
                             <div class="relative">
-                                Hiring Log<sup class="bg-white text-[#6D2932] px-1 rounded-full">5</sup>
+                                Hiring Log<sup class="bg-white text-[#6D2932] px-1 rounded-full" id="countProcess">5</sup>
                             </div>
                         </a>
                     </li>
@@ -302,6 +302,9 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
             showLoggedInUserProfile();
 
+            // Function for show number of pending hiring process in Hiring Log superscript
+            showHiringLogOnProcessInNumber();
+
             $(document).on("click", "#ss-logout", function(e) {
 
                 e.preventDefault();
@@ -369,7 +372,32 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                 })
             }
 
+            function showHiringLogOnProcessInNumber() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "countTotalPendingHiringProcess"
+                    },
+                    success: function(response) {
+                        // console.log(response);
 
+                        if (response == 0) {
+
+                            $("#countProcess")[0].classList.add("hidden")
+                        } else {
+                            $("#countProcess")[0].classList.remove("hidden")
+                            $("#countProcess")[0].textContent = response
+                        }
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+                })
+            }
         })
     </script>
 

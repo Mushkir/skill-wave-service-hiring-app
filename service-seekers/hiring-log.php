@@ -23,9 +23,6 @@
         // * Function for show all the service hiring summary of logged-in service seeker
         showServiceSeekerAllHistoryLog();
 
-        // Function for show number of pending hiring process in Hiring Log superscript
-        showHiringLogOnProcessInNumber();
-
         function showServiceSeekerAllHistoryLog() {
             $.ajax({
                 url: '../ajax-file/ajax.php',
@@ -38,7 +35,8 @@
                 },
                 success: function(response) {
 
-                    $("#tableContainer").html(response)
+                    $("#tableContainer").html(response);
+                    $("#all-hiring-process-table").DataTable();
                 },
                 error: function(xhr, status, error) {
 

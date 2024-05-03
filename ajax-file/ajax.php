@@ -1263,7 +1263,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
 
         // * 4. Get the all the detail such as provider name, provider id, description, service charge and service status using the id & Display the results in UI.
         $serialNo = 1;
-        $result .= '<table class="table-auto mx-auto [&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full">
+        $result .= '<table class="table-auto mx-auto [&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full" id="all-hiring-process-table">
         <thead class="bg-[#6D2932] text-white text-center">
             <th class="p-2 text-center">S.No</th>
             <th class="p-2 text-center">Service ID</th>
@@ -1311,4 +1311,33 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
     }
 
     echo $result;
+}
+
+// Todo: Need to count and show total pending hiring process in SS profile dashboard
+if (isset($_POST['request']) && $_POST['request'] == 'countTotalPendingHiringProcess') {
+
+    $count;
+    // * Steps:
+    // * 1. Get the name of SP using SESSION.
+    if (isset($_SESSION['serviceSeekerName'])) {
+
+        // * 2. Get the id of SS which is received in step 1.
+        $sessionSsName = $_SESSION['serviceSeekerName'];
+
+        $getServiceSeekerData = $serviceSeeker->getServiceSeekerInfo("name", $sessionSsName);
+
+        $ssId = $getServiceSeekerData['service_seeker_id'];
+
+        // * 3. Get the results in Services table based on ss-id and "Pending" condition.
+        $query = "SELECT * FROM table_services WHERE seeker_id = $ssId AND service_status = 'on process'";
+
+        $results = $db->countMultipleData($query);
+
+        $count = $results;
+    } else {
+
+        $count = 0;
+    }
+    // * 4. Return to Frontend.
+    echo $count;
 }
