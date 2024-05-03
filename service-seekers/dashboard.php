@@ -100,7 +100,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                             <!-- Name -->
                             <div class="relative">
-                                Hiring History<sup class="bg-white text-[#6D2932] px-1 rounded-full">5</sup>
+                                Hiring Log<sup class="bg-white text-[#6D2932] px-1 rounded-full">5</sup>
                             </div>
                         </a>
                     </li>

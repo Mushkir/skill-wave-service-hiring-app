@@ -1,4 +1,5 @@
 To do:
-9. Need to show SS hiring history in Profile (Hiring History) in Table form.
+9. Need to show SS hiring history in Profile (Hiring History) in Table form - ON GOING.
 10. Need to give view and delete feature to those Hiring history.
-11. 
+11. Make the hiring log number as dynamically.
+12. Need to inform to SP to change status as "Busy".

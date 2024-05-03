@@ -1246,8 +1246,24 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
     }
 }
 
-// Todo: 
-/*
-1. Need to get ss id and return it.
-2. Store those data in Service Table.
-*/
+// Todo: Need to show all service hiring summary in profile dashboard (Hiring Log) to SS.
+if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
+    $result;
+
+    if (isset($_SESSION['serviceSeekerName'])) {
+        // * Steps:
+        // * 1. Need to get logged-in username using SESSION.
+        $loggedInSsName = $_SESSION['serviceSeekerName'];
+
+        // * 2. Need to get the ID of logged-in SS using their name in 'table_service_seeker' table.
+        $serviceSeeker->getServiceSeekerInfo("name", $loggedInSsName);
+
+        // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
+        // * 4. Get the all the ddetail such as provider name, provider id, description, service charge and service status using the id.
+        // * 5. Return the output object to frontend.
+
+
+    } else {
+        echo "0";
+    }
+}
