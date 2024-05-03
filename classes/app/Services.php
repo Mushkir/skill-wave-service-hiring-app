@@ -10,16 +10,16 @@ class Services extends Database
     protected $tableName = "table_services";
 
     // * Insert service info.
-    public function addNewServiceInfo($serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceStatus)
+    public function addNewServiceInfo($serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceAgreed, $serviceStatus)
     {
-        $query = "INSERT INTO {$this->tableName} (provider_id, seeker_id, description, service_charge, service_status) 
-        VALUES (:provider_id, :seeker_id, :description, :service_charge, :service_status)";
+        $query = "INSERT INTO {$this->tableName} (provider_id, seeker_id, description, service_charge, service_agreed, service_status) 
+        VALUES (:provider_id, :seeker_id, :description, :service_charge, :service_agreed, :service_status)";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':provider_id' => $serviceProviderId, 'seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_status' => $serviceStatus]);
+            $statement->execute([':provider_id' => $serviceProviderId, ':seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_agreed' => $serviceAgreed, ':service_status' => $serviceStatus]);
 
             return true;
             // $lastInsertId = $this->connection->lastInsertId();
@@ -110,16 +110,16 @@ class Services extends Database
     }
 
     // * Update Service Info
-    public function updateServiceInfo($servicesId, $serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceStatus)
+    public function updateServiceInfo($servicesId, $serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceAgreed, $serviceStatus)
     {
 
-        $query = "UPDATE {$this->tableName} SET provider_id = :provider_id, seeker_id = :seeker_id, description = :description, service_charge = :service_charge, service_status = :service_status WHERE services_id = :services_id";
+        $query = "UPDATE {$this->tableName} SET provider_id = ':provider_id', seeker_id = ':seeker_id', description = ':description', service_charge = ':service_charge', service_agreed = ':service_agreed', service_status = ':service_status' WHERE services_id = ':services_id'";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':provider_id' => $serviceProviderId, 'seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_status' => $serviceStatus, ':services_id' => $servicesId]);
+            $statement->execute([':provider_id' => $serviceProviderId, 'seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_agreed' => $serviceAgreed, ':service_status' => $serviceStatus, ':services_id' => $servicesId]);
 
             $updatedData = $this->getServiceInfoById($servicesId);
 

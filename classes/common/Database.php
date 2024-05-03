@@ -97,6 +97,20 @@ class Database
         }
     }
 
+    public function updateDataByQuery($query)
+    {
+        try {
+
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->execute();
+
+            return true;
+        } catch (PDOException $ex) {
+            echo "Error from updateDataByQuery(): " . $ex->getMessage();
+        }
+    }
+
     public function countMultipleData($query)
     {
         try {

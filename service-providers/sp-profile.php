@@ -105,12 +105,14 @@
 <!-- JQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+<!-- JQuery script -->
 <script>
     $(document).ready(function() {
 
-        showLoggedInServiceProviderProfileInfo()
+        showLoggedInServiceProviderProfileInfo();
 
-        checkServiceHiringRequest()
+        // * Function to alert to SP as new service hiring request.
+        checkServiceHiringRequest();
 
         function showLoggedInServiceProviderProfileInfo() {
 
@@ -207,7 +209,9 @@
                                 window.location.href = '/skill-wave-service-hiring-app/service-providers/dashboard.php?summary';
                             }
                         });
-                    } else if (response > 1) {
+                    }
+
+                    if (response > 1) {
                         Swal.fire({
                             title: "New Service Request!",
                             text: `You have ${newResponse} new service hiring requests!`,
@@ -217,9 +221,10 @@
                                 window.location.href = '/skill-wave-service-hiring-app/service-providers/dashboard.php?summary';
                             }
                         });
-                    } else {
-                        window.location.href = '/skill-wave-service-hiring-app/service-providers/dashboard.php?spProfile';
                     }
+                    //  else {
+                    //     window.location.href = '/skill-wave-service-hiring-app/service-providers/dashboard.php?spProfile';
+                    // }
                 },
                 error: function(xhr, status, error) {
                     console.log("Status: " + status);

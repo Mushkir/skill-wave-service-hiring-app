@@ -1194,7 +1194,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'verifyUserLoggedIn') {
     echo $sessionStatus;
 }
 
-// Todo: Get Logged-in SS Id to confirm hiring process.
+// Todo: Get Logged-in SS-Id to confirm hiring process.
 if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])) {
 
     $loggedInSsName = $_GET['getLoggedInSsId']; // Ex: Mushkir%20Mohamed
@@ -1224,11 +1224,14 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
 
     $serviceCharge = $arrayOfSpData['price'];
 
-    // 5. service_status
-    $status = "on process"; // It will update after payment process.
+    // 5. service_agreed
+    $serviceAgreed = 0; // It means false. It will update as 1 (true) while SP accepting request
+
+    // 6. service_status
+    $status = "waiting"; // It will update after payment process.
 
     // * Save the hiring process in table_services table.
-    $confirmedHiringProcess = $services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $status);
+    $confirmedHiringProcess = $services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $serviceAgreed, $status);
 
     if ($confirmedHiringProcess == true) {
 
@@ -1254,7 +1257,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
         $serviceSeekerId = $arrayOfSsInfo['service_seeker_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id";
+        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE ts.seeker_id = $serviceSeekerId";
 
         $arrayOfHiringProcessInfo = $db->getMultipleData($query);
 
@@ -1326,7 +1329,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'countTotalPendingHiringPro
         $ssId = $getServiceSeekerData['service_seeker_id'];
 
         // * 3. Get the results in Services table based on ss-id and "Pending" condition.
-        $query = "SELECT * FROM table_services WHERE seeker_id = $ssId AND service_status = 'on process'";
+        $query = "SELECT * FROM table_services WHERE seeker_id = $ssId AND service_status = 'waiting'";
 
         $results = $db->countMultipleData($query);
 
@@ -1356,7 +1359,7 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
         $spId = $arrayOfSpInfo['service_provider_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        $query = "SELECT ts.services_id, ts.seeker_id, ts.description, ts.service_charge, ts.service_status, tss.name, tss.contact_no 
+        $query = "SELECT ts.services_id, ts.seeker_id, ts.description, ts.service_charge, ts.service_agreed, ts.service_status, tss.name, tss.contact_no 
         FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id 
         JOIN table_service_seeker tss ON ts.seeker_id = tss.service_seeker_id WHERE tsp.service_provider_id = $spId";
 
@@ -1385,6 +1388,7 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
             $serviceSeekerId = $data['seeker_id'];
             $serviceDesc = $data['description'];
             $serviceCharge = $data['service_charge'];
+            $serviceAgreed = $data['service_agreed'];
             $serviceStatus = $data['service_status'];
             $serviceSeekerName = $data['name'];
             $serviceSeekerContactNo = $data['contact_no'];
@@ -1396,22 +1400,29 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
             <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">#' . $serialNo++ . '</td>
             <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">' . $serviceSeekerId . '</td>
             <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">' . $serviceSeekerName . '</td>
-            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2"><a href="tel:' . $serviceSeekerContactNo . '" class="block text-center hover:transition 500" id="cta" title="Tap to call to ' . $serviceSeekerName . '">' . $serviceSeekerContactNo . '</a></td>
-            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2"><a href="serviceId=' . $serviceId . '" class="hover:underline hover:transition 500 hover:text-gray-700 block text-center" title="Click to confirm or reject this request">Confirm</a></td>
-            <td class="px-1 py-1.5 border-gray-400 border-r-2">
-                <a href="serviceId=' . $serviceId . '" class="hover:underline text-left block hover:transition 500 hover:text-gray-700" id="serviceDes">' . $desc . '</a>
-            </td>
+            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2"><a href="tel:' . $serviceSeekerContactNo . '" class="block text-center hover:transition 500" id="cta" title="Tap to call to ' . $serviceSeekerName . '">' . $serviceSeekerContactNo . '</a></td>';
 
-            <td class="px-1 py-1.5 border-gray-400 border-r-2">
-                <a href="serviceId=' . $serviceId . '" class="hover:text-gray-700 hover:transition 500 hover:underline text-left block" id="serviceCharge">Add Service Charge</a>
-            </td>
-            <td class="px-1 py-1.5 border-gray-400 border-r-2">
-                On Process
-            </td>
-            <td class="px-1 py-1.5 border-gray-400 border-r-2">
-                <a href="#" class="hover:underline hover:transition 500 hover:text-gray-700">Pending</a>
-            </td>
-        </tr>';
+            if ($serviceAgreed == 0) {
+                $output = "Confirm";
+                $result .= '<td class="px-1 py-1.5 text-center border-gray-400 border-r-2"><a href="serviceId=' . $serviceId . '" class="hover:underline hover:transition 500 hover:text-gray-700 block text-center" id="btnConfirm" title="Click to confirm or reject this request">' . $output . '</a></td>';
+            } else {
+                $output = "Accepted";
+                $result .= '<td class="px-1 py-1.5 text-center border-gray-400 border-r-2">' . $output . '</td>';
+            }
+            $result .= '    <td class="px-1 py-1.5 border-gray-400 border-r-2">
+            <a href="serviceId=' . $serviceId . '" class="hover:underline text-left block hover:transition 500 hover:text-gray-700" id="serviceDes">' . $desc . '</a>
+        </td>
+
+        <td class="px-1 py-1.5 border-gray-400 border-r-2">
+            <a href="serviceId=' . $serviceId . '" class="hover:text-gray-700 hover:transition 500 hover:underline text-left block" id="serviceCharge">Add Service Charge</a>
+        </td>
+        <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">
+        ' . $serviceStatus . '
+        </td>
+        <td class="px-1 py-1.5 border-gray-400 border-r-2">
+            <a href="#" class="hover:underline hover:transition 500 hover:text-gray-700">Pending</a>
+        </td>
+    </tr>';
         }
 
         $result .= '</tbody></table>';
@@ -1435,7 +1446,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'countPendingServices') {
         $arrayOfServiceProviderInfo = $serviceProvider->getServiceProviderInfo("name", $sessionSpName);
         $serviceProviderId = $arrayOfServiceProviderInfo['service_provider_id'];
 
-        $query = "SELECT * FROM table_services WHERE provider_id = $serviceProviderId AND service_status = 'on process'";
+        $query = "SELECT * FROM table_services WHERE provider_id = $serviceProviderId AND service_status = 'waiting'";
 
         $result = $db->countMultipleData($query);
 
@@ -1466,7 +1477,7 @@ if (isset($_POST["request"]) && $_POST["request"] == 'checkNewServiceHiringReque
         $spId = $arrayOfSpInfo['service_provider_id'];
 
         // * 3. Check in 'table_services' table any new request required / not.
-        $query = "SELECT * FROM table_services WHERE provider_id = $spId AND service_status = 'on process'";
+        $query = "SELECT * FROM table_services WHERE provider_id = $spId AND service_status = 'waiting'";
         $resultOfCount = $db->countMultipleData($query);
 
         // * 4. If it is request > 0, need to alert to user.
@@ -1482,5 +1493,39 @@ if (isset($_POST["request"]) && $_POST["request"] == 'checkNewServiceHiringReque
         }
 
         echo $req;
+    }
+}
+
+// Todo: Get the Service seeker name
+if (isset($_GET['id'])) {
+
+    // * 1. Need to get the service id.
+    $serviceId = $_GET['id'];
+
+    // * 2. Get the service seeker name using seeker_id in 'table_services' table.
+    $query = "SELECT ts.seeker_id, tss.name FROM table_services ts JOIN table_service_seeker tss ON ts.seeker_id = tss.service_seeker_id WHERE ts.services_id = $serviceId";
+    $result = $db->getMultipleData($query);
+
+    // * 3. Return to Frontend
+    echo $result[0]['name'];
+}
+
+// Todo: Need to do Confirm Process by SP.
+if (isset($_GET['serviceId'])) {
+
+    if (isset($_GET["request"]) && $_GET["request"] == "acceptRequest") {
+
+        $serviceId = $_GET['serviceId'];
+
+        $query = "UPDATE table_services SET service_status = 'on process', service_agreed = 1 WHERE services_id = $serviceId";
+
+        $updateStatus = $db->updateDataByQuery($query);
+
+        if ($updateStatus == true) {
+
+            $result = 1;
+        }
+
+        echo $result;
     }
 }

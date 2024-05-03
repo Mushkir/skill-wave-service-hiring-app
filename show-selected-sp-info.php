@@ -268,7 +268,7 @@ if (!isset($_SESSION['serviceSeekerName'])) {
                         "request": "verifyUserLoggedIn"
                     },
                     success: function(response) {
-                        // console.log(response);
+                        console.log(response);
                         // No. 1
                         if (response == "401") {
                             Swal.fire({

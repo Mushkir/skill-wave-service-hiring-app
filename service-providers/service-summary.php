@@ -55,5 +55,62 @@
                 }
             })
         }
+
+        $("body").on("click", "#btnConfirm", function(e) {
+
+            e.preventDefault();
+
+            const serviceId = $(this).attr("href");
+            const id = serviceId.split("=")[1];
+
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: "GET",
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    // console.log(response);
+                    Swal.fire({
+                        title: "Are you sure!",
+                        text: `Are you sure to proceed ${response}\'s request?`,
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, Confirm!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '../ajax-file/ajax.php',
+                                type: 'GET',
+                                data: {
+                                    "serviceId": id,
+                                    "request": "acceptRequest"
+                                },
+                                success: function(resp) {
+
+                                    console.log(resp);
+                                    // if (resp == 1) {
+                                    //     $("#btnConfirm")[0].textContent = 'Accepted';
+                                    // }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log("Status: " + status);
+                                    console.log("XHR Response: " + xhr.responseText);
+                                    console.error("Error: " + error);
+                                }
+                            })
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                    console.error("Error: " + error);
+                }
+            })
+
+        })
     })
 </script>
