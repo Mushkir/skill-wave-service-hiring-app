@@ -1091,6 +1091,7 @@ if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderP
             $spSkills = $arrayOfSpInfo['skills'];
             $spPrice = $arrayOfSpInfo['price'];
             $spImage = $arrayOfSpInfo['image'];
+            $spStatus = $arrayOfSpInfo['status'];
 
             // * Get the Town and District name using Id
             $districtData = $district->getDistrictInfoById($spDistrictId);
@@ -1100,7 +1101,7 @@ if (isset($_GET['request']) && $_GET['request'] == 'showLoggedInServiceProviderP
             $townName = $townData['name'];
 
             // * Store all the required values inside an array object
-            $arrayOfResult = serialize(array("spId" => $spID, "name" => $spName, "email" => $spEmailAddress, "contactNo" => $spContactNo, "username" => $spUsername, "gender" => $spGender, "address" => $spAddress, "skills" => $spSkills, "price" => $spPrice, "districtName" => $districtName, "townName" => $townName, "profileImg" => $spImage));
+            $arrayOfResult = serialize(array("spId" => $spID, "name" => $spName, "email" => $spEmailAddress, "contactNo" => $spContactNo, "username" => $spUsername, "gender" => $spGender, "address" => $spAddress, "skills" => $spSkills, "price" => $spPrice, "districtName" => $districtName, "townName" => $townName, "profileImg" => $spImage, "status" => $spStatus));
             $arrayOfResultInString = unserialize($arrayOfResult);
 
             // * Return those array using json_encode()
@@ -1523,6 +1524,33 @@ if (isset($_GET['serviceId'])) {
 
         if ($updateStatus == true) {
 
+            $arrayOfServiceInfo = $services->getServiceInfoById($serviceId);
+
+            $spId = $arrayOfServiceInfo["provider_id"];
+
+            $query = "UPDATE table_service_provider SET status = 'busy' WHERE service_provider_id = $spId";
+
+            $updateSpStatusAsBusy = $db->updateDataByQuery($query);
+
+            if ($updateSpStatusAsBusy == true) {
+
+                $result = 1;
+            }
+        }
+
+        echo $result;
+    }
+}
+
+if (isset($_GET["serviceIdForDelReq"])) {
+
+    if (isset($_GET["request"]) && $_GET["request"] == 'deleteRequest') {
+
+        $serviceId = $_GET["serviceIdForDelReq"];
+
+        $deleteServiceInfo = $services->deleteServicesInfo($serviceId);
+
+        if ($deleteServiceInfo == true) {
             $result = 1;
         }
 

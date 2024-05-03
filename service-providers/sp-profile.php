@@ -21,7 +21,7 @@
                             <strong class="capitalize" id="spName">Mohamed Mushkir</strong>
                         </h3>
 
-                        <div class="bg-green-500 mt-2 px-3 py-1 rounded-full text-sm">
+                        <div class="bg-green-500 mt-2 px-3 py-1 rounded-full text-sm" id="statusDiv">
                             Available
                         </div>
                     </div>
@@ -138,6 +138,7 @@
                         });
                     } else {
                         const serviceProviderJsonData = JSON.parse(response);
+                        console.log(serviceProviderJsonData);
 
                         const {
                             spId,
@@ -151,7 +152,8 @@
                             skills,
                             townName,
                             username,
-                            profileImg
+                            profileImg,
+                            status
                         } = serviceProviderJsonData;
 
                         $("#btnEdit")[0].href = spId;
@@ -167,6 +169,14 @@
                         $("#spTown")[0].textContent = townName;
                         $("#spSkills")[0].textContent = skills;
                         $("#spServicePackage")[0].textContent = `Rs. ${price}`;
+
+                        if (status == "busy") {
+                            // console.dir($("#statusDiv")[0]);
+                            $("#statusDiv")[0].classList.remove("bg-green-500");
+                            $("#statusDiv")[0].classList.add("bg-red-500", "w-20", "text-center")
+                            $("#statusDiv")[0].textContent = "Busy";
+
+                        }
 
                         // console.log(serviceProviderJsonData);
                     }

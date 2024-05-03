@@ -8,3 +8,10 @@ Top 2: Need to implement District and Town details adding by admin feature - COM
 6. Service Provider Profile Dashboard - COMPLETED.
 7. Service Seeker Profile Dashboard - COMPLETED.
 8. Find Services - COMPLETED.
+9. Need to show SS hiring history in Profile (Hiring History) in Table form - COMPLETED.
+10. Make the hiring log number as dynamically - COMPLETED.
+11. Need to inform to SP to change status as "Busy" - ON GOING.
+    11.1 Need to display all summary - COMPLETED.
+    11.2 Need to make dynamically in menu - COMPLETED.
+    11.3 Need to check if the new request (Pending state) came / not? If it is came, need to alert to SP while logging-in - COMPLETED.
+    11.4 SP need to Choose one order. if he choose the order, their state need to change as "Busy" - COMPLETED.

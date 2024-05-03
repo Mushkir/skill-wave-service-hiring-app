@@ -57,7 +57,6 @@
         }
 
         $("body").on("click", "#btnConfirm", function(e) {
-
             e.preventDefault();
 
             const serviceId = $(this).attr("href");
@@ -72,14 +71,14 @@
                 success: function(response) {
                     // console.log(response);
                     Swal.fire({
-                        title: "Are you sure!",
+                        title: "Are you sure?",
                         text: `Are you sure to proceed ${response}\'s request?`,
-                        icon: "question",
+                        showDenyButton: true,
                         showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, Confirm!"
+                        confirmButtonText: "Yes!",
+                        denyButtonText: `Delete the request`
                     }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
                             $.ajax({
                                 url: '../ajax-file/ajax.php',
@@ -89,11 +88,32 @@
                                     "request": "acceptRequest"
                                 },
                                 success: function(resp) {
-
                                     console.log(resp);
-                                    // if (resp == 1) {
-                                    //     $("#btnConfirm")[0].textContent = 'Accepted';
-                                    // }
+                                    showAllServiceSummaryOfServiceProvider();
+                                    if (resp == 1) {
+
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log("Status: " + status);
+                                    console.log("XHR Response: " + xhr.responseText);
+                                    console.error("Error: " + error);
+                                }
+                            })
+                        } else if (result.isDenied) {
+                            $.ajax({
+                                url: '../ajax-file/ajax.php',
+                                type: 'GET',
+                                data: {
+                                    "serviceIdForDelReq": id,
+                                    "request": "deleteRequest"
+                                },
+                                success: function(res) {
+
+                                    if (res == 1) {
+                                        Swal.fire("The request has been rejected", "", "info");
+                                        showAllServiceSummaryOfServiceProvider();
+                                    }
                                 },
                                 error: function(xhr, status, error) {
                                     console.log("Status: " + status);
