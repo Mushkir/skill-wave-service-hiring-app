@@ -100,7 +100,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                             <!-- Name -->
                             <div class="relative">
-                                Hiring Log<sup class="bg-white text-[#6D2932] px-1 rounded-full" id="countProcess">5</sup>
+                                Hiring Log<sup class="bg-[#6D2932] text-white px-1 rounded-full" id="countProcess">5</sup>
                             </div>
                         </a>
                     </li>
@@ -279,10 +279,6 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
         const PATH_HREF = "http://localhost/skill-wave-service-hiring-app/service-seekers/dashboard.php?"
         const documentPathHref = document.location.href;
 
-        // if (documentPathHref == `${PATH_HREF}overview`) {
-        //     dashboardMenuEl.classList.add("activeSideBar")
-        // }
-
         if (documentPathHref == `${PATH_HREF}profile`) {
             profileMenuEl.classList.add("activeSideBar");
         }
@@ -293,6 +289,13 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
         if (documentPathHref == `${PATH_HREF}hiringProcess`) {
             hiringLogMenuEl.classList.add("activeSideBar");
+
+            const countProcessEl = document.querySelector("#countProcess");
+            countProcessEl.classList.remove("bg-[#6D2932]");
+            countProcessEl.classList.remove("text-white");
+
+            countProcessEl.classList.add("bg-white");
+            countProcessEl.classList.add("text-[#6D2932]");
         }
     </script>
 
@@ -302,7 +305,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
             showLoggedInUserProfile();
 
-            // Function for show number of pending hiring process in Hiring Log superscript
+            // * Function for show number of pending hiring process in Hiring Log superscript.
             showHiringLogOnProcessInNumber();
 
             $(document).on("click", "#ss-logout", function(e) {

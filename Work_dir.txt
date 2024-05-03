@@ -2,7 +2,7 @@ To do:
 9. Need to show SS hiring history in Profile (Hiring History) in Table form - COMPLETED.
 10. Need to give view and delete feature to those Hiring history.
 11. Make the hiring log number as dynamically - COMPLETED.
-12. Need to inform to SP to change status as "Busy".
+12. Need to inform to SP to change status as "Busy" - ON GOING.
 
 
 

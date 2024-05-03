@@ -303,6 +303,7 @@ if (!isset($_SESSION['serviceSeekerName'])) {
                                             "getLoggedInSsId": encodeURIComponent('<?php echo $loggedInSsName; ?>')
                                         },
                                         success: function(res) {
+                                            console.log(res);
                                             // No. 4
                                             const jsonData = JSON.parse(res);
 

@@ -1231,7 +1231,7 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
     $status = "on process"; // It will update after payment process.
 
     // * Save the hiring process in table_services table.
-    $confirmedHiringProcess = $Services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $status);
+    $confirmedHiringProcess = $services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $status);
 
     if ($confirmedHiringProcess == true) {
 
@@ -1340,4 +1340,86 @@ if (isset($_POST['request']) && $_POST['request'] == 'countTotalPendingHiringPro
     }
     // * 4. Return to Frontend.
     echo $count;
+}
+
+// Todo: Need to show all service provider service summary in dashboard.
+if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSummary') {
+
+    if (isset($_SESSION['serviceProviderName'])) {
+        $result = "";
+        // * Steps:
+        // * 1. Need to get logged-in username using SESSION.
+        $sessionSpName = $_SESSION['serviceProviderName'];
+
+        // * 2. Need to get the ID of logged-in SP using their name in 'table_service_provider' table.
+        $arrayOfSpInfo = $serviceProvider->getServiceProviderInfo('name', $sessionSpName);
+
+        $spId = $arrayOfSpInfo['service_provider_id'];
+
+        // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
+        $query = "SELECT ts.services_id, ts.seeker_id, ts.description, ts.service_charge, ts.service_status, tss.name, tss.contact_no 
+        FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id 
+        JOIN table_service_seeker tss ON ts.seeker_id = tss.service_seeker_id WHERE tsp.service_provider_id = $spId";
+
+        $arrayOfServiceSeekerInfo = $db->getMultipleData($query);
+
+        // * 4. Get the all the detail such as seeker name, seeker id, description, service charge and service status using the id & Display the results in UI.
+        $serialNo = 1;
+        $result .= '<table class="table-auto mx-auto [&>tbody>*:nth-child(even)]:bg-gray-300 table border-2 border-gray-400 w-full text-center" id="spServiceSummaryTable">
+        <thead>
+            <tr class=" bg-gray-400 text-gray-700 text-center">
+                <th class="p-2 text-center">S.No</th>
+                <th class="p-2 text-center">Service Seeker ID</th>
+                <th class="p-2 text-center">Service Seeker Name</th>
+                <th class="p-2 text-center">Service Seeker Contact No</th>
+                <th class="p-2 text-center">Accept / Reject</th>
+                <th class="p-2 text-center">Service Description</th>
+                <th class="p-2 text-center">Service Charge</th>
+                <th class="p-2 text-center">Status</th>
+                <th class="p-2 text-center">Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+        foreach ($arrayOfServiceSeekerInfo as $data) {
+            $serviceId = $data['services_id'];
+            $serviceSeekerId = $data['seeker_id'];
+            $serviceDesc = $data['description'];
+            $serviceCharge = $data['service_charge'];
+            $serviceStatus = $data['service_status'];
+            $serviceSeekerName = $data['name'];
+            $serviceSeekerContactNo = $data['contact_no'];
+
+
+            $serviceDesc == "Pending" ? $desc = "Click to add description details" : $desc = $serviceDesc;
+
+            $result .= '<tr>
+            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">#' . $serialNo++ . '</td>
+            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">' . $serviceSeekerId . '</td>
+            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">' . $serviceSeekerName . '</td>
+            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2"><a href="tel:' . $serviceSeekerContactNo . '" class="block text-center hover:transition 500" id="cta" title="Tap to call to ' . $serviceSeekerName . '">' . $serviceSeekerContactNo . '</a></td>
+            <td class="px-1 py-1.5 text-center border-gray-400 border-r-2"><a href="serviceId=' . $serviceId . '" class="hover:underline hover:transition 500 hover:text-gray-700 block text-center" title="Click to confirm or reject this request">Confirm</a></td>
+            <td class="px-1 py-1.5 border-gray-400 border-r-2">
+                <a href="serviceId=' . $serviceId . '" class="hover:underline text-left block hover:transition 500 hover:text-gray-700" id="serviceDes">' . $desc . '</a>
+            </td>
+
+            <td class="px-1 py-1.5 border-gray-400 border-r-2">
+                <a href="serviceId=' . $serviceId . '" class="hover:text-gray-700 hover:transition 500 hover:underline text-left block" id="serviceCharge">Add Service Charge</a>
+            </td>
+            <td class="px-1 py-1.5 border-gray-400 border-r-2">
+                On Process
+            </td>
+            <td class="px-1 py-1.5 border-gray-400 border-r-2">
+                <a href="#" class="hover:underline hover:transition 500 hover:text-gray-700">Pending</a>
+            </td>
+        </tr>';
+        }
+
+        $result .= '</tbody></table>';
+    } else {
+
+        $result = 0;
+    }
+
+    echo $result;
 }
