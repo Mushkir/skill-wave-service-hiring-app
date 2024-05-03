@@ -17,7 +17,7 @@ $district = new District();
 $town = new Town();
 $serviceSeeker = new ServiceSeeker();
 $serviceProvider = new ServiceProvider();
-$Services = new Services();
+$services = new Services();
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -1208,13 +1208,10 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
 
     $serviceSeekerName = implode(" ", $nameInArray);
 
-    // Get the ss id using recieved ss name.
+    // 1. Get the ss id using recieved ss name.
     $arrayOfSsInfo = $serviceSeeker->getServiceSeekerInfo("name", $serviceSeekerName);
 
-    // Confirm the service hiring (Insert data in table_services)
-    // Required Data: 
-    // 1. provider_id - 1
-    // 2. seeker_id - 1
+    // 2. Confirm the service hiring (Insert data in table_services)
     $serviceSeekerId = $arrayOfSsInfo['service_seeker_id'];
     $serviceSeekerName = $arrayOfSsInfo['name'];
 
@@ -1248,7 +1245,7 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
 
 // Todo: Need to show all service hiring summary in profile dashboard (Hiring Log) to SS.
 if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
-    $result;
+    $result = "";
 
     if (isset($_SESSION['serviceSeekerName'])) {
         // * Steps:
@@ -1256,14 +1253,62 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
         $loggedInSsName = $_SESSION['serviceSeekerName'];
 
         // * 2. Need to get the ID of logged-in SS using their name in 'table_service_seeker' table.
-        $serviceSeeker->getServiceSeekerInfo("name", $loggedInSsName);
+        $arrayOfSsInfo = $serviceSeeker->getServiceSeekerInfo("name", $loggedInSsName);
+        $serviceSeekerId = $arrayOfSsInfo['service_seeker_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        // * 4. Get the all the ddetail such as provider name, provider id, description, service charge and service status using the id.
-        // * 5. Return the output object to frontend.
+        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id";
 
+        $arrayOfHiringProcessInfo = $db->getMultipleData($query);
 
+        // * 4. Get the all the detail such as provider name, provider id, description, service charge and service status using the id & Display the results in UI.
+        $serialNo = 1;
+        $result .= '<table class="table-auto mx-auto [&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full">
+        <thead class="bg-[#6D2932] text-white text-center">
+            <th class="p-2 text-center">S.No</th>
+            <th class="p-2 text-center">Service ID</th>
+            <th class="p-2 text-center">Service Provider ID</th>
+            <th class="p-2 text-center">Service Provider Name</th>
+            <th class="p-2 text-center">Service Description</th>
+            <th class="p-2 text-center">Service Charge</th>
+            <th class="p-2 text-center">Status</th>
+        </thead>
+        <tbody>';
+
+        foreach ($arrayOfHiringProcessInfo as $data) {
+
+            $serviceId  = $data['services_id'];
+            $serviceProviderId  = $data['provider_id'];
+            $serviceDesc  = $data['description'];
+            $serviceCharge  = $data['service_charge'];
+            $serviceStatus  = $data['service_status'];
+            $serviceProviderName  = $data['name'];
+
+            $desc = "";
+
+            $serviceDesc == "Pending" ? $desc = "Will be updated by $serviceProviderName" : $desc = $serviceDesc;
+
+            $result .= '<tr>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">#' . $serialNo++ . '</td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $serviceId . '</td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $serviceProviderId . '</td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $serviceProviderName . '</td>
+            <td class="px-3 py-1.5 border-r-[#6D2932] border-r-2 text-left">
+            ' . $desc . '
+            </td>
+
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">Rs. ' . $serviceCharge . '</td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
+            ' . $serviceStatus . '
+            </td>
+        </tr>';
+        }
+
+        $result .= '</tbody></table>';
     } else {
-        echo "0";
+
+        $result = 0;
     }
+
+    echo $result;
 }

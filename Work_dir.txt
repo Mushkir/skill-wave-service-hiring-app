@@ -1,5 +1,24 @@
 To do:
-9. Need to show SS hiring history in Profile (Hiring History) in Table form - ON GOING.
+9. Need to show SS hiring history in Profile (Hiring History) in Table form - COMPLETED.
 10. Need to give view and delete feature to those Hiring history.
-11. Make the hiring log number as dynamically.
+11. Make the hiring log number as dynamically - On Process.
 12. Need to inform to SP to change status as "Busy".
+
+
+
+Steps to write join query: 
+    service id
+    description
+    service charge
+    status => services table
+
+    Provider Id
+    Provider name => service provider table
+        1. Find the tables need to join
+        2. Write the join query with table name only
+        Ex: "SELECT FROM mainTable aliyas JOIN subTable sub_table_aliyas"
+        3. Write needed output next to SELECT
+        Ex: "SELECT aliyas.output1, aliyas.output2, sub_table_aliyas.output1 FROM JOIN subTable sub_table_aliyas";
+        4. Need to find JOIN CONDITION. To find that, need get common columns in both tables. 
+        After that, need to write that condition finally.
+        EX: "SELECT aliyas.output1, aliyas.output2, sub_table_aliyas.output1 FROM mainTable aliyas JOIN sub_table subTable_aliyas ON aliyas.commonColumnName = sub_table_aliyas.commonColumnName"
