@@ -1557,3 +1557,70 @@ if (isset($_GET["serviceIdForDelReq"])) {
         echo $result;
     }
 }
+
+// Todo: Check the service provider state
+if (isset($_POST["request"]) && $_POST['request'] == "checkUserState") {
+
+    if (isset($_SESSION['serviceProviderName'])) {
+
+        $spName = $_SESSION['serviceProviderName'];
+
+        // * 1. Get the id of SP using Name
+        $arrayOfSpInfo = $serviceProvider->getServiceProviderInfo("name", $spName);
+        $serviceProviderID = $arrayOfSpInfo['service_provider_id'];
+
+        // * 2. Get the status
+        $arrayOfSpData = $serviceProvider->getServiceProviderInfoById($serviceProviderID);
+        $spStatus = $arrayOfSpData['status'];
+
+        // * 3. Based on the status return value to frontend
+        if ($spStatus == 'busy') {
+
+            $res = 0;
+        } else {
+
+            $res = 1;
+        }
+
+        echo $res;
+    }
+}
+
+// Todo: Need to change state as busy and available by SP.
+if (isset($_GET["passedServiceProviderId"])) {
+
+    if (isset($_SESSION['serviceProviderName'])) {
+
+
+        // * Steps:
+        // * 1. Need to get the SP-ID.
+        $sessionSpId = $_GET["passedServiceProviderId"];
+
+        // * 2. Check the status.
+        $arrayOfSpInfo = $serviceProvider->getServiceProviderInfoById($sessionSpId);
+        $spStatus = $arrayOfSpInfo['status'];
+
+        // * 3. If it is "busy", update as "available".
+        if ($spStatus == "busy") {
+
+            $query = "UPDATE table_service_provider SET status = 'available' WHERE service_provider_id = $sessionSpId";
+            $updateState = $db->updateDataByQuery($query);
+
+            if ($updateState == true) {
+
+                $result = 1;
+            }
+        } else {
+
+            $query = "UPDATE table_service_provider SET status = 'busy' WHERE service_provider_id = $sessionSpId";
+            $updateState = $db->updateDataByQuery($query);
+
+            if ($updateState == true) {
+
+                $result = 0;
+            }
+        }
+
+        echo $result;
+    }
+}

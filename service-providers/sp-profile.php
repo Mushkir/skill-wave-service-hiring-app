@@ -138,7 +138,7 @@
                         });
                     } else {
                         const serviceProviderJsonData = JSON.parse(response);
-                        console.log(serviceProviderJsonData);
+                        // console.log(serviceProviderJsonData);
 
                         const {
                             spId,

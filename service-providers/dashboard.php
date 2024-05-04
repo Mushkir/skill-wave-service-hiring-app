@@ -133,14 +133,17 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
         </section>
 
         <!-- Content -->
-        <section class="bg-gray-200 w-full min-h-screen p-5 rounded-xl">
+        <section class="bg-gray-200 w-full min-h-screen p-5 rounded-xl" id="contentMenu">
             <!-- Header Part -->
             <section class="flex items-start justify-between relative z-40">
                 <!-- Profile -->
                 <div class="hover:cursor-pointer z-40 absolute top-0 right-0" id="sp-profile">
                     <div>
-                        <div class="flex justify-end items-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" class="w-10 h-10 object-cover rounded-full" id="sp-profile-img" />
+                        <div class="relative">
+                            <div class="flex justify-end items-center">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" class="w-10 h-10 object-cover rounded-full" id="sp-profile-img" />
+                            </div>
+                            <div class="w-2 h-2 bg-green-500 rounded-full absolute top-0 right-0" id="stateIndicator"></div>
                         </div>
 
                         <!-- Dropdown menu -->
@@ -167,14 +170,8 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                                 </li>
 
                                 <li class="mt-3 text-black px-[16px] py-1 hover:bg-gray-200 hover:text-black">
-                                    <a href="#" class="flex items-center gap-2">
-                                        <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                                <path fill="currentColor" d="M12 19.75A7.75 7.75 0 0 1 4.25 12h-2.5c0 5.66 4.59 10.25 10.25 10.25zm0-15.5A7.75 7.75 0 0 1 19.75 12h2.5c0-5.661-4.59-10.25-10.25-10.25zM4.25 12c0-2.14.866-4.076 2.27-5.48L4.752 4.752A10.222 10.222 0 0 0 1.75 12zm2.27-5.48A7.722 7.722 0 0 1 12 4.25v-2.5c-2.83 0-5.394 1.149-7.248 3.002zm-1.768 0L17.48 19.248l1.768-1.768L6.52 4.752zM19.75 12c0 2.14-.866 4.076-2.27 5.48l1.768 1.768A10.221 10.221 0 0 0 22.25 12zm-2.27 5.48A7.722 7.722 0 0 1 12 19.75v2.5c2.83 0 5.394-1.149 7.248-3.002z" />
-                                            </svg>
-                                        </div>
+                                    <a href="#" class="flex items-center gap-2" id="btnChangeState">
 
-                                        Change to Busy state
                                     </a>
                                 </li>
 
@@ -283,6 +280,9 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
             // * Function for count and show on process services in Menu
             countPendingServices();
 
+            // * Function for check and change the service provider state based on their current state.
+            checkAndChangeServiceProviderState();
+
             function showServiceProviderInfoInCorner() {
 
                 $.ajax({
@@ -293,7 +293,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                         "loggedInUsername": "loggedInUsername"
                     },
                     success: function(response) {
-
+                        // console.dir(document.baseURI);
                         if (response == "404") {
                             Swal.fire({
                                 icon: "error",
@@ -323,6 +323,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                             $("#sp-profile-img")[0].alt = `${name}'s image`;
                             $("#sp-fullname")[0].textContent = name;
                             $("#sp-email")[0].textContent = email;
+                            $("#btnChangeState").attr("href", sericeProviderID);
                         }
 
                     }
@@ -338,7 +339,9 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                     },
                     success: function(response) {
                         // console.log(response);
-                        console.dir()
+                        // const stateTextEl = document.querySelector("#stateText")
+                        // console.dir(stateTextEl.innerText = "Chnage");
+
                         if (response == 0) {
                             $("#countSummary")[0].classList.add("hidden")
                         } else if (response == 401) {
@@ -366,6 +369,99 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                 })
             }
 
+            function checkAndChangeServiceProviderState() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "checkUserState"
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if (response == 0) {
+
+                            $("#btnChangeState").html(`<div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                                <path fill="currentColor" d="M5 6a4 4 0 1 1 8 0a4 4 0 0 1-8 0m-3 7c0-1.113.903-2 2.009-2h6.248A5.48 5.48 0 0 0 9 14.5c0 1.303.453 2.5 1.21 3.443Q9.617 18 9 18c-1.855 0-3.583-.386-4.865-1.203C2.833 15.967 2 14.69 2 13m17 1.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m-2.146-1.854a.5.5 0 0 0-.708 0L13.5 15.293l-.646-.647a.5.5 0 0 0-.708.708l1 1a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0 0-.708" />
+                                            </svg>
+                                        </div>
+
+                                        <p id="stateText">Change to Available state</p>`)
+
+                            $("#stateIndicator")[0].classList.remove("bg-green-500");
+                            $("#stateIndicator")[0].classList.add("bg-red-500");
+
+                        } else {
+
+                            $("#btnChangeState").html(`<div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M12 19.75A7.75 7.75 0 0 1 4.25 12h-2.5c0 5.66 4.59 10.25 10.25 10.25zm0-15.5A7.75 7.75 0 0 1 19.75 12h2.5c0-5.661-4.59-10.25-10.25-10.25zM4.25 12c0-2.14.866-4.076 2.27-5.48L4.752 4.752A10.222 10.222 0 0 0 1.75 12zm2.27-5.48A7.722 7.722 0 0 1 12 4.25v-2.5c-2.83 0-5.394 1.149-7.248 3.002zm-1.768 0L17.48 19.248l1.768-1.768L6.52 4.752zM19.75 12c0 2.14-.866 4.076-2.27 5.48l1.768 1.768A10.221 10.221 0 0 0 22.25 12zm-2.27 5.48A7.722 7.722 0 0 1 12 19.75v2.5c2.83 0 5.394-1.149 7.248-3.002z" />
+                                            </svg>
+                                        </div>
+
+                                        <p id="stateText">Change to Busy state</p>`)
+
+                            $("#stateIndicator")[0].classList.remove("bg-red-500");
+                            $("#stateIndicator")[0].classList.add("bg-green-500");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.log("Error: " + error);
+                    }
+
+
+                })
+            }
+
+            $("body").on("click", "#btnChangeState", function(e) {
+                e.preventDefault();
+
+                const serviceProviderId = $(this).attr("href");
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: "GET",
+                    data: {
+                        "passedServiceProviderId": serviceProviderId
+                    },
+                    beforeSend: function() {
+                        $("#contentMenu").html('<div class="mt-[200px] flex justify-center items-center"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"><circle cx="12" cy="2" r="0" fill="#6D2932"><animate attributeName="r" begin="0" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(45 12 12)"><animate attributeName="r" begin="0.125s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(90 12 12)"><animate attributeName="r" begin="0.25s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(135 12 12)"><animate attributeName="r" begin="0.375s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(180 12 12)"><animate attributeName="r" begin="0.5s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(225 12 12)"><animate attributeName="r" begin="0.625s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(270 12 12)"><animate attributeName="r" begin="0.75s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(315 12 12)"><animate attributeName="r" begin="0.875s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg></div>');
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response == 1) {
+                            Swal.fire({
+                                title: "State Changed!",
+                                text: "Your state changed as Available!",
+                                icon: "success"
+                            }).then((result) => {
+
+                                const currentUrl = document.baseURI // Get the current url
+                                window.location.href = currentUrl // Redirect to same page after changing the state
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "State Changed!",
+                                text: "Your state changed as Busy!",
+                                icon: "success"
+                            }).then((result) => {
+
+                                const currentUrl = document.baseURI // Get the current url
+                                window.location.href = currentUrl // Redirect to same page after changing the state
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.log("Error: " + error);
+                    }
+
+
+                })
+            })
         })
     </script>
 
