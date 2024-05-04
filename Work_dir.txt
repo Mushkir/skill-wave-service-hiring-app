@@ -1,6 +1,9 @@
 To do:
-12. Need to implement state changing in SP profile.
-
+13. Need to implement service description and service charge enterign by SP.
+14. Need to design Payment UI.
+15. Need to implement payment feature
+16. Need to implement Feedback UI.
+17. Need to implement giving feedback by SS.
 
 
 Steps to write join query: 

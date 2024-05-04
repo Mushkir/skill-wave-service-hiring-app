@@ -15,3 +15,4 @@ Top 2: Need to implement District and Town details adding by admin feature - COM
     11.2 Need to make dynamically in menu - COMPLETED.
     11.3 Need to check if the new request (Pending state) came / not? If it is came, need to alert to SP while logging-in - COMPLETED.
     11.4 SP need to Choose one order. if he choose the order, their state need to change as "Busy" - COMPLETED.
+12. Need to implement state changing in SP profile - COMPLETED.
