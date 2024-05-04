@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2024 at 01:25 PM
+-- Generation Time: May 04, 2024 at 01:24 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -135,10 +135,20 @@ CREATE TABLE `table_services` (
   `services_id` int(11) NOT NULL,
   `provider_id` int(11) NOT NULL,
   `seeker_id` int(11) NOT NULL,
-  `nic_no` varchar(12) NOT NULL,
   `description` varchar(200) NOT NULL,
-  `service_charge` int(11) NOT NULL
+  `service_charge` int(11) NOT NULL,
+  `service_agreed` tinyint(1) NOT NULL,
+  `service_status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `table_services`
+--
+
+INSERT INTO `table_services` (`services_id`, `provider_id`, `seeker_id`, `description`, `service_charge`, `service_agreed`, `service_status`) VALUES
+(18, 19, 34, 'Pending', 1000, 1, 'on process'),
+(19, 3, 34, 'Pending', 517, 1, 'on process'),
+(21, 15, 34, 'Pending', 702, 1, 'on process');
 
 -- --------------------------------------------------------
 
@@ -174,7 +184,7 @@ CREATE TABLE `table_service_provider` (
   `skills` varchar(100) NOT NULL,
   `image` varchar(255) NOT NULL,
   `description` varchar(50) NOT NULL,
-  `keywords` varchar(100) NOT NULL,
+  `keywords` varchar(255) NOT NULL,
   `price` float NOT NULL,
   `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -184,7 +194,25 @@ CREATE TABLE `table_service_provider` (
 --
 
 INSERT INTO `table_service_provider` (`service_provider_id`, `name`, `email_address`, `contact_no`, `username`, `password`, `gender`, `address_line`, `district_id`, `town_id`, `latitude_value`, `longitutde_value`, `qualification`, `skills`, `image`, `description`, `keywords`, `price`, `status`) VALUES
-(1, 'Jeya Kummar', 'vywagy@example.com', '+91218373429', 'fumawewo', '$2y$10$qYLafcZ0iOoCPpl2MztyX.GfFOEuV8oHGq0xzhil00sF0Hf8DxW.6', 'Other', '638 North Cowley Court', 7, 4, '7.4143831', '81.8306334', 'In et veritatis dolo', 'Repudiandae aliqua ', '20f98461e50ae8b28e979ea208478b3f.jpeg', 'Voluptatem accusamus', 'Blanditiis labore ad', 618, 'available');
+(1, 'Jeya Kummar', 'vywagy@example.com', '+91218373429', 'fumawewo', '$2y$10$qYLafcZ0iOoCPpl2MztyX.GfFOEuV8oHGq0xzhil00sF0Hf8DxW.6', 'Other', '638 North Cowley Court', 7, 4, '7.4143831', '81.8306334', 'In et veritatis dolo', 'Electrician', '20f98461e50ae8b28e979ea208478b3f.jpeg', 'House Electrical Fixing', 'Electrical, electrician, electrical man, electrical worker, electric worker', 618, 'available'),
+(2, 'Bearcin Suthan', 'kipic@example.com', '+91978435719', 'josypuxepe', '$2y$10$pzOY0gxO5jyY9tKKuIHGHef4cdEEkGRba5TZx2hLN5sbSmxN40XGq', 'Other', '62 White Cowley Court', 16, 4, '7.4143831', '81.8306334', 'Vel earum ea aliquam', 'Plumber', 'e1dae7874a83417584b1e629818cb7fa.jpeg', 'Tempor aut nemo perf', 'Plumber, plumbing, plumbing worker, plumber worker, house plumber', 116, 'available'),
+(3, 'Mohamed Ramesh', 'tysiho@example.com', '+91177768935', 'zuvosifano', '$2y$10$WA6lMInx0iW3dXHpg5K50.6ppeu.2ScSKyOBaPkdj/cZYSthim1Xm', 'Other', '27 Hague Extension', 16, 7, '6.926997', '79.8639835', 'Labore reiciendis el', 'Mechanic', '54eea2d903de3172582bfaf1d1f7d6f1.jpeg', 'Quasi mollit explica', 'mechanic, bike mechanic, car mechanic, light vehicle mechanic, heavy vehicle mechanic, puncture, oil changing', 517, 'busy'),
+(4, 'Khaja Mariyaan', 'kylyqeqyxi@example.com', '+91793611313', 'sufeq', '$2y$10$/CpA6pR/mIEZvBhTOK1FnOboaKQQ/ItZLvzef3U/5LiF1Obm/hDIC', 'Male', '65 Milton Road', 9, 6, '7.7249146', '81.6966911', 'MBBS, MD', 'Surgeon, Child Doctor', 'cd96ec1eaa95fc27e2d16d9234fbf7dd.jpeg', 'Tempor ad eius non t', 'surgeon, child doctor, doctor', 146, 'available'),
+(5, 'Jeba Mohamed', 'zykutaqimo@example.com', '+91711297825', 'cymitazuv', '$2y$10$Z0hNj8atKzueaqUQaQzPy.CEVPaatFaNoBuDLMIE1cNOOXdR/LpQK', 'Female', '42 White Hague Freeway', 4, 4, '7.4143831', '81.8306334', 'Et debitis autem dol', 'Eveniet iure neque ', 'fe8235cda713ff183c8817db8bb636af.jpeg', 'Dicta officiis minim', 'Dolore proident sin', 63, 'available'),
+(6, 'Gayathri Kumari', 'laduxyvada@example.com', '+91957726979', 'tefinu', '$2y$10$kr44yZOsLJsIDwTq3Dr/sOdqI10p/O6/Edm0CmROX2WXMSL9d/zwi', 'Female', '33 North White First Avenue', 13, 7, '6.926997', '79.8639835', 'Consectetur perferen', 'Ut molestias sequi d', '2c535ed385c9775a86f80cde0c27a69d.jpeg', 'Molestiae mollitia a', 'Consequatur exceptur', 608, 'available'),
+(7, 'Sudharshan Vedhasek', 'behuqup@example.com', '+91152869969', 'kohudokyby', '$2y$10$AMqCj7HvZIEs1MIzMVWfee48TCATD.9UfOXzG3klG6RhHZiYseW5y', 'Other', '284 First Freeway', 32, 7, '6.926997', '79.8639835', 'Nesciunt quibusdam ', 'Exercitation quae co', 'a7ce9f4a10dc83c1f493d0efd8b2234c.jpeg', 'Harum vel eos duis ', 'Impedit eos cumque ', 631, 'available'),
+(8, 'Dinesh Sweety', 'betisogub@example.com', '+91313297941', 'sidof', '$2y$10$tKg.aImPge1r.fO/MrNOHucYgylVkZUlcP3yTje3Fb0atvRqXPcMS', 'Other', '23 North Old Road', 14, 5, '6.8559485', '79.8629683', 'Corporis est id vo', 'Itaque rerum sunt c', 'd4f14c9e0789217d2dc87a357963f166.jpeg', 'Elit laboriosam la', 'Est harum nisi cons', 628, 'available'),
+(9, 'Shajid Ramesh', 'pyxedi@example.com', '+91569483918', 'nasizateky', '$2y$10$M3RivHzbL8Ot2jXm.GaU5.IxyabnlAM6ZqYZCgjXo4A7adAtZmyj6', 'Female', '17 West Fabien Lane', 7, 5, '6.8559485', '79.8629683', 'Qui anim libero aut ', 'Quam quos et archite', '7ac26b3287f781a15ef7be333e95299a.jpeg', 'Ea voluptatum ullamc', 'Qui nulla qui animi', 781, 'available'),
+(10, 'Sudharshan Sweety', 'tuvivemiru@example.com', '+91169671724', 'tucuc', '$2y$10$pcDlbV1/7BIMhLuepUW3wOJbM5xqP8BMxVP0L/0KA7hL6E8FFG.9.', 'Other', '708 First Court', 6, 6, '7.7249146', '81.6966911', 'Deserunt rerum possi', 'Deleniti est autem ', '2d6c5175229a5dc5652817b20e21478c.jpeg', 'Dolorum a autem et d', 'Optio fugit cum ex', 283, 'available'),
+(11, 'Riyaz Mushkir', 'hacu@example.com', '+91417448683', 'besan', '$2y$10$t9hRPVcMtKAWOJzy6z/QVetcRzS9kz3CEmJmH9IbQGH/X9SE6YXnK', 'Female', '81 Old Extension', 7, 4, '7.4143831', '81.8306334', 'Anim provident mole', 'Ea maxime alias quas', 'fb1951be98a0c677bc246280f4d72eaa.jpeg', 'Alias aut amet dolo', 'Laboriosam quibusda', 68, 'available'),
+(12, 'Muthu Selvan', 'kibi@example.com', '+91282473523', 'gywegahuro', '$2y$10$QPxCFLzJuhiRdWzo4YuVye2Zbwj7ZWnEU14RaSDNPYNN/D9fBiDKK', 'Male', '850 Rocky Second Avenue', 17, 6, '7.7249146', '81.6966911', 'Aperiam dolore dolor', 'Sit quos et vero nis', 'fc20ad7559b675380c4152c2d3c81b09.jpeg', 'Architecto qui dolor', 'Quas quia rem qui la', 607, 'available'),
+(13, 'Suriya Mohamed', 'some@example.com', '+91583355712', 'tugahu', '$2y$10$u2cfYWTAyLTXSZMVSjfbAeeMBvbbS7XctwWIGe6hcwtPoF1vkggxS', 'Male', '411 West Second Extension', 7, 6, '7.7249146', '81.6966911', 'Unde ut soluta et qu', 'Esse aspernatur est ', '4cad6a3ed2d70d33473f0573e6d6bd2a.jpeg', 'Voluptatem Eiusmod ', 'Dolore proident sit', 704, 'available'),
+(14, 'Jeya Mohamed', 'jyqodipevu@example.com', '+91433717579', 'habokudaz', '$2y$10$IMvYSpibmYMUM8epWFF5Tu5BGbP2BifW3g/pIjNpAaqGcbSoGrGYq', 'Male', '760 West Cowley Street', 32, 7, '6.926997', '79.8639835', 'Porro enim sapiente ', 'Dolore minus laudant', 'e76fc6cc030865381cfe1c36a0fbaba5.jpeg', 'Dolor aperiam sit ir', 'Est soluta ipsa vo', 13, 'available'),
+(15, 'Anbu Sweety', 'risop@example.com', '+91897668227', 'punih', '$2y$10$owstBnyhsTK4iQIk/PIr8.0GNt3amwRBBv.0ahliZ1ov8A6rGzROy', 'Other', '55 East Rocky Fabien Parkway', 7, 7, '6.926997', '79.8639835', 'Ut tempor aliquam ip', 'Quod ipsum consequat', 'a2eaccc21b771edf6ceb4e2e7db14b08.jpeg', 'Laboris illum volup', 'Cillum ea laboris as', 702, 'available'),
+(16, 'Vijay Dhayalan', 'xukyjehos@example.com', '+91143677181', 'pepoti', '$2y$10$jBOWaOgju1RYcwUkq5PPhuz.J8ussR3GG22mn18HBz5VzUuE3RQrK', 'Male', '544 North Clarendon Road', 5, 5, '6.8559485', '79.8629683', 'Sint tempore volup', 'Inventore et modi co', '91dcb7432aae3698c9a96c4b16f4af7a.jpeg', 'Quaerat autem laboru', 'Qui id sunt veritati', 535, 'available'),
+(17, 'Swetha Sabari', 'secegehosa@example.com', '+91323662147', 'modidete', '$2y$10$lzcWZcnesckfv.eCGbqdoOJdY03QgGs26A4uu64Gy6JQb73/2BJ1u', 'Female', '470 West White Old Parkway', 7, 7, '6.926997', '79.8639835', 'Minim placeat eius ', 'Molestiae quia ut al', '528f1c12a2ccd54e3653c655db3b4852.jpeg', 'Natus velit in tenet', 'Assumenda incididunt', 387, 'available'),
+(18, 'Sudharshan Gangathar', 'cywepys@example.com', '+91769671633', 'qywutuk', '$2y$10$6QCpnr/qL4dzUszsSrUt7O.tT/3jA9OwDgIRBlf4cylipXv2SHOES', 'Female', '64 South Second Street', 7, 6, '7.7249146', '81.6966911', 'Non nulla sint sequ', 'Incidunt perspiciat', 'bcd2abce98d83c245820d845ceaa2394.jpeg', 'Ipsum culpa saepe t', 'Rerum rem optio et ', 389, 'available'),
+(19, 'Mushkir Mohamed', 'mushkirmohamed@gmail.com', '+94777195282', 'mushkir_96', '$2y$10$q8u4CoYYWnA9J9bEJjrNhug6lc/9yVY/iJiO0SpAXHXMLwVguWRSu', 'Male', 'No. 246/A, Meera Nagar Road', 5, 7, '6.926997', '79.8639835', 'OW', 'Mechanic', '58ee9650878ff83154fff0e21742634c.jpeg', 'pgfjpdohg', 'Puncture, Bike oil changing, Engine issue fixing', 1000, 'available');
 
 -- --------------------------------------------------------
 
@@ -221,7 +249,9 @@ INSERT INTO `table_service_seeker` (`service_seeker_id`, `name`, `email_address`
 (29, 'Dinesh Kummar', 'gyguqo@example.com', '+919324413814', 'pawyke', '$2y$10$G51r29LvOkWIQeY/.UWV4.HC9UDGbj14PS3nkEitoOpAHAEHYnj2W', 'Other', '46 West Rocky Hague Lane', 'Nintavur', '7.3314137', '81.8333656', '199631411505', 'b1dea88788ea5b2934412601bb80f1d8.jpg'),
 (30, 'Jeya Suthan', 'xiduxufaq@example.com', '+915315999221', 'peniwoma', '$2y$10$lr6KRBtvjcHAV8rGvhSkiOgDVZJt0/8zdee99.RKhakSf6M5nLIoS', 'Female', '656 East First Extension', 'Nintavur', '7.3314137', '81.8333656', '199631401405', 'b432ed0d3eb9534765f48137f2764fa9.jpeg'),
 (31, 'Mohamed Suthan', 'gidume@example.com', '+912262677435', 'nufijyw', '$2y$10$Z6Ynv2jtXwEJIML5EFF9.eQ827BKMJdmW6jYa1Tj.bqABh2tkb/fe', 'Other', '51 White Old Road', 'Nintavur', '7.3314137', '81.8333656', '199631474505', '6b16015af39fab42227a59560b4245e8.png'),
-(32, 'Jeba Kumar', 'xonycecype@example.com', '+911947885298', 'wyhidoha', '$2y$10$TNleW3BK0zJ5NbfSlGCMqOyXzINAXuOynqnfP9bmwTbrDK27ICcOG', 'Female', '917 East Hague Boulevard', 'Nintavur', '7.3314137', '81.8333656', '199631400000', '5baccc7997564857032c56a802bb9726.png');
+(32, 'Jeba Kumar', 'xonycecype@example.com', '+911947885298', 'wyhidoha', '$2y$10$TNleW3BK0zJ5NbfSlGCMqOyXzINAXuOynqnfP9bmwTbrDK27ICcOG', 'Female', '917 East Hague Boulevard', 'Nintavur', '7.3314137', '81.8333656', '199631400000', '5baccc7997564857032c56a802bb9726.png'),
+(33, 'Swetha Shafee', 'sycoqahor@example.com', '+91746282214', 'zorahy', '$2y$10$LnlrsUFWeK7re/kWuK4oEe1OZz1zABz5TLplW946H2/..VtscxiWa', 'Other', 'No. 246/A, Meera Nagar Road', 'Nintavur', '7.3314137', '81.8333656', '174185293698', 'db88e63fd2b91b65d09397ddff8b725d.jpeg'),
+(34, 'Anbu Kummar', 'fufoxaf@example.com', '+91218637327', 'gadapal', '$2y$10$crO4QF1XSVWeyZkmAYQlx.RcMDQddyvA8nsqJ7LsTqpm5/zsFimS.', 'Other', 'No. 246/A, Meera Nagar Road', 'Nintavur', '7.3314137', '81.8333656', '741296327896', 'e0110eb961946ae74bac5a8743328c7c.jpeg');
 
 -- --------------------------------------------------------
 
@@ -353,7 +383,7 @@ ALTER TABLE `table_payment`
 -- AUTO_INCREMENT for table `table_services`
 --
 ALTER TABLE `table_services`
-  MODIFY `services_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `services_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `table_service_category`
@@ -365,13 +395,13 @@ ALTER TABLE `table_service_category`
 -- AUTO_INCREMENT for table `table_service_provider`
 --
 ALTER TABLE `table_service_provider`
-  MODIFY `service_provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `service_provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `table_service_seeker`
 --
 ALTER TABLE `table_service_seeker`
-  MODIFY `service_seeker_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `service_seeker_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `table_town`
@@ -395,13 +425,6 @@ ALTER TABLE `table_&_providers_detail`
 --
 ALTER TABLE `table_feedback`
   ADD CONSTRAINT `service_id_FK` FOREIGN KEY (`service_id`) REFERENCES `table_services` (`services_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `table_services`
---
-ALTER TABLE `table_services`
-  ADD CONSTRAINT `service_provider_id_FK` FOREIGN KEY (`provider_id`) REFERENCES `table_service_provider` (`service_provider_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `service_seeker_id` FOREIGN KEY (`seeker_id`) REFERENCES `table_service_seeker` (`service_seeker_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
