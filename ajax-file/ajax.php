@@ -521,6 +521,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'serviceProviderSignUp') {
     $spDescEl = $_POST['sp-desc'];
     $spKeywordsEl = $_POST['sp-keywords'];
     $spPriceInfoEl = $_POST['sp-starting-price'];
+    $spProfileStatus = "pending";
 
 
     // If service provider has qualifications such as Doctor, Engineer, etc, this value will take those values.
@@ -585,7 +586,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'serviceProviderSignUp') {
 
         $spProfilePic = $db->imageUpload($spProfileImgEl);
 
-        $serviceProvider->addServiceProvider($spFullNameEl, $spEmailEl, $spContactNoEl, $spUsernameEl, $encryptedPassword, $spGenderEl, $spAddressLineEl, $spDistrictEl, $spTownEl, $latitudeValue, $longitudeValue, $qualificationValue, $spSkillsEl, $spProfilePic, $spDescEl, $spKeywordsEl, $spPriceInfoEl, $status);
+        $serviceProvider->addServiceProvider($spFullNameEl, $spEmailEl, $spContactNoEl, $spUsernameEl, $encryptedPassword, $spGenderEl, $spAddressLineEl, $spDistrictEl, $spTownEl, $latitudeValue, $longitudeValue, $qualificationValue, $spSkillsEl, $spProfilePic, $spDescEl, $spKeywordsEl, $spPriceInfoEl, $status, $spProfileStatus);
     }
 }
 
@@ -1626,4 +1627,55 @@ if (isset($_GET["passedServiceProviderId"])) {
 
         echo $result;
     }
+}
+
+// Todo: Need to check new request of SP.
+if (isset($_POST['request']) && $_POST['request'] == "checkNewRequests") {
+
+    $isSpRequestExist = $serviceProvider->countTotalServiceProviders("profile_status", "pending");
+
+    $arrayOfSpRequest = $serviceProvider->getServiceProviderInfo("profile_status", "pending");
+
+    $output = "";
+
+    if ($isSpRequestExist > 0) {
+
+        foreach ($arrayOfSpRequest as $data) {
+
+            $spId = $data['service_provider_id'];
+            $spName = $data['name'];
+            $spQualification = $data['qualification'];
+            $spImage = $data['image'];
+
+            $output .= '<div class="w-full max-w-[310px] rounded-lg shadow bg-[#d7ccbe]">
+            <div class="flex flex-col items-center pb-10 pt-10">
+                <img class="w-24 h-24 mb-3 rounded-full object-cover shadow-lg" src="/skill-wave-service-hiring-app/ajax-file/uploads/' . $spImage . '" alt="Bonnie image" />
+                <h5 class="mb-1 text-xl font-bold text-[#6D2932]">' . $spName . '</h5>
+                <span class="text-sm text-gray-600">' . $spQualification . '</span>
+                <div class="flex gap-4 items-center  mt-4 md:mt-6">
+                    <a href="' . $spId . '" title="View Profile" class="bg-[#6D2932] text-white p-2 rounded-md hover:bg-[#7b3e46] hover:transition 500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3" />
+                        </svg>
+                    </a>
+                    <a href="' . $spId . '" class=" bg-green-800 p-2 rounded-md text-white hover:bg-green-700 hover:transition 500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">
+                            <path fill="currentColor" fill-rule="evenodd" d="M0 7.5a7.5 7.5 0 1 1 15 0a7.5 7.5 0 0 1-15 0m7.072 3.21l4.318-5.398l-.78-.624l-3.682 4.601L4.32 7.116l-.64.768z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="' . $spId . '" class=" bg-red-700 text-white p-2 rounded-md hover:bg-red-600 hover:transition 500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19.1 4.9C15.2 1 8.8 1 4.9 4.9S1 15.2 4.9 19.1s10.2 3.9 14.1 0s4-10.3.1-14.2m-4.3 11.3L12 13.4l-2.8 2.8l-1.4-1.4l2.8-2.8l-2.8-2.8l1.4-1.4l2.8 2.8l2.8-2.8l1.4 1.4l-2.8 2.8l2.8 2.8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>';
+        }
+    } else {
+
+        $output = "0";
+    }
+
+    echo $output;
 }

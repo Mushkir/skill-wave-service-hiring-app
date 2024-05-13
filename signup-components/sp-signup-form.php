@@ -536,14 +536,14 @@
                         } else {
                             Swal.fire({
                                 title: "Account Created!",
-                                text: "Dear Service Provider! Your Sign up process has been processed successfully!",
+                                text: "Dear Service Provider! Your account is currently undergoing a review process. Upon completion of verification, we will promptly notify you. Thank you for your cooperation and patience.",
                                 icon: "success"
                             }).then((result) => {
 
                                 if (result.isConfirmed) {
 
                                     $("#serviceProvidersSignUpForm")[0].reset();
-                                    window.location.href = "/skill-wave-service-hiring-app/login.php";
+                                    window.location.href = "/skill-wave-service-hiring-app/index.php";
                                 }
                             })
                         }

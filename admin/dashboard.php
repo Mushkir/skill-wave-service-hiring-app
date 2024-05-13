@@ -97,6 +97,21 @@ session_start();
                         </a>
                     </li>
 
+                    <!-- Requests -->
+                    <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
+                        <a href="dashboard.php?requests" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="serviceProvidersNewRequestsMenu">
+                            <!-- Icon -->
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M13.37 21.248a.75.75 0 0 1-.75.75H4.99a.75.75 0 0 1-.75-.75c0-4.1 4.49-7.28 8.37-7.28a.76.76 0 0 1 .75.75zm3.96-12.17a5.19 5.19 0 0 1-1.88 2.29a5.11 5.11 0 0 1-5.452.121A5.1 5.1 0 0 1 8.39 4.278a5.09 5.09 0 0 1 2.29-1.89a5.17 5.17 0 0 1 3-.28a5 5 0 0 1 2.61 1.4a5.05 5.05 0 0 1 1.4 2.62a5.14 5.14 0 0 1-.36 2.95m.09 10.61a.76.76 0 0 1-.75-.75v-.37a1.74 1.74 0 0 1 1.12-1.6a.61.61 0 0 0 .24-.14a.5.5 0 0 0 .15-.2a.53.53 0 0 0 0-.25a.691.691 0 0 0 0-.24a.81.81 0 0 0-.58-.39a.81.81 0 0 0-.56.08a.82.82 0 0 0-.38.4a.754.754 0 0 1-1.37-.63a2.36 2.36 0 0 1 2.56-1.33c.36.05.704.187 1 .4c.291.21.53.483.7.8a2 2 0 0 1 .21.88a2.05 2.05 0 0 1-.67 1.58a2 2 0 0 1-.75.45a.2.2 0 0 0-.08.08a.21.21 0 0 0 0 .13v.35a.76.76 0 0 1-.84.75m-.02 2.15a.78.78 0 1 0 0-1.56a.78.78 0 0 0 0 1.56" />
+                                </svg>
+                            </div>
+
+                            <!-- Name -->
+                            <p>New Requests<sup id="countRequest" class=" bg-[#6D2932] px-1 text-white rounded-full">5</sup></p>
+                        </a>
+                    </li>
+
                     <!-- Total Service Providers -->
                     <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
                         <a href="dashboard.php?serviceProviders" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="serviceProvidersMenu">
@@ -229,6 +244,10 @@ session_start();
                     include('service-seekers.php');
                 }
 
+                if (isset($_GET['requests'])) {
+                    include('new-profile-requests.php');
+                }
+
                 if (isset($_GET['settings'])) {
                     include('profile.php');
                 }
@@ -273,8 +292,9 @@ session_start();
         const serviceProvidersMenuEl = document.querySelector("#serviceProvidersMenu");
         const serviceSeekersMenuEl = document.querySelector("#serviceSeekersMenu");
         const settingsMenuEl = document.querySelector("#settingsMenu");
+        const serviceProvidersNewRequestsMenuEl = document.querySelector("#serviceProvidersNewRequestsMenu");
 
-        const PATH_HREF = "http://localhost/skillWaveWebApp/admin/dashboard.php?"
+        const PATH_HREF = "http://localhost/skill-wave-service-hiring-app/admin/dashboard.php?"
         const documentPathHref = document.location.href;
         // console.log(document.location.href);
 
@@ -301,6 +321,14 @@ session_start();
 
         if (documentPathHref == `${PATH_HREF}settings`) {
             settingsMenuEl.classList.add("activeSideBar")
+        }
+
+        if (documentPathHref == `${PATH_HREF}requests`) {
+            const countRequestEl = document.querySelector("#countRequest");
+
+            serviceProvidersNewRequestsMenuEl.classList.add("activeSideBar");
+            countRequestEl.classList.remove("bg-[#6D2932]");
+            countRequestEl.classList.add("bg-gray-50", "text-black");
         }
     </script>
 
