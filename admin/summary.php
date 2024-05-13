@@ -26,3 +26,44 @@
         </div>
     </div>
 </div>
+
+<!-- JQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<!-- JQuery Script -->
+<script>
+    $(document).ready(function() {
+        showNewRequestNotification();
+
+        // * Function for show new SP signup notification to admin while login
+        function showNewRequestNotification() {
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: 'POST',
+                data: {
+                    "request": "notifyNewRequest"
+                },
+                success: function(response) {
+                    if (response > 0) {
+                        response < 9 ? newNumberFormat = `0${response}` : newNumberFormat = response;
+
+                        Swal.fire({
+                            title: `Dear Admin! You have ${newNumberFormat} pending request.`,
+                            text: "You clicked the button!",
+                            icon: "info"
+                        }).then((result) => {
+                            console.log(result);
+                            if (result.isConfirmed == true) {
+                                window.location.href = "/skill-wave-service-hiring-app/admin/dashboard.php?requests";
+                            }
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                }
+            })
+        }
+    })
+</script>

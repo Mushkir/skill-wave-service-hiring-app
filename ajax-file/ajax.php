@@ -1690,3 +1690,13 @@ if (isset($_POST['request']) && $_POST['request'] == "checkNewRequests") {
 
     echo $output;
 }
+
+// Todo: Need to notify new SP request to admin
+if (isset($_POST["request"]) && $_POST["request"] == "notifyNewRequest") {
+
+    $query = "SELECT * FROM table_service_provider WHERE profile_status = 'pending'";
+
+    $isPendingRequestExist = $db->countMultipleData($query);
+
+    echo $isPendingRequestExist;
+}

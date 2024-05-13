@@ -370,7 +370,7 @@ session_start();
                     },
                     success: function(response) {
                         const countRequestEl = $("#countRequest")[0];
-                        console.log(response);
+                        // console.log(response);
                         if (response > 0) {
                             countRequestEl.classList.remove("hidden");
                             countRequestEl.textContent = response;
