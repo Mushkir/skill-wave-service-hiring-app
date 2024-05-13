@@ -1629,16 +1629,27 @@ if (isset($_GET["passedServiceProviderId"])) {
     }
 }
 
+
+// Todo: Need to count total new requests
+if (isset($_POST['request']) && $_POST['request'] == 'countTotalRequest') {
+
+    $isRequestExist = $serviceProvider->countTotalServiceProviders("profile_status", "pending");
+
+    echo $isRequestExist;
+}
+
 // Todo: Need to check new request of SP.
 if (isset($_POST['request']) && $_POST['request'] == "checkNewRequests") {
 
-    $isSpRequestExist = $serviceProvider->countTotalServiceProviders("profile_status", "pending");
+    $query = "SELECT * FROM table_service_provider WHERE profile_status = 'pending'";
 
-    $arrayOfSpRequest = $serviceProvider->getServiceProviderInfo("profile_status", "pending");
+    $isRequestExist = $db->countMultipleData($query);
 
     $output = "";
 
-    if ($isSpRequestExist > 0) {
+    if ($isRequestExist > 0) {
+
+        $arrayOfSpRequest = $db->getMultipleData($query);
 
         foreach ($arrayOfSpRequest as $data) {
 

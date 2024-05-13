@@ -294,6 +294,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                     },
                     success: function(response) {
                         // console.dir(document.baseURI);
+                        console.log(response);
                         if (response == "404") {
                             Swal.fire({
                                 icon: "error",
@@ -410,8 +411,6 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                         console.log("XHR Response: " + xhr.responseText);
                         console.log("Error: " + error);
                     }
-
-
                 })
             }
 

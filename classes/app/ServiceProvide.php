@@ -168,15 +168,15 @@ class ServiceProvider extends Database
 
             $statement->execute([':value' => $value]);
 
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-            $dataset = [];
+            // $dataset = [];
 
-            foreach ($result as $data) {
-                $dataset[] = $data;
-            }
+            // foreach ($result as $data) {
+            //     $dataset[] = $data;
+            // }
 
-            return $dataset;
+            return $result;
         } catch (PDOException $ex) {
 
             echo "Error from getServiceProviderInfo(): " . $ex->getMessage();

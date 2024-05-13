@@ -108,7 +108,7 @@ session_start();
                             </div>
 
                             <!-- Name -->
-                            <p>New Requests<sup id="countRequest" class=" bg-[#6D2932] px-1 text-white rounded-full">5</sup></p>
+                            <p>New Requests<sup id="countRequest" class="bg-[#6D2932] hidden px-1 text-white rounded-full"></sup></p>
                         </a>
                     </li>
 
@@ -336,6 +336,8 @@ session_start();
     <script>
         $(document).ready(function() {
 
+            showRequestCountInMenu();
+
             $(document).on("click", "#admin-logout", function(e) {
 
                 e.preventDefault();
@@ -357,6 +359,31 @@ session_start();
                     }
                 })
             })
+
+            // * Function for show pending requests in Menu
+            function showRequestCountInMenu() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "countTotalRequest"
+                    },
+                    success: function(response) {
+                        const countRequestEl = $("#countRequest")[0];
+                        console.log(response);
+                        if (response > 0) {
+                            countRequestEl.classList.remove("hidden");
+                            countRequestEl.textContent = response;
+                        } else {
+                            countRequestEl.classList.add("hidden");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                })
+            }
         })
     </script>
 
