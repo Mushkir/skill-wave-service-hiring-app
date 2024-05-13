@@ -1,7 +1,13 @@
 To do:
+Feedback: 
+1. Need to send request to admin when new SP creating their profile. after admin accepts their request, then only it needs to show.
+2. Cancel feature to Service Seekers to canceling their service requests.
+3. Rename "Upload File" to "Profile img"
+
+
 13. Need to implement service description and service charge enterign by SP.
 14. Need to design Payment UI.
-15. Need to implement payment feature
+15. Need to implement payment feature.
 16. Need to implement Feedback UI.
 17. Need to implement giving feedback by SS.
 

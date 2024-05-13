@@ -93,7 +93,7 @@
         <div class="w-full">
             <label for="ss-city" class="font-semibold text-cus-maron">City<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-city" id="ss-city" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: nintavur" value="Nintavur" required />
+                <input type="text" name="ss-city" id="ss-city" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: nintavur" required />
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
         <div class="w-full">
             <label for="ss-id-card-no" class="font-semibold text-cus-maron">NIC No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-id-card-no" id="ss-id-card-no" class="font-normal w-full bg-white border-none rounded mt-2" placeholder="Ex: 199631401505" value="199631401505" required />
+                <input type="text" name="ss-id-card-no" id="ss-id-card-no" class="font-normal w-full bg-white border-none rounded mt-2" placeholder="Ex: 199631401505" required />
             </div>
         </div>
     </div>

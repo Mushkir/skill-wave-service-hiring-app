@@ -687,8 +687,11 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUQnWPLujwoqkHL3VDRXLndGKIN9-O1El3Ew&usqp=CAU" alt="Banner Profile" class="w-full rounded-t-md h-20 object-cover" />
 
                 <!-- Profile Pic -->
-
+                <div class="relative">
                 <img src="ajax-file/uploads/' . $serviceProviderImage . '" alt="' . $serviceProviderName . ' Picture" class="absolute bottom-0 left-2/4 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white" />
+                <div class="bg-green-500 w-[15px] h-[15px] rounded-full absolute left-[179px] top-5">
+                </div>
+                </div>
             </div>
             <!-- User Info with Verified Button -->
             <div class="block">
@@ -810,8 +813,8 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
                 <!-- Tap to call -->
                 <div>
                     <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default">
-                        <i class="fa-solid fa-phone"></i>
-                        Get Service
+                    <i class="fa-solid fa-handshake-angle"></i>
+                    Tap to Hire
                     </a>
                 </div>
 

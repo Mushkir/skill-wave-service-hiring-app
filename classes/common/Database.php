@@ -111,6 +111,7 @@ class Database
         }
     }
 
+    // Count Data based on SQL Query
     public function countMultipleData($query)
     {
         try {

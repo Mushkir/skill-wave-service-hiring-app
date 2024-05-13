@@ -31,7 +31,7 @@
 <body class=" bg-cus-maron flex justify-center items-center px-3">
 
     <!-- Login Div -->
-    <section class=" bg-primary-color-10 w-full rounded-md max-w-xl p-8" style="margin-top: 208px;">
+    <section class=" bg-primary-color-10 w-full rounded-md max-w-xl p-8" style="margin-top: 80px;">
 
         <form action="" method="post" id="adminLoginForm">
             <!-- Username -->

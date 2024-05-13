@@ -48,6 +48,7 @@
     <!-- Main -->
     <main class="mt-[6.25rem] bg-[#e8e2da] min-h-screen">
         <section class="mt-10 sm:mt-20 px-3 sm:px-5 md:px-20">
+            <h3 class="text-center mt-5 mb-5 text-xl text-[#6D2932] font-semibold bg-[#C7B7A3] p-3 rounded-md">Here you can explore our avilable Experts</h3>
             <!-- Search bar -->
             <div class="max-w-7xl mx-auto">
                 <form class="w-full" action="" id="searchServiceProvidersForm">
