@@ -45,9 +45,11 @@ if (isset($_GET['serviceProviderId'])) {
 </head>
 
 <body class="bg-gray-300" id="infoContainer">
+
+    <!-- Image Div -->
     <div class="">
         <div class="mt-10 bg-[#6D2932] w-36 h-36 mx-auto rounded-full p-1">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd35gCLjgWxdpmIMsq6yS1eNeu7PyT0QqDlNE7itMjiQ&s" class="w-36 h-36 object-cover rounded-full" alt="Picture">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd35gCLjgWxdpmIMsq6yS1eNeu7PyT0QqDlNE7itMjiQ&s" class="w-36 h-36 object-cover rounded-full" alt="Picture" id="serviceProviderProfileImg">
         </div>
     </div>
     <form action="" class="mx-auto w-full mb-10 max-w-[1000px] px-3 py-5 sm:p-10 rounded-md" enctype="multipart/form-data" id="serviceProvidersSignUpForm">
@@ -91,14 +93,14 @@ if (isset($_GET['serviceProviderId'])) {
             <div class="w-full">
                 <label for="sp-district" class="font-semibold text-cus-maron">District</label>
                 <div class="mb-5">
-                    <input type="text" name="sp-address-line" id="sp-address-line" class="font-normal p-1.5 w-full bg-white border-none rounded mt-2 outline-none capitalize" readonly />
+                    <input type="text" name="sp-district-info" id="sp-district-info" class="font-normal p-1.5 w-full bg-white border-none rounded mt-2 outline-none capitalize" readonly />
                 </div>
             </div>
 
             <div class="w-full">
                 <label for="sp-town" class="font-semibold text-cus-maron">Town</label>
                 <div class="mb-5">
-                    <input type="text" name="sp-address-line" id="sp-address-line" class="font-normal p-1.5 w-full bg-white border-none rounded mt-2 outline-none capitalize" readonly />
+                    <input type="text" name="sp-town-info" id="sp-town-info" class="font-normal p-1.5 w-full bg-white border-none rounded mt-2 outline-none capitalize" readonly />
                 </div>
             </div>
         </div>
@@ -109,7 +111,7 @@ if (isset($_GET['serviceProviderId'])) {
             <div class="w-full">
                 <label for="sp-gender" class="font-semibold text-cus-maron">Gender</label>
                 <div class="mb-5">
-                    <input type="text" name="sp-email" id="sp-email" class="font-normal p-1.5 w-full bg-white border-none rounded mt-2 outline-none" readonly />
+                    <input type="text" name="sp-gender" id="sp-gender" class="font-normal p-1.5 w-full bg-white border-none rounded mt-2 outline-none" readonly />
                 </div>
             </div>
 
@@ -172,13 +174,13 @@ if (isset($_GET['serviceProviderId'])) {
 
         <!-- Buttons -->
         <div class="mt-5 w-full flex items-center justify-between">
-            <button type="button" class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-green-800 hover:bg-green-700 hover:transition 500">
+            <a href="#" id="" class="accept-btn w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-green-800 hover:bg-green-700 hover:transition 500">
                 Accept
-            </button>
+            </a>
 
-            <button type="button" class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-red-800 hover:bg-red-700 hover:transition 500">
+            <a href="#" id="" class="reject-btn w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-red-800 hover:bg-red-700 hover:transition 500">
                 Reject
-            </button>
+            </a>
 
             <button type="button" class="w-full sm:w-52 text-white bg-primary-700 rounded px-5 py-2 text-center bg-cus-maron">
                 Back to dashboard
@@ -203,10 +205,58 @@ if (isset($_GET['serviceProviderId'])) {
                         "getNewServiceProviderId": <?php echo $serviceProviderId ?>
                     },
                     beforeSend: function() {
-                        $("#infoContainer").html(`<div class="text-[#6D2932]"><svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mt-[150px]" width="50" height="50" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"/><path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"/></path></svg></div>`)
+                        // $("#infoContainer").html(`<div class="text-[#6D2932]"><svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mt-[150px]" width="50" height="50" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"/><path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"/></path></svg></div>`)
                     },
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
+                        const jsonSpData = JSON.parse(response);
+                        // console.log(jsonSpData[0]);
+                        const {
+                            address_line,
+                            contact_no,
+                            description,
+                            district_name,
+                            email_address,
+                            gender,
+                            image,
+                            keywords,
+                            name,
+                            price,
+                            qualification,
+                            skills,
+                            town_name,
+                            username,
+                            service_provider_id
+                        } = jsonSpData[0];
+
+                        const priceInString = price.toString();
+
+                        let newAddressFormat = "";
+                        let newPriceFormat = "";
+
+                        address_line.includes("No. ") ? newAddressFormat = address_line : newAddressFormat = `No. ${address_line}`;
+                        priceInString.includes("Rs. ") ? newPriceFormat = priceInString : newPriceFormat = `Rs. ${priceInString}`;
+
+                        // console.log(newPriceFormat);
+
+                        $("#serviceProviderProfileImg")[0].src = `/skill-wave-service-hiring-app/ajax-file/uploads/${image}`;
+                        $("#sp-fullname")[0].value = name;
+                        $("#sp-email")[0].value = email_address;
+                        $("#sp-contact-no")[0].value = contact_no;
+                        $("#sp-username")[0].value = username;
+                        $("#sp-district-info")[0].value = district_name;
+                        $("#sp-town-info")[0].value = town_name;
+                        $("#sp-gender")[0].value = gender;
+                        $("#sp-address-line")[0].value = newAddressFormat;
+                        $("#sp-starting-price")[0].value = newPriceFormat;
+                        $("#sp-qualification")[0].value = qualification;
+                        $("#sp-skills")[0].value = skills;
+                        $("#sp-desc")[0].value = description;
+                        $("#sp-keywords")[0].value = keywords;
+                        $(".accept-btn")[0].id = service_provider_id;
+                        $(".reject-btn")[0].id = service_provider_id;
+
+                        console.dir();
                     },
                     error: function(xhr, status, error) {
                         console.log("Status: " + status);
@@ -215,6 +265,47 @@ if (isset($_GET['serviceProviderId'])) {
                     }
                 })
             }
+
+            $("body").on("click", ".accept-btn", function(e) {
+                e.preventDefault();
+
+                const spId = $(this).attr("id");
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'GET',
+                    data: {
+                        "acceptSpRequest": spId
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        const serverResp = JSON.parse(response);
+                        // const serverResponse = JSON.parse(response);
+                        const {
+                            status,
+                            message
+                        } = serverResp[0]
+
+                        if (status == 200) {
+                            Swal.fire({
+                                title: "Request Accepted!",
+                                text: `Dear Admin ${message}!`,
+                                icon: "success"
+                            }).then((result) => {
+                                if (result.isConfirmed == true) {
+                                    window.location.href = "/skill-wave-service-hiring-app/admin/dashboard.php?requests";
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+                })
+            })
         })
     </script>
 

@@ -1,5 +1,13 @@
 <?php
 
+// * PHP Mailer Dependencies
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 class Database
 {
     private $dsn = "mysql:host=localhost;dbname=db-skill-wave;";
@@ -111,7 +119,7 @@ class Database
         }
     }
 
-    // Count Data based on SQL Query
+    // * Count Data based on SQL Query
     public function countMultipleData($query)
     {
         try {
@@ -129,5 +137,41 @@ class Database
 
             echo "Error from getMultipleData(): " . $ex->getMessage();
         }
+    }
+
+    // * Sending Email
+    public function sendEmail($serviceProviderName, $serviceProviderEmail, $emailSubject, $emailBody)
+    {
+        require_once '../env.php'; // ! This file includes userEmail and passKey
+
+        $mail = new PHPMailer(true);
+
+        $userEmail = $USER_MAIL;
+        $passKey = $PASS_KEY;
+
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $userEmail;
+        $mail->Password = $passKey;
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
+        $mail->setFrom($userEmail);
+        $mail->addAddress($serviceProviderEmail, $serviceProviderName);
+
+        $mail->isHTML(true);
+
+        $mail->Subject = $emailSubject;
+        $mail->Body = $emailBody;
+
+        $mail->send();
     }
 }

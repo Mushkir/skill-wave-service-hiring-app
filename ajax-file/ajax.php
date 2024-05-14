@@ -1699,3 +1699,68 @@ if (isset($_POST["request"]) && $_POST["request"] == "notifyNewRequest") {
 
     echo $isPendingRequestExist;
 }
+
+// Todo: Need to Fetch all the details of requested Sp detail using Id through GET method
+if (isset($_GET['getNewServiceProviderId'])) {
+    // * Get the Sp-id using GET method
+    $newSpId = $_GET['getNewServiceProviderId'];
+
+    // * Get all the details of id, town name, & disatrict name.
+    $arrayOfNewSpInfo = $serviceProvider->getServiceProviderInfoById($newSpId);
+
+    $query = "SELECT tsp.*, tt.name AS town_name, td.name AS district_name FROM table_service_provider tsp 
+    JOIN table_town tt ON tsp.town_id = tt.town_id
+    JOIN table_district td ON tsp.district_id = td.district_id
+    WHERE tsp.service_provider_id = $newSpId";
+
+
+    $arrayOfSpData = $db->getMultipleData($query);
+
+    echo json_encode($arrayOfSpData);
+}
+
+
+// Todo: Accept the New request of Sp.
+if (isset($_GET['acceptSpRequest'])) {
+
+    // * 1. Get the SP-id using GET.
+    $serviceProviderID = $_GET['acceptSpRequest'];
+
+    // * 2. Get the name, email, subject, and message using SP-id got from step 1.
+    $arrayOfSP = $serviceProvider->getServiceProviderInfoById($serviceProviderID);
+    $spName = $arrayOfSP['name'];
+    $spEmail = $arrayOfSP['email_address'];
+
+    // * 3. Update the profile status from "pending" to "accepted."
+    $query = "UPDATE table_service_provider SET profile_status = 'accepted' WHERE service_provider_id = $serviceProviderID";
+
+    $accpetSpRequest = $db->updateDataByQuery($query);
+
+    if ($accpetSpRequest) {
+
+        // * 4. Need to send accept mail to SP
+        // Subject
+        $subject = "Acknowledgment of Accepted Service Provider Request";
+
+        // Message
+        $body = "<body>
+        <p>Dear " . $spName . ",</p>
+        <p>We hope this message finds you in high spirits!</p>
+        <p>We are thrilled to extend our heartfelt congratulations to you on the acceptance of your service provider request. Your profile underwent a comprehensive review, and we are delighted to inform you that there were no discrepancies or negative findings during this process.</p>
+        <p>Your dedication to joining our platform as a service provider is commendable, and we are confident that your skills and expertise will enrich our community of users.</p>
+        <p>If you have any queries or require further assistance, please do not hesitate to reach out to us. We eagerly anticipate witnessing your success as a valued service provider on our platform.</p>
+        <p>Warm regards,</p>
+        <p>Skill-Wave Service Hiring Platform,<br>
+        The Admin,<br>
+        Tel: +94 777195282.</p>
+    </body>";
+
+        $db->sendEmail($spName, $spEmail, $subject, $body);
+
+        $response[] = array("status" => 200, "message" => "$spName's request accepted");
+    } else {
+        $response[] = array("status" => 500, "message" => "Currenly cannot proceed this process. Please try again!");
+    }
+
+    echo json_encode($response);
+}
