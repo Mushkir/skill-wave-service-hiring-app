@@ -48,8 +48,8 @@
                         response < 9 ? newNumberFormat = `0${response}` : newNumberFormat = response;
 
                         Swal.fire({
-                            title: `Dear Admin! You have ${newNumberFormat} pending request.`,
-                            text: "You clicked the button!",
+                            title: "New Service Provider Request",
+                            text: `Dear Admin! You have ${newNumberFormat} pending request.`,
                             icon: "info"
                         }).then((result) => {
                             console.log(result);

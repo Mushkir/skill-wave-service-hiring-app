@@ -1629,7 +1629,6 @@ if (isset($_GET["passedServiceProviderId"])) {
     }
 }
 
-
 // Todo: Need to count total new requests
 if (isset($_POST['request']) && $_POST['request'] == 'countTotalRequest') {
 
@@ -1664,7 +1663,7 @@ if (isset($_POST['request']) && $_POST['request'] == "checkNewRequests") {
                 <h5 class="mb-1 text-xl font-bold text-[#6D2932]">' . $spName . '</h5>
                 <span class="text-sm text-gray-600">' . $spQualification . '</span>
                 <div class="flex gap-4 items-center  mt-4 md:mt-6">
-                    <a href="' . $spId . '" title="View Profile" class="bg-[#6D2932] text-white p-2 rounded-md hover:bg-[#7b3e46] hover:transition 500">
+                    <a href="' . $spId . '" id="viewBtn" title="View Profile" class="bg-[#6D2932] text-white p-2 rounded-md hover:bg-[#7b3e46] hover:transition 500">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3" />
                         </svg>
