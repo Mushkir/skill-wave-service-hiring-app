@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Service Description</title>
+
+    <!-- JustValidateDev CDN -->
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 </head>
 
 <body>
-    <form method="post" class="h-screen w-screen z-50 backdrop-blur-sm absolute left-[50%] top-[40%] -translate-x-[50%] -translate-y-[50%] " id="addServiceDescForm">
+    <form method="post" class="h-screen w-screen z-50 backdrop-blur-sm absolute left-[50%] top-[40%] -translate-x-[50%] -translate-y-[50%] hidden" id="addServiceDescForm">
         <div class=" w-full max-w-[500px] shadow-md rounded-lg px-8 pt-4 pb-8 mb-4 bg-gray-400 absolute left-[50%] top-[40%] -translate-x-[50%] -translate-y-[50%]">
             <div class="flex items-center justify-between">
                 <h4 class=" text-gray-800 font-bold text-lg mb-3">Add service description</h4>
@@ -20,9 +23,9 @@
             <!-- Town Name -->
             <div class="mt-5 mb-5">
                 <input type="hidden" name="service-id" id="service-id">
-                <label for="update-town-name" class="block text-gray-800 mb-2">Service Description<span class="text-red-500">*</span></label>
+                <label for="add-service-desc" class="block text-gray-800 mb-2">Service Description<span class="text-red-500">*</span></label>
                 <div>
-                    <textarea class=" bg-gray-200 w-full rounded-md p-3" rows="10" name="" id="" placeholder="Enter the service description..."></textarea>
+                    <textarea class=" bg-gray-200 w-full rounded-md p-3 outline-none" rows="10" name="add-service-desc" id="add-service-desc" placeholder="Enter the service description..."></textarea>
                 </div>
 
             </div>
@@ -37,9 +40,18 @@
         </div>
     </form>
 
-    <!-- JustValidateDev CDN -->
-    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+    <!-- Valdiation script -->
+    <script>
+        const addServiceDescFormEl = document.querySelector("#addServiceDescForm");
+        const validator = new window.JustValidate(addServiceDescFormEl);
 
+        validator.addField("#add-service-desc",
+            [{
+                rule: 'required'
+            }], {
+                errorLabelCssClass: ["errorMsg"],
+            })
+    </script>
 
     <!-- Function for close the edit district form -->
     <script>

@@ -146,15 +146,13 @@ include('service-description-modal.php');
 
             const addServiceDescFormEl = $("#addServiceDescForm")
 
-            // addServiceDescFormEl.removeClass("hidden").addClass("transition duration-300 opacity-0");
+            addServiceDescFormEl.removeClass("hidden").addClass("transition duration-300 opacity-0");
 
             setInterval(() => {
                 addServiceDescFormEl.addClass("opacity-100")
             }, 100);
 
             const serviceIdEl = $("#service-id");
-
-
         })
     })
 </script>
