@@ -1833,3 +1833,13 @@ if (isset($_POST["request"]) && $_POST["request"] == "updateServiceCharge") {
 
     echo json_encode($response);
 }
+
+// Todo: Need to logout SP
+if (isset($_POST['request']) && $_POST['request'] == 'spLogout') {
+
+    if (isset($_SESSION['serviceProviderName'])) {
+        session_start();
+        session_unset();
+        session_destroy();
+    }
+}

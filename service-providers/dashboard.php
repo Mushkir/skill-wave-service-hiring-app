@@ -43,7 +43,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
     </style>
 </head>
 
-<body class=" bg-gray-400 mx-auto">
+<body class=" bg-gray-400 mx-auto" id="main-container">
     <!-- Main Wrapper -->
     <section class="flex items-center gap-7 p-5 pl-0 m-auto relative max-w-[1800px] ">
         <!-- Sidebar -->
@@ -458,6 +458,44 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                         console.log("Error: " + error);
                     }
 
+
+                })
+            })
+
+            // * Service Provider logout request script
+            $("body").on("click", "#sp-logout", function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "spLogout"
+                    },
+                    beforeSend: function() {
+                        $("#main-container").html(`<div class="flex justify-center items-center mt-32"><img src="../assets/img/loading-menu.gif" class="w-28 h-28 object-cover " /></div>`)
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Are you sure to Logout?",
+                            icon: "question",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes! Sure"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // console.log(response);
+                                window.location.href = "/skill-wave-service-hiring-app/index.php";
+                            }
+                        });
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.log("Error: " + error);
+                    }
 
                 })
             })
