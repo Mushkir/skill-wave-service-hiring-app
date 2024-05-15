@@ -34,6 +34,10 @@ include('service-charge-modal.php');
         // * Function for show all the service orders in logged-in service provider's profile dashboard.
         showAllServiceSummaryOfServiceProvider();
 
+        sendingServiceDescriptionToServer();
+
+        sendingServiceChargeToServer();
+
         function showAllServiceSummaryOfServiceProvider() {
             $.ajax({
                 url: '../ajax-file/ajax.php',
@@ -156,65 +160,74 @@ include('service-charge-modal.php');
         });
 
         // * Validation and Sending service description info to server script 
-        const addServiceDescFormEl = document.querySelector("#addServiceDescForm");
+        function sendingServiceDescriptionToServer() {
 
-        const validator = new window.JustValidate(addServiceDescFormEl);
+            const addServiceDescFormEl = document.querySelector("#addServiceDescForm");
 
-        validator.addField("#add-service-desc",
-            [{
-                rule: 'required'
-            }], {
-                errorLabelCssClass: ["errorMsg"],
-            });
+            const validator = new window.JustValidate(addServiceDescFormEl);
 
-        validator.onSuccess((e) => {
-            e.preventDefault();
+            validator.addField("#add-service-desc",
+                [{
+                    rule: 'required'
+                }], {
+                    errorLabelCssClass: ["errorMsg"],
+                });
 
-            // * Send the service description entered by Service Provider to server using JQuery request.
-            $(document).on("submit", "#addServiceDescForm", function(e) {
+            validator.onSuccess((e) => {
                 e.preventDefault();
-                e.stopImmediatePropagation();
 
-                // const addServiceDescForm = document.querySelector("#addServiceDescForm");
+                // * Send the service description entered by Service Provider to server using JQuery request.
+                $(document).on("submit", "#addServiceDescForm", function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
 
-                const formData = new FormData(addServiceDescFormEl);
-                formData.append("req", "updateDesc");
+                    // const addServiceDescForm = document.querySelector("#addServiceDescForm");
 
-                $.ajax({
-                    url: '../ajax-file/ajax.php',
-                    type: 'POST',
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function(resp) {
-                        console.log(resp);
-                        const serverResponse = JSON.parse(resp);
-                        const {
-                            status
-                        } = serverResponse[0];
+                    const formData = new FormData(addServiceDescFormEl);
+                    formData.append("req", "updateDesc");
 
-                        if (status == 200) {
-                            Swal.fire({
-                                title: "Description Updated!",
-                                text: "Dear Service Provider! Your service description has been recorded successfully.",
-                                icon: "success"
-                            }).then((result) => {
-                                if (result.isConfirmed == true) {
-                                    $("#addServiceDescForm").addClass("hidden");
-                                    $("#addServiceDescForm")[0].reset();
-                                    showAllServiceSummaryOfServiceProvider();
-                                }
-                            });
+                    $.ajax({
+                        url: '../ajax-file/ajax.php',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function(resp) {
+                            console.log(resp);
+                            const serverResponse = JSON.parse(resp);
+                            const {
+                                status
+                            } = serverResponse[0];
+
+                            if (status == 200) {
+                                Swal.fire({
+                                    title: "Description Updated!",
+                                    text: "Dear Service Provider! Your service description has been recorded successfully.",
+                                    icon: "success"
+                                }).then((result) => {
+                                    if (result.isConfirmed == true) {
+                                        $("#addServiceDescForm").addClass("hidden");
+                                        $("#addServiceDescForm")[0].reset();
+                                        showAllServiceSummaryOfServiceProvider();
+                                    }
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Status: " + status);
+                            console.log("XHR Response: " + xhr.responseText);
+                            console.error("Error: " + error);
                         }
-                    }
+                    })
 
                 })
 
             })
-
-        })
+        }
 
         // * <------------------------- End of script ------------------------->
+
+        // * Sending request to open service charge modal to enter service charge by the Service Provider.
         $("body").on("click", "#serviceCharge", function(e) {
             e.preventDefault();
 
@@ -234,6 +247,77 @@ include('service-charge-modal.php');
             // console.log($("#service-id-for-charge")[0].value);
         })
 
+        // * Validation and Sending service charge info to server script.
+        function sendingServiceChargeToServer() {
 
+            const addServiceChargeFormEl = document.querySelector("#addServiceChargeForm");
+
+            const validator = new window.JustValidate(addServiceChargeFormEl);
+
+            validator.addField("#add-service-charge", [{
+                    rule: 'required',
+                },
+                {
+                    rule: 'number',
+                },
+                {
+                    rule: 'minLength',
+                    value: 2,
+                },
+            ], {
+                errorLabelCssClass: ["errorMsg"],
+            })
+
+            validator.onSuccess((e) => {
+                e.preventDefault();
+
+                $(document).on("submit", addServiceChargeFormEl, function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    const formData = new FormData(addServiceChargeFormEl);
+
+                    formData.append("request", "updateServiceCharge");
+
+                    $.ajax({
+                        url: "../ajax-file/ajax.php",
+                        type: "POST",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function(response) {
+                            // console.log(response);
+                            const serverResp = JSON.parse(response)
+
+                            console.log(serverResp);
+                            const {
+                                status,
+                                amount
+                            } =
+                            serverResp[0];
+
+                            if (status == 200) {
+                                Swal.fire({
+                                    title: "Service Charge Updated!",
+                                    text: `Dear Service Provider! Your service charge Rs. ${amount} has been recorded successfully. You will receive an Email after successfull payment.`,
+                                    icon: "success"
+                                }).then((result) => {
+                                    if (result.isConfirmed == true) {
+                                        $("#addServiceChargeForm").addClass("hidden");
+                                        $("#addServiceChargeForm")[0].reset();
+                                        showAllServiceSummaryOfServiceProvider();
+                                    }
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Status: " + status);
+                            console.log("XHR Response: " + xhr.responseText);
+                            console.error("Error: " + error);
+                        }
+                    })
+                })
+            })
+        }
     });
 </script>

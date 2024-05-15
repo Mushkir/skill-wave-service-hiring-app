@@ -1232,7 +1232,8 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
 
     $spContactNo = $arrayOfSpData['contact_no'];
 
-    $serviceCharge = $arrayOfSpData['price'];
+    // $serviceCharge = $arrayOfSpData['price'];
+    $serviceCharge = -1; // ! Service charge will be given after the final completion of service. Until then, it is in pending state. -1 means, "Pending."
 
     // 5. service_agreed
     $serviceAgreed = 0; // It means false. It will update as 1 (true) while SP accepting request
@@ -1295,8 +1296,10 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             $serviceProviderName  = $data['name'];
 
             $desc = "";
+            $serviceChargeAmount = "";
 
             $serviceDesc == "Pending" ? $desc = "Will be updated by $serviceProviderName" : $desc = $serviceDesc;
+            $serviceCharge == -1 ? $serviceChargeAmount = "Negotiable and it will be updated by $serviceProviderName after finishing required service process." : $serviceChargeAmount = "Rs. $serviceCharge";
 
             $result .= '<tr>
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">#' . $serialNo++ . '</td>
@@ -1307,7 +1310,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             ' . $desc . '
             </td>
 
-            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">Rs. ' . $serviceCharge . ' (Negotiable)</td>
+            <td class="text-left px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $serviceChargeAmount . '</td>
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
             ' . $serviceStatus . '
             </td>
@@ -1434,13 +1437,18 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
                 $result .= '    <td class="px-1 py-1.5 border-gray-400 border-r-2">' . $desc . '</td>';
             }
 
+            if ($serviceCharge == -1) {
 
-            $result .= '<td class="px-1 py-1.5 border-gray-400 border-r-2">
-            <a href="serviceId=' . $serviceId . '" class="hover:text-gray-700 hover:transition 500 hover:underline text-left block" id="serviceCharge">Add Service Charge</a>
-        </td>
-        <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">
-        ' . $serviceStatus . '
-        </td>
+                $serviceChargeAmount = "Add Service Charge";
+                $result .= '<td class="px-1 py-1.5 border-gray-400 border-r-2"> <a href="serviceId=' . $serviceId . '" class="hover:text-gray-700 hover:transition 500 hover:underline text-left block" id="serviceCharge">' . $serviceChargeAmount . '</a></td>';
+            } else {
+
+                $serviceChargeAmount = $serviceCharge;
+                $result .= '<td class="px-1 py-1.5 border-gray-400 border-r-2">Rs. ' . $serviceChargeAmount . '</td>';
+            }
+
+
+            $result .= '<td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $serviceStatus . '</td>
         <td class="px-1 py-1.5 border-gray-400 border-r-2">
             <a href="#" class="hover:underline hover:transition 500 hover:text-gray-700">Pending</a>
         </td>
@@ -1797,6 +1805,22 @@ if (isset($_POST['req']) && $_POST['req'] == 'updateDesc') {
 
     if ($updateDesc) {
         $response[] = array("status" => 200);
+    }
+
+    echo json_encode($response);
+}
+
+// Todo: Need to update the service charge using service-id.
+if (isset($_POST["request"]) && $_POST["request"] == "updateServiceCharge") {
+
+    $serviceId = $_POST['service-id-for-charge'];
+    $serviceChargeAmount = $_POST['add-service-charge'];
+
+    $query = "UPDATE table_services SET service_charge = $serviceChargeAmount, service_status = 'completed'  WHERE services_id = $serviceId";
+    $updateServiceCharge = $db->updateDataByQuery($query);
+
+    if ($updateServiceCharge) {
+        $response[] = array('status' => 200, "amount" => $serviceChargeAmount);
     }
 
     echo json_encode($response);

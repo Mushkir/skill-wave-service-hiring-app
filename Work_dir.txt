@@ -8,8 +8,8 @@ Feedback:
 13. Need to implement service description and service charge entering by SP.
 13.1 Need to create a modal to add Service description details using Service-id. - COMPLETED
 13.2 Need to implement service description entering by SP feature. - COMPLETED
-13.3 Need to create a modal to add Service Charge details using Service-id. - ON PROCESS
-13.4 Need to implement service charge entering by SP feature.
+13.3 Need to create a modal to add Service Charge details using Service-id. - COMPLETED
+13.4 Need to implement service charge entering by SP feature. - COMPLETED
 
 
 14. Need to design Payment UI.
