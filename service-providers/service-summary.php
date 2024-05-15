@@ -4,11 +4,13 @@
     }
 </style>
 
-<?php @session_start(); ?>
+<?php @session_start();
+include('service-description-modal.php');
+?>
 
 <div class="relative mb-5">
     <h3 class="text-center font-semibold text-xl text-gray-700">
-        Dear Mushkir, here you can explore your whole service summary info.
+        Dear <?php echo $_SESSION['serviceProviderName']; ?>, here you can explore your whole service summary info.
     </h3>
     <div class="bg-[#6D2932] w-10 h-[3px] rounded-full mx-auto mt-2"></div>
 </div>
@@ -130,6 +132,28 @@
                     console.error("Error: " + error);
                 }
             })
+
+        })
+
+
+        // * Function for Add service description
+        $("body").on("click", "#serviceDes", function(e) {
+            e.preventDefault();
+
+            const serviceIdHrefVal = $(this).attr("href");
+            const splittedServiceId = serviceIdHrefVal.split("=");
+            const serviceId = splittedServiceId[1];
+
+            const addServiceDescFormEl = $("#addServiceDescForm")
+
+            // addServiceDescFormEl.removeClass("hidden").addClass("transition duration-300 opacity-0");
+
+            setInterval(() => {
+                addServiceDescFormEl.addClass("opacity-100")
+            }, 100);
+
+            const serviceIdEl = $("#service-id");
+
 
         })
     })

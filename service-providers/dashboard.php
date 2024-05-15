@@ -9,7 +9,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="../assets/img/logo.png" class="object-cover" />
+    <link rel="icon" type="image/svg+xml" href="../assets/img/SkillWave-logo-white-bg.png" class="object-cover" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -294,7 +294,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                     },
                     success: function(response) {
                         // console.dir(document.baseURI);
-                        console.log(response);
+                        // console.log(response);
                         if (response == "404") {
                             Swal.fire({
                                 icon: "error",
