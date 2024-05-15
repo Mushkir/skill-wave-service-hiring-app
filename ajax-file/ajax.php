@@ -660,14 +660,15 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
 
     // * Storyline
     // * 1. Need to check records exist or not in Service Providers Table
-    $isServiceProviderExist = $serviceProvider->countTotalServiceProviders();
+    $isServiceProviderExist = $serviceProvider->countTotalServiceProviders("profile_status", "accepted");
 
     if ($isServiceProviderExist > 0) {
 
-        $tooltipNumber = 1;
-
         // * 2. If it is yes, Fetch all the data from DB.
-        $arrayOfServiceProviders = $serviceProvider->readAllServiceProviderInfo(9);
+        // $query = "SELECT * FROM table_service_provider WHERE profile_status = 'accepted' ORDER BY RAND() LIMIT 9";
+        $query = "SELECT tsp.*, tt.name AS town_name FROM table_service_provider tsp 
+        JOIN table_town tt ON tsp.town_id = tt.town_id WHERE tsp.profile_status = 'accepted' ORDER BY RAND() LIMIT 9";
+        $arrayOfServiceProviders = $db->getMultipleData($query);
 
         foreach ($arrayOfServiceProviders as $dataSetOfServiceProviders) {
 
@@ -677,7 +678,10 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
             $serviceProviderSkills = $dataSetOfServiceProviders['skills'];
             $serviceProviderLatitudeValue = $dataSetOfServiceProviders['latitude_value'];
             $serviceProviderLongitudeValue = $dataSetOfServiceProviders['longitutde_value'];
+            $serviceProviderTownName = $dataSetOfServiceProviders['town_name'];
             $serviceProviderImage = $dataSetOfServiceProviders['image'];
+
+            // echo var_dump($dataSetOfServiceProviders);
 
             $locationValue = $serviceProviderLatitudeValue . ", " . $serviceProviderLongitudeValue;
 
@@ -709,30 +713,30 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
                 <div>
                     <!-- Tap to call -->
                     <div>
-                        <a href="' . $serviceProviderId . '" id="booking-btn" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-0' . $tooltipNumber++ . '" title="Tap to contact ' . $serviceProviderName . '">
+                        <a href="' . $serviceProviderId . '" id="booking-btn" class="text-[#e0d5d7] hover:underline" data-tooltip-target="" title="Tap to contact ' . $serviceProviderName . '">
                         <i class="fa-solid fa-handshake-angle"></i>
                             Tap to Hire
                         </a>
                     </div>
 
                     <!-- Tooltip Code -->
-                    <div id="tooltip-default-' . $tooltipNumber++ . '" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                    <div id="" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
                         ' . $serviceProviderContactNo . '
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
 
                 <div>
-                    <!-- Tap to call -->
+                    <!-- Show Location -->
                     <div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=' . $serviceProviderLatitudeValue . ',' . $serviceProviderLongitudeValue . '" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn-' . $tooltipNumber++ . '" target="_blank">
+                        <a href="https://www.google.com/maps/search/?api=1&query=' . $serviceProviderLatitudeValue . ',' . $serviceProviderLongitudeValue . '" title="Tap to show ' . $serviceProviderName . '\'s location" class="text-[#e0d5d7] hover:underline" data-tooltip-target="" target="_blank">
                             <i class="fa-solid fa-map-pin"></i>
-                            Show Location
+                            ' . $serviceProviderTownName . '
                         </a>
                     </div>
 
                     <!-- Tooltip Code -->
-                    <div id="tooltip-default-newn-' . $tooltipNumber++ . '" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
+                    <div id="" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
                         Tap to Open Google Maps
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
