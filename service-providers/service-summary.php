@@ -135,8 +135,7 @@ include('service-description-modal.php');
 
         })
 
-
-        // * Function for Add service description
+        // Function for open the modal for Add service description.
         $("body").on("click", "#serviceDes", function(e) {
             e.preventDefault();
 
@@ -152,7 +151,67 @@ include('service-description-modal.php');
                 addServiceDescFormEl.addClass("opacity-100")
             }, 100);
 
-            const serviceIdEl = $("#service-id");
+            $("#service-id")[0].value = serviceId;
+        });
+
+        // * Valdiation script 
+        const addServiceDescFormEl = document.querySelector("#addServiceDescForm");
+
+        const validator = new window.JustValidate(addServiceDescFormEl);
+
+        validator.addField("#add-service-desc",
+            [{
+                rule: 'required'
+            }], {
+                errorLabelCssClass: ["errorMsg"],
+            });
+
+        validator.onSuccess((e) => {
+            e.preventDefault();
+
+            // * Send the service description entered by Service Provider to server using JQuery request.
+            $(document).on("submit", "#addServiceDescForm", function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                // const addServiceDescForm = document.querySelector("#addServiceDescForm");
+
+                const formData = new FormData(addServiceDescFormEl);
+                formData.append("req", "updateDesc");
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function(resp) {
+                        console.log(resp);
+                        const serverResponse = JSON.parse(resp);
+                        const {
+                            status
+                        } = serverResponse[0];
+
+                        if (status == 200) {
+                            Swal.fire({
+                                title: "Description Updated!",
+                                text: "Dear Service Provider! Your service description has been recorded successfully.",
+                                icon: "success"
+                            }).then((result) => {
+                                if (result.isConfirmed == true) {
+                                    $("#addServiceDescForm").addClass("hidden");
+                                    $("#addServiceDescForm")[0].reset();
+                                    showAllServiceSummaryOfServiceProvider();
+                                }
+                            });
+                        }
+                    }
+
+                })
+
+            })
+
         })
-    })
+
+    });
 </script>

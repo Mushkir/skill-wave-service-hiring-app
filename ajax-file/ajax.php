@@ -1404,8 +1404,6 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
             $serviceSeekerContactNo = $data['contact_no'];
 
 
-            $serviceDesc == "Pending" ? $desc = "Click to add description details" : $desc = $serviceDesc;
-
             $result .= '<tr>
             <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">#' . $serialNo++ . '</td>
             <td class="px-1 py-1.5 text-center border-gray-400 border-r-2">' . $serviceSeekerId . '</td>
@@ -1419,11 +1417,25 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
                 $output = "Accepted";
                 $result .= '<td class="px-1 py-1.5 text-center border-gray-400 border-r-2">' . $output . '</td>';
             }
-            $result .= '    <td class="px-1 py-1.5 border-gray-400 border-r-2">
-            <a href="serviceId=' . $serviceId . '" class="hover:underline text-left block hover:transition 500 hover:text-gray-700" id="serviceDes">' . $desc . '</a>
-        </td>
 
-        <td class="px-1 py-1.5 border-gray-400 border-r-2">
+            /*
+            While accepting the service request, the description status will be defined as "Pending". So, after the 
+            completion of service, the Service provider need to enter the service description ($serviceDesc) by himself.
+            So, in the initial time this field need to be editable. after enter the description by SP, it need to be
+            unchangeable. This condition is doing that process.
+            */
+            if ($serviceDesc == "Pending") {
+
+                $desc = "Click to add description details";
+                $result .=  '    <td class="px-1 py-1.5 border-gray-400 border-r-2"> <a href="serviceId=' . $serviceId . '" class="hover:underline text-left block hover:transition 500 hover:text-gray-700" id="serviceDes">' . $desc . '</a> </td>';
+            } else {
+
+                $desc = $serviceDesc;
+                $result .= '    <td class="px-1 py-1.5 border-gray-400 border-r-2">' . $desc . '</td>';
+            }
+
+
+            $result .= '<td class="px-1 py-1.5 border-gray-400 border-r-2">
             <a href="serviceId=' . $serviceId . '" class="hover:text-gray-700 hover:transition 500 hover:underline text-left block" id="serviceCharge">Add Service Charge</a>
         </td>
         <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">
@@ -1724,7 +1736,6 @@ if (isset($_GET['getNewServiceProviderId'])) {
     echo json_encode($arrayOfSpData);
 }
 
-
 // Todo: Accept the New request of Sp.
 if (isset($_GET['acceptSpRequest'])) {
 
@@ -1765,6 +1776,27 @@ if (isset($_GET['acceptSpRequest'])) {
         $response[] = array("status" => 200, "message" => "$spName's request accepted");
     } else {
         $response[] = array("status" => 500, "message" => "Currenly cannot proceed this process. Please try again!");
+    }
+
+    echo json_encode($response);
+}
+
+// ! Need to implement Rejecttion of New Request with mail feature.
+
+// Todo: Need to verify the service-id and add the service description detail.
+if (isset($_POST['req']) && $_POST['req'] == 'updateDesc') {
+
+    // * 1. Get all the data from form element.
+    $serviceId = $_POST['service-id'];
+    $serviceDescriptionEl  = $_POST['add-service-desc'];
+
+    // * 2. Update the description using recieved input to relevent id.
+    $query = "UPDATE table_services SET description = '$serviceDescriptionEl' WHERE services_id = $serviceId";
+
+    $updateDesc = $db->updateDataByQuery($query);
+
+    if ($updateDesc) {
+        $response[] = array("status" => 200);
     }
 
     echo json_encode($response);
