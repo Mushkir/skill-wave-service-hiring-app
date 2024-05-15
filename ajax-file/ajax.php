@@ -1820,7 +1820,15 @@ if (isset($_POST["request"]) && $_POST["request"] == "updateServiceCharge") {
     $updateServiceCharge = $db->updateDataByQuery($query);
 
     if ($updateServiceCharge) {
-        $response[] = array('status' => 200, "amount" => $serviceChargeAmount);
+        // * Need to change SP state from "Busy" to "Available"
+        $arrayOfServiceInfo = $services->getServiceInfoById($serviceId);
+
+        $serviceProviderID = $arrayOfServiceInfo['provider_id'];
+
+        $query = "UPDATE table_service_provider SET status = 'available' WHERE service_provider_id = $serviceProviderID";
+        $db->updateDataByQuery($query);
+
+        $response[] = array("status" => 200, "amount" => $serviceChargeAmount);
     }
 
     echo json_encode($response);

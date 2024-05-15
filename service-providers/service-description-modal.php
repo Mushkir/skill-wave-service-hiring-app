@@ -16,7 +16,7 @@
             <input type="hidden" name="service-id" id="service-id">
             <label for="add-service-desc" class="block text-gray-800 mb-2">Service Description<span class="text-red-500">*</span></label>
             <div>
-                <textarea class=" bg-gray-200 w-full rounded-md p-3 outline-none" rows="10" name="add-service-desc" id="add-service-desc" placeholder="Enter the service description..."></textarea>
+                <textarea class=" bg-gray-200 w-full rounded-md p-3 outline-none" rows="10" name="add-service-desc" id="add-service-desc" placeholder="Enter the service description..." autocomplete="off"></textarea>
             </div>
 
         </div>

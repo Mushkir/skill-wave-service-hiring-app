@@ -1,4 +1,4 @@
-Top 1: Need to implement Admin Dashboard with District and Town adding ui - 40% COMPLETE.
+Top 1: Need to implement Admin Dashboard with District and Town adding ui - COMPLETE.
 Top 2: Need to implement District and Town details adding by admin feature - COMPLETE.
 1. Need to implement Service Seeker signup process. - COMPLETE.
 2. Need to implement Service Seeker login process - COMPLETE.
@@ -16,3 +16,8 @@ Top 2: Need to implement District and Town details adding by admin feature - COM
     11.3 Need to check if the new request (Pending state) came / not? If it is came, need to alert to SP while logging-in - COMPLETED.
     11.4 SP need to Choose one order. if he choose the order, their state need to change as "Busy" - COMPLETED.
 12. Need to implement state changing in SP profile - COMPLETED.
+13. Need to implement service description and service charge entering by SP.
+13.1 Need to create a modal to add Service description details using Service-id. - COMPLETED
+13.2 Need to implement service description entering by SP feature. - COMPLETED
+13.3 Need to create a modal to add Service Charge details using Service-id. - COMPLETED
+13.4 Need to implement service charge entering by SP feature. - COMPLETED

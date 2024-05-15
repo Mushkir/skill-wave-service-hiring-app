@@ -16,7 +16,7 @@
             <input type="hidden" name="service-id-for-charge" id="service-id-for-charge">
             <label for="add-service-charge" class="block text-gray-800 mb-2">Service Charge Amount<span class="text-red-500">*</span></label>
             <div>
-                <input type="text" id="add-service-charge" name="add-service-charge" class="p-2 rounded-md outline-none w-full bg-gray-200" placeholder="Ex: 500, 800...">
+                <input type="text" id="add-service-charge" name="add-service-charge" class="p-2 rounded-md outline-none w-full bg-gray-200" placeholder="Ex: 500, 800..." autocomplete="off">
             </div>
 
         </div>

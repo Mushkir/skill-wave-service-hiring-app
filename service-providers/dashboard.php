@@ -94,7 +94,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
 
                             <!-- Name -->
                             <div class="relative">
-                                Service Summary<sup class="bg-black text-white px-1 rounded-full" id="countSummary">5</sup>
+                                Service Summary<sup class="bg-black text-white px-1 rounded-full" id="countSummary"></sup>
                             </div>
                         </a>
                     </li>
