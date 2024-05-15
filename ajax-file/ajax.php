@@ -665,7 +665,6 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
     if ($isServiceProviderExist > 0) {
 
         // * 2. If it is yes, Fetch all the data from DB.
-        // $query = "SELECT * FROM table_service_provider WHERE profile_status = 'accepted' ORDER BY RAND() LIMIT 9";
         $query = "SELECT tsp.*, tt.name AS town_name FROM table_service_provider tsp 
         JOIN table_town tt ON tsp.town_id = tt.town_id WHERE tsp.profile_status = 'accepted' ORDER BY RAND() LIMIT 9";
         $arrayOfServiceProviders = $db->getMultipleData($query);
@@ -773,7 +772,8 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
 
     $output = "";
 
-    $query = "SELECT * FROM table_service_provider WHERE status = 'available'";
+    $query = "SELECT tsp.*, tt.name AS town_name FROM table_service_provider tsp 
+    JOIN table_town tt ON tsp.town_id = tt.town_id WHERE tsp.status = 'available' AND tsp.profile_status = 'accepted'";
 
     $arrayOfAvailableServiceProviders = $db->getMultipleData($query);
 
@@ -785,6 +785,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
         $availableSpSkills = $dataSet['skills'];
         $availableSpLatitudeValue = $dataSet['latitude_value'];
         $availableSpLongitudeValue = $dataSet['longitutde_value'];
+        $availableSpTownName = $dataSet['town_name'];
         $availableSpImage = $dataSet['image'];
 
         $output .= '<div class="lg:max-w-md w-full md:w-[300px] mt-10 bg-cus-maron rounded-md overflow-hidden">
@@ -831,11 +832,11 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
             </div>
 
             <div>
-                <!-- Tap to call -->
+                <!-- Tap to show location -->
                 <div>
                     <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn">
                         <i class="fa-solid fa-map-pin"></i>
-                        Show Location
+                        ' . $availableSpTownName . '
                     </a>
                 </div>
 
