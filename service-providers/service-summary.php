@@ -6,6 +6,7 @@
 
 <?php @session_start();
 include('service-description-modal.php');
+include('service-charge-modal.php');
 ?>
 
 <div class="relative mb-5">
@@ -154,7 +155,7 @@ include('service-description-modal.php');
             $("#service-id")[0].value = serviceId;
         });
 
-        // * Valdiation script 
+        // * Validation and Sending service description info to server script 
         const addServiceDescFormEl = document.querySelector("#addServiceDescForm");
 
         const validator = new window.JustValidate(addServiceDescFormEl);
@@ -212,6 +213,27 @@ include('service-description-modal.php');
             })
 
         })
+
+        // * <------------------------- End of script ------------------------->
+        $("body").on("click", "#serviceCharge", function(e) {
+            e.preventDefault();
+
+            const serviceIdHrefValue = $(this).attr("href");
+            const splittedArray = serviceIdHrefValue.split("=");
+            const serviceId = splittedArray[1];
+
+            const addServiceChargeFormEl = $("#addServiceChargeForm");
+
+            addServiceChargeFormEl.removeClass("hidden").addClass("transition duration-300 opacity-0");
+
+            setInterval(() => {
+                addServiceChargeFormEl.addClass("opacity-100")
+            }, 100);
+
+            $("#service-id-for-charge")[0].value = serviceId;
+            // console.log($("#service-id-for-charge")[0].value);
+        })
+
 
     });
 </script>

@@ -1307,7 +1307,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             ' . $desc . '
             </td>
 
-            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">Rs. ' . $serviceCharge . '</td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">Rs. ' . $serviceCharge . ' (Negotiable)</td>
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
             ' . $serviceStatus . '
             </td>
