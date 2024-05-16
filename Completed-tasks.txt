@@ -10,14 +10,22 @@ Top 2: Need to implement District and Town details adding by admin feature - COM
 8. Find Services - COMPLETED.
 9. Need to show SS hiring history in Profile (Hiring History) in Table form - COMPLETED.
 10. Make the hiring log number as dynamically - COMPLETED.
-11. Need to inform to SP to change status as "Busy" - ON GOING.
+
+11. Need to inform to SP to change status as "Busy" - COMPLETED.
     11.1 Need to display all summary - COMPLETED.
     11.2 Need to make dynamically in menu - COMPLETED.
     11.3 Need to check if the new request (Pending state) came / not? If it is came, need to alert to SP while logging-in - COMPLETED.
     11.4 SP need to Choose one order. if he choose the order, their state need to change as "Busy" - COMPLETED.
 12. Need to implement state changing in SP profile - COMPLETED.
+
 13. Need to implement service description and service charge entering by SP.
 13.1 Need to create a modal to add Service description details using Service-id. - COMPLETED
 13.2 Need to implement service description entering by SP feature. - COMPLETED
 13.3 Need to create a modal to add Service Charge details using Service-id. - COMPLETED
 13.4 Need to implement service charge entering by SP feature. - COMPLETED
+
+14. Need to design Payment UI - ON PROCESS.
+14.1 Need to design summary sheet with payment - COMPLETED.
+14.2 Need to fetch the service related details using Service-id and show those details in summary sheet. - COMPLETED.
+14.3 After the confirmation, it need to navigate to Payment Portal. - COMPLETED.
+14.4 Design Stripe Payment Portal. - COMPLETED.

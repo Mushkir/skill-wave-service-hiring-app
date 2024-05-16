@@ -89,7 +89,7 @@ if (isset($_GET["serviceId"])) {
         </div>
 
         <div>
-            <button class="bg-[#6D2932] px-5 py-2 rounded-md text-[#e4dbd2] w-full hover:bg-[#572028] hover:transition 500 hover:text-white">
+            <button type="button" class="bg-[#6D2932] confirm-btn px-5 py-2 rounded-md text-[#e4dbd2] w-full hover:bg-[#572028] hover:transition 500 hover:text-white" id="">
                 Confirm to Pay
             </button>
         </div>
@@ -135,6 +135,7 @@ if (isset($_GET["serviceId"])) {
                         $("#service-desc")[0].textContent = description;
                         $("#service-charge")[0].value = `Rs. ${service_charge}`;
                         $("#date-time")[0].value = humanReadableDateAndTime;
+                        $(".confirm-btn")[0].id = service_charge; // ! This DOM integration for pass the service charge to payment portal while clicking confirm button
 
 
 
@@ -146,6 +147,15 @@ if (isset($_GET["serviceId"])) {
                     }
                 })
             }
+
+            $("body").on("click", ".confirm-btn", function(e) {
+                e.preventDefault();
+
+                const serviceChargeAmount = $(this).attr("id");
+
+                window.location.href = `/skill-wave-service-hiring-app/service-seekers/payment/payment.php?serivceId=${<?php echo $serviceId; ?>}&serviceCharge=${serviceChargeAmount}`
+
+            })
         })
     </script>
 </body>

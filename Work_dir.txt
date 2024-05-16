@@ -6,13 +6,13 @@ Feedback:
 
 **** TODO: Need to create Payment Class & Need to configure services registration with payment registration.
 
-14. Need to design Payment UI - ON PROCESS.
-14.1 Need to design summary sheet with payment
-14.2 Need to fetch the service related details using Service-id and show those details in summary sheet.
-14.3 After the confirmation, it need to navigate to Payment Portal.
-14.4 Design Stripe Payment Portal
 
-15. Need to implement payment feature.
+
+15. Need to implement payment feature. - PENDING.
+15.1 After payment process status of payment need to change (Update) from "Pending" to "Paid" and date_time in `table_payment` table.
+15.2 After changing "Paid" status, need to send email to relevent SP as payment successfully recieved.
+15.3 Need to navigate Feedback Panel / Hiring log panel.
+
 16. Need to implement Feedback UI.
 17. Need to implement giving feedback by SS.
 
