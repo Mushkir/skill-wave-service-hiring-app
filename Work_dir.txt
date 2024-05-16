@@ -9,7 +9,7 @@ Feedback:
 
 
 15. Need to implement payment feature. - PENDING.
-15.1 After payment process status of payment need to change (Update) from "Pending" to "Paid" and date_time in `table_payment` table.
+15.1 After payment process, status of payment need to change (Update) from "Pending" to "Paid" and date_time in `table_payment` table.
 15.2 After changing "Paid" status, need to send email to relevent SP as payment successfully recieved.
 15.3 Need to navigate Feedback Panel / Hiring log panel.
 

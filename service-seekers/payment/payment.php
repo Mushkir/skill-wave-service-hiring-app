@@ -1,4 +1,5 @@
 <?php
+require_once '../../classes/common/Database.php';
 require_once 'stripe-php-13.10.0/init.php';
 require_once '../../env.php';
 
@@ -25,17 +26,10 @@ if (isset($_GET['serivceId'])) {
     $checkoutSession = $stripe->checkout->sessions->create([
         'line_items' => $lineItems,
         'mode' => 'payment',
-        'success_url' => "http://localhost/skill-wave-service-hiring-app/service-seekers/hiring-log.php",
-        'cancel_url' => "http://localhost/skill-wave-service-hiring-app/index.php"
+        // 'success_url' => "http://localhost/skill-wave-service-hiring-app/service-seekers/dashboard.php?hiringProcess",
+        'success_url' => "http://localhost/skill-wave-service-hiring-app/ajax-file/ajax.php?paidServiceId=$serviceId",
+        'cancel_url' => "http://localhost/skill-wave-service-hiring-app/service-seekers/dashboard.php?serviceSummary&serviceId=1"
     ]);
-
-
-    // !<---------------------------------- Database Code -------------------------------------->
-    $status = "paid";
-    // !<---------------------------------- End of Database Code -------------------------------------->
-
-
-
 
     header('Content-Type: application/json');
     header("HTTP/1.1 303 See Other");

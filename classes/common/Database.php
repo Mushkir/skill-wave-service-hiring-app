@@ -143,6 +143,7 @@ class Database
     public function sendEmail($serviceProviderName, $serviceProviderEmail, $emailSubject, $emailBody)
     {
         require_once '../env.php'; // ! This file includes userEmail and passKey
+        // require_once '../../env.php';
 
         $mail = new PHPMailer(true);
 

@@ -1898,3 +1898,48 @@ if (isset($_GET['getParsedServiceIdInfo'])) {
 
     echo json_encode($arrayOfServiceInfo);
 }
+
+// Todo: Get the service-d from Payment portal, update the payment status as "Paid" and navigate to SS dashboard after update.
+if (isset($_GET["paidServiceId"])) {
+
+    $serviceId = $_GET["paidServiceId"];
+
+    // * 1. Need to update date and time and status of `table_payment` table 
+    $query = "UPDATE table_payment SET status = 'Paid', date_time = NOW() WHERE services_id = $serviceId";
+    $updateAsPaymentRecieved = $db->updateDataByQuery($query);
+
+    if ($updateAsPaymentRecieved) {
+
+        // * 2. After the successfull payment, need to send email to relevent service provider as payment received.
+        $query = "SELECT ts.*, tsp.name AS provider_name, tsp.email_address AS provider_email, tss.name AS seeker_name  FROM 
+        table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id
+        JOIN table_service_seeker tss ON ts.seeker_id = tss.service_seeker_id WHERE ts.services_id = $serviceId";
+
+        $serviceInfo = $db->getMultipleData($query);
+
+        $spName = $serviceInfo[0]['provider_name'];
+        $spEmail = $serviceInfo[0]['provider_email'];
+        $ssName = $serviceInfo[0]['seeker_name'];
+        $spServiceCharge = $serviceInfo[0]['service_charge'];
+
+        $serviceIdNewFormat = "";
+
+        $serviceId < 10 ? $serviceIdNewFormat = "0" . $serviceId : $serviceIdNewFormat = $serviceId;
+
+        $subject = "Notification: Payment Credited for Service ID No. $serviceIdNewFormat";
+
+        $body = "<body>
+        <p>Dear $spName,</p>
+        <p>We trust this message finds you well. We are pleased to inform you that the payment for Service ID No. $serviceIdNewFormat, amounting to Rs. $spServiceCharge, has been successfully credited by $ssName. Your contribution is greatly appreciated, and we extend our gratitude for your continued support as a valued member of our platform.</p>
+        <p>Should any concerns arise or should you require further assistance, please do not hesitate to contact us. Our dedicated team is readily available to address any queries you may have.</p>
+        <p>Once again, we express our gratitude for choosing to be a part of our platform. We eagerly anticipate the opportunity to continue serving you and ensuring your satisfaction.</p>
+        <p>Best regards,</p><br>
+        <p>The Admin,<br>
+        Skill-Wave Service Hiring Platform,<br>
+        Tel: +94 777195282</p>
+        </body>";
+
+        $db->sendEmail($spName, $spEmail, $subject, $body);
+    }
+    echo "<script>window.location.href = '/skill-wave-service-hiring-app/service-seekers/dashboard.php?hiringProcess'</script>";
+}
