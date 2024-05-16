@@ -48,5 +48,15 @@
             })
 
         }
+
+        $("body").on("click", "#navigateSummaryPageBtn", function(e) {
+            e.preventDefault();
+
+            const serviceIdHrefVal = $(this).attr("href");
+            const arrayOfServiceId = serviceIdHrefVal.split("=");
+            const serviceId = arrayOfServiceId[1];
+
+            window.location.href = `/skill-wave-service-hiring-app/service-seekers/dashboard.php?serviceSummary&serviceId=${serviceId}`
+        })
     })
 </script>

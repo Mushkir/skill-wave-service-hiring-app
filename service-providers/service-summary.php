@@ -341,7 +341,7 @@ include('service-charge-modal.php');
                         processData: false,
                         data: formData,
                         success: function(response) {
-                            console.log(response);
+                            // console.log(response);
                             const serverResp = JSON.parse(response)
 
                             // console.log(serverResp);

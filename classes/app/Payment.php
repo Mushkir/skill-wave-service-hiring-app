@@ -33,6 +33,8 @@ class Payment extends Database
     }
 
 
+
+
     public function getPaymentInfoById($paymentId)
     {
         $query = "SELECT * FROM {$this->tableName} WHERE payment_id = :payment_id";

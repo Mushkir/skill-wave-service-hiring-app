@@ -7,6 +7,11 @@ Feedback:
 **** TODO: Need to create Payment Class & Need to configure services registration with payment registration.
 
 14. Need to design Payment UI - ON PROCESS.
+14.1 Need to design summary sheet with payment
+14.2 Need to fetch the service related details using Service-id and show those details in summary sheet.
+14.3 After the confirmation, it need to navigate to Payment Portal.
+14.4 Design Stripe Payment Portal
+
 15. Need to implement payment feature.
 16. Need to implement Feedback UI.
 17. Need to implement giving feedback by SS.
@@ -29,3 +34,27 @@ Steps to write join query:
         After that, need to write that condition finally.
         EX: "SELECT aliyas.output1, aliyas.output2, sub_table_aliyas.output1 FROM mainTable aliyas JOIN sub_table subTable_aliyas ON aliyas.commonColumnName = sub_table_aliyas.commonColumnName"
 10. Need to give view and delete feature to those Hiring history.
+
+
+
+Human  Readable date code: 
+// if (isset($_POST['req']) && $_POST['req'] == 'dateReq') {
+
+//     $dataOf = $payment->getPaymentInfoById(1);
+
+//     echo $dataOf["date_time"];
+//     // echo var_dump($dataOf);
+
+
+//     // Create a DateTime object with the current date and time
+//     // $now = new DateTime();
+
+//     // // Set the timezone (optional, you can skip this if you want to use the default timezone)
+//     // $now->setTimezone(new DateTimeZone('Asia/Colombo'));
+
+//     // // Format the date and time in a human-readable format
+//     // $humanReadableDateTime = $now->format('l, F j, Y \a\t g:i A');
+
+//     // // Output the human-readable date and time
+//     // echo "Current date and time: $humanReadableDateTime";
+// }

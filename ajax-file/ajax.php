@@ -1329,7 +1329,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $date . '</td>
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $time . '</td>
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">
-            <a href="serviceId=' . $serviceId . '" class=" hover:underline">Click to Pay</a>
+            <a href="serviceId=' . $serviceId . '" class=" hover:underline" id="navigateSummaryPageBtn">Click to Pay</a>
             </td>
 
         </tr>';
@@ -1886,4 +1886,15 @@ if (isset($_POST['request']) && $_POST['request'] == 'spLogout') {
         session_unset();
         session_destroy();
     }
+}
+
+// Todo: Get the all details of selected service using service-id to do payment by SS.
+if (isset($_GET['getParsedServiceIdInfo'])) {
+
+    $serviceId = $_GET['getParsedServiceIdInfo'];
+
+    $query = "SELECT ts.*, tsp.name AS providerName FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE services_id = $serviceId";
+    $arrayOfServiceInfo = $db->getMultipleData($query);
+
+    echo json_encode($arrayOfServiceInfo);
 }

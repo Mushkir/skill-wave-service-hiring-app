@@ -157,14 +157,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
         <section class="bg-[#F9F6EE] w-full min-h-screen p-5 rounded-xl">
             <!-- Header Part -->
             <section class="flex items-start justify-between relative z-40">
-                <div class="bg-primary-color-10 flex items-center w-[250px] p-2 gap-4 rounded-lg">
-                    <!-- Search Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 16 16">
-                        <path fill="#6D2932" d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0a5.5 5.5 0 0 1 11 0" />
-                    </svg>
 
-                    <input type="text" name="" id="" class="bg-primary-color-10 w-full outline-none placeholder-[#6D2932]" placeholder="Search" />
-                </div>
 
                 <!-- Profile -->
                 <div class="hover:cursor-pointer z-40 absolute top-0 right-0" id="ss-profile">
@@ -235,6 +228,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                 if (isset($_GET['delete'])) {
                     include('delete-profile.php');
+                }
+
+                if (isset($_GET['serviceSummary'])) {
+                    include('service-summary-sheet.php');
                 }
                 ?>
             </section>
