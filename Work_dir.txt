@@ -6,7 +6,7 @@ Feedback:
 
 
 
-14. Need to design Payment UI.
+14. Need to design Payment UI - ON PROCESS.
 15. Need to implement payment feature.
 16. Need to implement Feedback UI.
 17. Need to implement giving feedback by SS.

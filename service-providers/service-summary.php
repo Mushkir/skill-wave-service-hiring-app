@@ -9,15 +9,17 @@ include('service-description-modal.php');
 include('service-charge-modal.php');
 ?>
 
-<div class="relative mb-5">
-    <h3 class="text-center font-semibold text-xl text-gray-700">
-        Dear <?php echo $_SESSION['serviceProviderName']; ?>, here you can explore your whole service summary info.
-    </h3>
-    <div class="bg-[#6D2932] w-10 h-[3px] rounded-full mx-auto mt-2"></div>
-</div>
+<div>
+    <div class="mb-5">
+        <h3 class="text-center font-semibold text-xl text-gray-700">
+            Dear <?php echo $_SESSION['serviceProviderName']; ?>, here you can explore your whole service summary info.
+        </h3>
+        <div class="bg-[#6D2932] w-10 h-[3px] rounded-full mx-auto mt-2"></div>
+    </div>
 
-<div class="summaryTableContainer flex justify-center items-center overflow-x-scroll">
+    <div class="summaryTableContainer  max-w-[950px] overflow-x-scroll">
 
+    </div>
 </div>
 
 

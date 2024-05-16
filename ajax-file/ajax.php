@@ -1268,7 +1268,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
         $serviceSeekerId = $arrayOfSsInfo['service_seeker_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE ts.seeker_id = $serviceSeekerId";
+        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, ts.date_time, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE ts.seeker_id = $serviceSeekerId";
 
         $arrayOfHiringProcessInfo = $db->getMultipleData($query);
 
@@ -1283,6 +1283,9 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             <th class="p-2 text-center">Service Description</th>
             <th class="p-2 text-center">Service Charge</th>
             <th class="p-2 text-center">Status</th>
+            <th class="p-2 text-center">Date</th>
+            <th class="p-2 text-center">Time</th>
+            <th class="p-2 text-center">Payment</th>
         </thead>
         <tbody>';
 
@@ -1294,6 +1297,13 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             $serviceCharge  = $data['service_charge'];
             $serviceStatus  = $data['service_status'];
             $serviceProviderName  = $data['name'];
+            $dateTime  = $data['date_time'];
+
+            $arrayOfDateTime = explode(" ", $dateTime);
+
+            $date = $arrayOfDateTime[0];
+            $time = $arrayOfDateTime[1];
+
 
             $desc = "";
             $serviceChargeAmount = "";
@@ -1314,6 +1324,12 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
             ' . $serviceStatus . '
             </td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $date . '</td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $time . '</td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">
+            <a href="serviceId=' . $serviceId . '" class=" hover:underline">Click to Pay</a>
+            </td>
+
         </tr>';
         }
 
@@ -1372,7 +1388,7 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
         $spId = $arrayOfSpInfo['service_provider_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        $query = "SELECT ts.services_id, ts.seeker_id, ts.description, ts.service_charge, ts.service_agreed, ts.service_status, tss.name, tss.contact_no 
+        $query = "SELECT ts.services_id, ts.seeker_id, ts.description, ts.service_charge, ts.service_agreed, ts.service_status, ts.date_time, tss.name, tss.contact_no 
         FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id 
         JOIN table_service_seeker tss ON ts.seeker_id = tss.service_seeker_id WHERE tsp.service_provider_id = $spId";
 
@@ -1391,6 +1407,8 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
                 <th class="p-2 text-center">Service Description</th>
                 <th class="p-2 text-center">Service Charge</th>
                 <th class="p-2 text-center">Status</th>
+                <th class="p-2 text-center">Date</th>
+                <th class="p-2 text-center">Time</th>
                 <th class="p-2 text-center">Payment Status</th>
             </tr>
         </thead>
@@ -1405,6 +1423,11 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
             $serviceStatus = $data['service_status'];
             $serviceSeekerName = $data['name'];
             $serviceSeekerContactNo = $data['contact_no'];
+            $dateTime = $data['date_time'];
+
+            $arrayOfDateTime = explode(" ", $dateTime);
+            $date = $arrayOfDateTime[0];
+            $time = $arrayOfDateTime[1];
 
 
             $result .= '<tr>
@@ -1449,6 +1472,10 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
 
 
             $result .= '<td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $serviceStatus . '</td>
+
+            <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $date . '</td>
+            <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $time . '</td>
+
         <td class="px-1 py-1.5 border-gray-400 border-r-2">
             <a href="#" class="hover:underline hover:transition 500 hover:text-gray-700">Pending</a>
         </td>

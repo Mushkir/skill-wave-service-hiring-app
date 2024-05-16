@@ -47,7 +47,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
     <!-- Main Wrapper -->
     <section class="flex items-center gap-7 p-5 pl-0 m-auto relative max-w-[1800px] ">
         <!-- Sidebar -->
-        <section class="w-1/5 min-h-screen">
+        <section class="w-1/5  min-h-screen">
             <div class="absolute top-6">
                 <h1 class="p-5 text-xl font-bold text-[#e94e1c] bg-[#0C0C0C] rounded-r-xl"><?php echo $serviceProviderName; ?></h1>
                 <!-- Menu List Item -->
