@@ -10,6 +10,7 @@ require_once('../classes/app/Town.php');
 require_once('../classes/app/ServiceSeeker.php');
 require_once('../classes/app/ServiceProvide.php');
 require_once('../classes/app/Services.php');
+require_once('../classes/app/Payment.php');
 
 $db = new Database();
 $admin = new Admin();
@@ -18,6 +19,7 @@ $town = new Town();
 $serviceSeeker = new ServiceSeeker();
 $serviceProvider = new ServiceProvider();
 $services = new Services();
+$payment = new Payment();
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -1573,12 +1575,21 @@ if (isset($_GET['serviceId'])) {
     if (isset($_GET["request"]) && $_GET["request"] == "acceptRequest") {
 
         $serviceId = $_GET['serviceId'];
+        $result = "";
 
         $query = "UPDATE table_services SET service_status = 'on process', service_agreed = 1 WHERE services_id = $serviceId";
 
+        $arrayOfServiceInfo = $services->getServiceInfoById($serviceId);
+        $serviceProviderId = $arrayOfServiceInfo['provider_id'];
+        $serviceSeekerId = $arrayOfServiceInfo['seeker_id'];
+        $serviceCharge = $arrayOfServiceInfo['service_charge'];
+        $paymentStatus = "Pending";
+
+        $insertPaymentInfo = $payment->insertNewPayment($paymentStatus, $serviceSeekerId, $serviceProviderId, $serviceId, $serviceCharge);
+
         $updateStatus = $db->updateDataByQuery($query);
 
-        if ($updateStatus == true) {
+        if ($updateStatus == true && $insertPaymentInfo == true) {
 
             $arrayOfServiceInfo = $services->getServiceInfoById($serviceId);
 
@@ -1840,14 +1851,20 @@ if (isset($_POST['req']) && $_POST['req'] == 'updateDesc') {
 // Todo: Need to update the service charge using service-id.
 if (isset($_POST["request"]) && $_POST["request"] == "updateServiceCharge") {
 
+    // * Steps: 
+    // * 1. Need to Get the service-id & service charge from frontend.
     $serviceId = $_POST['service-id-for-charge'];
     $serviceChargeAmount = $_POST['add-service-charge'];
 
-    $query = "UPDATE table_services SET service_charge = $serviceChargeAmount, service_status = 'completed'  WHERE services_id = $serviceId";
-    $updateServiceCharge = $db->updateDataByQuery($query);
+    // * 2. update service charge, service status = "completed" in "table_services" table and amount in "table_payment" which is entered by SP.
+    $queryForUpdateInTblServices = "UPDATE table_services SET service_charge = $serviceChargeAmount, service_status = 'completed'  WHERE services_id = $serviceId";
+    $queryForUpdateInTblPayment = "UPDATE table_payment SET amount = $serviceChargeAmount WHERE services_id = $serviceId";
 
-    if ($updateServiceCharge) {
-        // * Need to change SP state from "Busy" to "Available"
+    $updateServiceCharge = $db->updateDataByQuery($queryForUpdateInTblServices);
+    $updateServiceChargeInPaymentTbl = $db->updateDataByQuery($queryForUpdateInTblPayment);
+
+    if ($updateServiceCharge && $updateServiceChargeInPaymentTbl) {
+        // * 3. If both conditions become true, the SP's state need to change from "busy" to "available".
         $arrayOfServiceInfo = $services->getServiceInfoById($serviceId);
 
         $serviceProviderID = $arrayOfServiceInfo['provider_id'];

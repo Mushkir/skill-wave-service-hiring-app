@@ -1,5 +1,4 @@
 <?php
-
 // ! For app
 require_once('../classes/common/Database.php');
 
@@ -12,7 +11,7 @@ class Payment extends Database
 
     public function insertNewPayment($paymentStatus, $serviceSeekerId, $serviceProviderId, $serviceId, $serviceChargeAmount)
     {
-        $query = "INSERT INTO ($this->tableName} (status, seeker_id, provider_id, services_id, amount, date_time) 
+        $query = "INSERT INTO {$this->tableName} (status, seeker_id, provider_id, services_id, amount, date_time) 
         VALUES (:status, :seeker_id, :provider_id, :services_id, :amount, NOW())";
 
         try {
@@ -21,11 +20,12 @@ class Payment extends Database
 
             $statement->execute([':status' => $paymentStatus, ':seeker_id' => $serviceSeekerId, ':provider_id' => $serviceProviderId, ':services_id' => $serviceId, ':amount' => $serviceChargeAmount]);
 
-            $lastInsertedId = $this->connection->lastInsertId();
+            return true;
+            // $lastInsertedId = $this->connection->lastInsertId();
 
-            $lastInsertedData = $this->getPaymentInfoById($lastInsertedId);
+            // $lastInsertedData = $this->getPaymentInfoById($lastInsertedId);
 
-            echo json_encode($lastInsertedData);
+            // echo json_encode($lastInsertedData);
         } catch (PDOException $ex) {
 
             echo "Error from insertNewPayment(): " . $ex->getMessage();
@@ -35,5 +35,28 @@ class Payment extends Database
 
     public function getPaymentInfoById($paymentId)
     {
+        $query = "SELECT * FROM {$this->tableName} WHERE payment_id = :payment_id";
+
+        try {
+
+            $statement = $this->connection->prepare($query);
+
+            $statement->execute([":payment_id" => $paymentId]);
+
+            $numberOfRows = $statement->rowCount();
+
+            if ($numberOfRows > 0) {
+
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+            } else {
+
+                $result = 404;
+            }
+
+            return json_encode($result);
+        } catch (PDOException $ex) {
+
+            echo "Error from getPaymentInfoById(): " . $ex->getMessage();
+        }
     }
 }

@@ -9,7 +9,7 @@ include('service-description-modal.php');
 include('service-charge-modal.php');
 ?>
 
-<div>
+<div id="main-container">
     <div class="mb-5">
         <h3 class="text-center font-semibold text-xl text-gray-700">
             Dear <?php echo $_SESSION['serviceProviderName']; ?>, here you can explore your whole service summary info.
@@ -124,6 +124,9 @@ include('service-charge-modal.php');
                 data: {
                     id: id
                 },
+                beforeSend: function() {
+                    // $("#main-container").html(`<div class="flex justify-center items-center mt-[270px]"><img src="../assets/img/loading-menu.gif" class="w-28 h-28 object-cover " /></div>`)
+                },
                 success: function(response) {
                     // console.log(response);
                     Swal.fire({
@@ -143,11 +146,14 @@ include('service-charge-modal.php');
                                     "serviceId": id,
                                     "request": "acceptRequest"
                                 },
+                                beforeSend: function() {
+                                    // $("#main-container").html(`<div class="flex justify-center items-center mt-[270px]"><img src="../assets/img/loading-menu.gif" class="w-20 h-20 object-cover " /></div>`)
+                                },
                                 success: function(resp) {
-                                    console.log(resp);
-                                    showAllServiceSummaryOfServiceProvider();
+                                    // console.log(resp);
                                     if (resp == 1) {
-
+                                        showAllServiceSummaryOfServiceProvider();
+                                        checkAndChangeServiceProviderState();
                                     }
                                 },
                                 error: function(xhr, status, error) {
@@ -189,7 +195,7 @@ include('service-charge-modal.php');
 
         })
 
-        // Function for open the modal for Add service description.
+        // * Function for open the modal for Add service description.
         $("body").on("click", "#serviceDes", function(e) {
             e.preventDefault();
 
@@ -335,7 +341,7 @@ include('service-charge-modal.php');
                         processData: false,
                         data: formData,
                         success: function(response) {
-                            // console.log(response);
+                            console.log(response);
                             const serverResp = JSON.parse(response)
 
                             // console.log(serverResp);
