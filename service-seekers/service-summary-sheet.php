@@ -135,7 +135,7 @@ if (isset($_GET["serviceId"])) {
                         $("#service-desc")[0].textContent = description;
                         $("#service-charge")[0].value = `Rs. ${service_charge}`;
                         $("#date-time")[0].value = humanReadableDateAndTime;
-                        $(".confirm-btn")[0].id = service_charge; // ! This DOM integration for pass the service charge to payment portal while clicking confirm button
+                        $(".confirm-btn")[0].id = service_charge; // ! This DOM integration for pass the service charge to payment portal while clicking confirm button. Because the payment need to pass from here, otherwise need to get those details from database.
 
 
 
@@ -148,6 +148,7 @@ if (isset($_GET["serviceId"])) {
                 })
             }
 
+            // * Navigate to payment page with service-id and service charge amount.
             $("body").on("click", ".confirm-btn", function(e) {
                 e.preventDefault();
 
