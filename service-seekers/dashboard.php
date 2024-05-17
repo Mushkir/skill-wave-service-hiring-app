@@ -233,6 +233,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                 if (isset($_GET['serviceSummary'])) {
                     include('service-summary-sheet.php');
                 }
+
+                if (isset($_GET['viewPaymentInfo'])) {
+                    include('./payment/view-payment-info.php');
+                }
                 ?>
             </section>
         </section>

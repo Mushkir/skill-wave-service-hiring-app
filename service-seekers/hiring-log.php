@@ -56,7 +56,43 @@
             const arrayOfServiceId = serviceIdHrefVal.split("=");
             const serviceId = arrayOfServiceId[1];
 
-            window.location.href = `/skill-wave-service-hiring-app/service-seekers/dashboard.php?serviceSummary&serviceId=${serviceId}`
+            $.ajax({
+                url: "../ajax-file/ajax.php",
+                type: "GET",
+                data: {
+                    "checkPaymentStatus": serviceId
+                },
+                success: function(response) {
+
+                    // console.log(response);
+                    const paymentStatusResponse = JSON.parse(response);
+                    const {
+                        payment_status
+                    } = paymentStatusResponse[0]
+
+                    if (payment_status == "404") {
+                        Swal.fire({
+                            title: "Unable to process!",
+                            text: "Dear Service Seeker! Once the service provider confirms your request, we'll swiftly move forward. Thank you for your patience and cooperation!",
+                            icon: "error"
+                        });
+                    } else if (payment_status == "Paid") {
+
+                        window.location.href = `/skill-wave-service-hiring-app/service-seekers/dashboard.php?viewPaymentInfo&serviceId=${serviceId}`
+                    } else {
+
+                        window.location.href = `/skill-wave-service-hiring-app/service-seekers/dashboard.php?serviceSummary&serviceId=${serviceId}`
+                    }
+                },
+                error: function(xhr, status, error) {
+
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                    console.error("Error: " + error);
+                }
+            })
+
+
         })
     })
 </script>

@@ -1336,7 +1336,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             if ($paymentStatus == -1) {
 
                 $result .= '<td class="text-left px-1 py-1.5 border-r-[#6D2932] border-r-2">
-                Waiting for Service Provider Confirmation
+                <a href="serviceId=' . $serviceId . '" class=" hover:underline" id="navigateSummaryPageBtn" title="Click to show payment detail">Waiting for Service Provider Confirmation</a>
                 </td>';
             } else if ($paymentStatus == 0) {
 
