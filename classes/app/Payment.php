@@ -32,6 +32,53 @@ class Payment extends Database
         }
     }
 
+    public function getPaymentInfo($key = "", $value = "")
+    {
+        $query = "SELECT * FROM {$this->tableName}";
+
+        try {
+
+            if (!empty($key) && !empty($value)) {
+
+                $query .= " WHERE $key = :value";
+
+                $statement = $this->connection->prepare($query);
+
+                $statement->execute([':value' => $value]);
+
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                $dataset = [];
+
+                foreach ($result as $data) {
+
+                    $dataset[] = $data;
+                }
+
+                return $result;
+            } else {
+
+                $statement = $this->connection->prepare($query);
+
+                $statement->execute();
+
+                $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                $dataset = [];
+
+                foreach ($results as $data) {
+
+                    $dataset[] = $data;
+                }
+
+                return $dataset;
+            }
+        } catch (PDOException $ex) {
+
+            echo "Error from getPaymentInfo(): " . $ex->getMessage();
+        }
+    }
+
 
     public function getPaymentInfoById($paymentId)
     {

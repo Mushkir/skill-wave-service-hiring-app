@@ -17,7 +17,7 @@ include('service-charge-modal.php');
         <div class="bg-[#6D2932] w-10 h-[3px] rounded-full mx-auto mt-2"></div>
     </div>
 
-    <div class="summaryTableContainer  max-w-[950px] overflow-x-scroll">
+    <div class="summaryTableContainer  max-w-[980px] overflow-x-scroll">
 
     </div>
 </div>

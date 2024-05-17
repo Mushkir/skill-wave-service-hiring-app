@@ -1243,8 +1243,11 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
     // 6. service_status
     $status = "waiting"; // It will update after payment process.
 
+    // 7. payment_status
+    $paymentStatus = -1;
+
     // * Save the hiring process in table_services table.
-    $confirmedHiringProcess = $services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $serviceAgreed, $status);
+    $confirmedHiringProcess = $services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $serviceAgreed, $status, $paymentStatus);
 
     if ($confirmedHiringProcess == true) {
 
@@ -1270,7 +1273,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
         $serviceSeekerId = $arrayOfSsInfo['service_seeker_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, ts.date_time, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE ts.seeker_id = $serviceSeekerId";
+        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, ts.date_time, ts.payment_status, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE ts.seeker_id = $serviceSeekerId";
 
         $arrayOfHiringProcessInfo = $db->getMultipleData($query);
 
@@ -1300,6 +1303,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             $serviceStatus  = $data['service_status'];
             $serviceProviderName  = $data['name'];
             $dateTime  = $data['date_time'];
+            $paymentStatus = $data['payment_status'];
 
             $arrayOfDateTime = explode(" ", $dateTime);
 
@@ -1327,12 +1331,27 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             ' . $serviceStatus . '
             </td>
             <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $date . '</td>
-            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $time . '</td>
-            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">
-            <a href="serviceId=' . $serviceId . '" class=" hover:underline" id="navigateSummaryPageBtn">Click to Pay</a>
-            </td>
+            <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">' . $time . '</td>';
 
-        </tr>';
+            if ($paymentStatus == -1) {
+
+                $result .= '<td class="text-left px-1 py-1.5 border-r-[#6D2932] border-r-2">
+                Waiting for Service Provider Confirmation
+                </td>';
+            } else if ($paymentStatus == 0) {
+
+                $result .= '<td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">
+                <a href="serviceId=' . $serviceId . '" class=" hover:underline" id="navigateSummaryPageBtn">Click to Pay</a>
+                </td>';
+            } else {
+
+                $result .= ' <td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2">
+                <a href="serviceId=' . $serviceId . '" class=" hover:underline" id="navigateSummaryPageBtn" title="Click to show payment detail">Paid</a>
+                </td>';
+            }
+
+
+            $result .= '</tr>';
         }
 
         $result .= '</tbody></table>';
@@ -1577,7 +1596,7 @@ if (isset($_GET['serviceId'])) {
         $serviceId = $_GET['serviceId'];
         $result = "";
 
-        $query = "UPDATE table_services SET service_status = 'on process', service_agreed = 1 WHERE services_id = $serviceId";
+        $query = "UPDATE table_services SET service_status = 'on process', service_agreed = 1, payment_status = 0 WHERE services_id = $serviceId";
 
         $arrayOfServiceInfo = $services->getServiceInfoById($serviceId);
         $serviceProviderId = $arrayOfServiceInfo['provider_id'];
@@ -1904,11 +1923,15 @@ if (isset($_GET["paidServiceId"])) {
 
     $serviceId = $_GET["paidServiceId"];
 
-    // * 1. Need to update date and time and status of `table_payment` table 
+    // * 1. Need to update date and time and status of `table_payment` table.
     $query = "UPDATE table_payment SET status = 'Paid', date_time = NOW() WHERE services_id = $serviceId";
     $updateAsPaymentRecieved = $db->updateDataByQuery($query);
 
-    if ($updateAsPaymentRecieved) {
+    // * 1.1 Update payment status in "table_services" table.
+    $updateQuery = "UPDATE table_services SET payment_status = 1 WHERE services_id = $serviceId";
+    $updatePaymentStatus = $db->updateDataByQuery($updateQuery);
+
+    if ($updateAsPaymentRecieved && $updatePaymentStatus) {
 
         // * 2. After the successfull payment, need to send email to relevent service provider as payment received.
         $query = "SELECT ts.*, tsp.name AS provider_name, tsp.email_address AS provider_email, tss.name AS seeker_name  FROM 
@@ -1942,4 +1965,24 @@ if (isset($_GET["paidServiceId"])) {
         $db->sendEmail($spName, $spEmail, $subject, $body);
     }
     echo "<script>window.location.href = '/skill-wave-service-hiring-app/service-seekers/dashboard.php?hiringProcess'</script>";
+}
+
+// Todo: Need to check Payment status. Based on status need to give response to frontend in SS Hiring Log
+if (isset($_GET["checkPaymentStatus"])) {
+
+    $serviceId = $_GET["checkPaymentStatus"];
+
+    $arrayOfPaymentInfo = $payment->getPaymentInfo("services_id", $serviceId);
+
+    if (empty($arrayOfPaymentInfo[0])) {
+
+        $result[] = array("payment_status" => "404");
+    } else {
+
+        $paymentStatus = $arrayOfPaymentInfo[0]['status'];
+
+        $paymentStatus == "Paid" ? $result[] = array("payment_status" => "Paid") : $result[] = array("payment_status" => "Pending");
+    }
+
+    echo json_encode($result);
 }

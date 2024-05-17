@@ -7,7 +7,7 @@
     <div class="bg-[#6D2932] w-10 h-[3px] rounded-full mx-auto mt-2"></div>
 
 </div>
-<div id="tableContainer" class="flex items-center justify-center overflow-x-scroll">
+<div id="tableContainer" class=" overflow-x-scroll max-w-[950px]">
 
 </div>
 
