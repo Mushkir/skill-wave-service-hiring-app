@@ -2084,3 +2084,13 @@ if (isset($_POST['request']) && $_POST['request'] == "addServiceFeedback") {
 
     echo json_encode($response);
 }
+
+// Todo: Need to show feedback detail while ss clicks box-icon in hiring-log
+if (isset($_POST['request']) && $_POST['request'] == "reqForGetFeedbackData") {
+
+    $serviceId = $_POST['serviceId'];
+
+    $getFeedbackDetails = $feedback->getFeedbackInfoById("service_id", $serviceId);
+
+    echo json_encode($getFeedbackDetails[0]['data'][0]);
+}
