@@ -130,7 +130,7 @@
 
         <!-- Image -->
         <div class="w-full">
-            <label for="file-input" class="font-semibold text-cus-maron">Upload File<span class="text-red-500">*</span></label>
+            <label for="file-input" class="font-semibold text-cus-maron">Profile Image<span class="text-red-500">*</span></label>
             <div class="mb-5">
                 <input class="block w-full mt-2 rounded cursor-pointer focus:outline-none bg-white" id="file-input" type="file" name="file-input" />
             </div>

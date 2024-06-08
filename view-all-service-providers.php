@@ -93,6 +93,7 @@
 
             showAllServiceProviders()
 
+            // * Function for show all the service-providers
             function showAllServiceProviders() {
                 $.ajax({
 
@@ -113,6 +114,7 @@
                 })
             }
 
+            // * Live search
             $("#search-sp").keyup(function() {
 
                 const searchInputEl = $(this).val()
@@ -129,7 +131,7 @@
                         },
                         success: function(response) {
 
-                            console.log(response);
+                            // console.log(response);
                             $("#serviceProviderWrapper").html(response)
                         },
                         error: function(xhr, status, error) {}
@@ -140,7 +142,22 @@
                 }
             })
 
+            // * View selected service-provider info.
+            $("body").on("click", "#booking-btn", function(e) {
+                e.preventDefault();
 
+                const spId = $(this).attr("href");
+
+                window.location.href = `/skill-wave-service-hiring-app/show-selected-sp-info.php?userId=${spId}`;
+            })
+
+
+            $("body").on("click", "#hire-btn", function(e) {
+                e.preventDefault();
+
+                const spId = $(this).attr("href");
+                window.location.href = `/skill-wave-service-hiring-app/show-selected-sp-info.php?userId=${spId}`;
+            })
         })
     </script>
 </body>

@@ -712,7 +712,7 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
             <!-- Social Links -->
             <div class="flex items-center mt-4 space-x-4 justify-center">
                 <div>
-                    <!-- Tap to call -->
+                    <!-- Tap to Hire -->
                     <div>
                         <a href="' . $serviceProviderId . '" id="booking-btn" class="text-[#e0d5d7] hover:underline" data-tooltip-target="" title="Tap to contact ' . $serviceProviderName . '">
                         <i class="fa-solid fa-handshake-angle"></i>
@@ -818,9 +818,9 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
         <!-- Social Links -->
         <div class="flex items-center mt-4 space-x-4 justify-center">
             <div>
-                <!-- Tap to call -->
+                <!-- Tap to Hire -->
                 <div>
-                    <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default">
+                    <a href="' . $availableSpId . '" id="booking-btn" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default">
                     <i class="fa-solid fa-handshake-angle"></i>
                     Tap to Hire
                     </a>
@@ -836,7 +836,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
             <div>
                 <!-- Tap to show location -->
                 <div>
-                    <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn">
+                    <a href="https://www.google.com/maps/search/?api=1&query=' . $availableSpLatitudeValue . ',' . $availableSpLongitudeValue . '" class="text-[#e0d5d7] hover:underline" target="_blank" data-tooltip-target="tooltip-default-newn">
                         <i class="fa-solid fa-map-pin"></i>
                         ' . $availableSpTownName . '
                     </a>
@@ -877,7 +877,14 @@ if (isset($_POST['request']) && $_POST['request'] == 'searchSp') {
 
     $searchValue = $_POST['searchSp'];
 
-    $query = "SELECT * FROM table_service_provider WHERE keywords LIKE '%{$searchValue}%' OR name LIKE '%{$searchValue}%' AND status = 'available'";
+    $query = "SELECT tsp.*, tt.name AS serviceProviderTownName 
+          FROM table_service_provider tsp 
+          JOIN table_town tt 
+          ON tsp.town_id = tt.town_id 
+          WHERE tsp.keywords LIKE '%{$searchValue}%' 
+          OR tsp.name LIKE '%{$searchValue}%' 
+          AND tsp.status = 'available'";
+
 
     $isDataExist = $db->countMultipleData($query);
 
@@ -896,21 +903,22 @@ if (isset($_POST['request']) && $_POST['request'] == 'searchSp') {
             $spLatitudeValue = $dataset['latitude_value'];
             $spLongitudeValue = $dataset['longitutde_value'];
             $spImage = $dataset['image'];
+            $spTownName = $dataset['serviceProviderTownName'];
 
             $output .= '<div class="lg:max-w-md w-full md:w-[300px] mt-10 bg-cus-maron rounded-md overflow-hidden">
             <!-- Banner Profile -->
             <div class="relative">
                 <!-- Cover Photo -->
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUQnWPLujwoqkHL3VDRXLndGKIN9-O1El3Ew&usqp=CAU" alt="Banner Profile" class="w-full rounded-t-md h-20 object-cover" />
-    
+
                 <!-- Profile Pic -->
                 <div class="relative">
                     <img src="ajax-file/uploads/' . $spImage . '" alt="Profile Picture" class="absolute bottom-0 left-2/4 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white" />
-    
+
                     <div class="bg-green-500 w-[15px] h-[15px] rounded-full absolute left-[179px] top-5">
                     </div>
                 </div>
-    
+
             </div>
             <!-- User Info with Verified Button -->
             <div class="block">
@@ -925,30 +933,30 @@ if (isset($_POST['request']) && $_POST['request'] == 'searchSp') {
             <!-- Social Links -->
             <div class="flex items-center mt-4 space-x-4 justify-center">
                 <div>
-                    <!-- Tap to call -->
+                    <!-- Tap to Hire -->
                     <div>
-                        <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default">
+                        <a href="' . $spId . '" class="text-[#e0d5d7] hover:underline" id="hire-btn" data-tooltip-target="tooltip-default">
                             <i class="fa-solid fa-phone"></i>
-                            Tap to Call
+                            Tap to Hire
                         </a>
                     </div>
-    
+
                     <!-- Tooltip Code -->
                     <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
                         +94777195282
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
-    
+
                 <div>
                     <!-- Tap to call -->
                     <div>
-                        <a href="tel:+94777195282" class="text-[#e0d5d7] hover:underline" data-tooltip-target="tooltip-default-newn">
+                        <a href="https://www.google.com/maps/search/?api=1&query=' . $spLatitudeValue . ',' . $spLongitudeValue . '" class="text-[#e0d5d7] hover:underline" target="_blank" data-tooltip-target="tooltip-default-newn">
                             <i class="fa-solid fa-map-pin"></i>
-                            Show Location
+                            ' . $spTownName . '
                         </a>
                     </div>
-    
+
                     <!-- Tooltip Code -->
                     <div id="tooltip-default-newn" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-cus-maron transition-opacity duration-300 rounded-lg opacity-0 tooltip bg-primary-color-10">
                         Tap to Open Google Maps
@@ -1974,6 +1982,7 @@ if (isset($_GET["checkPaymentStatus"])) {
 
     $arrayOfPaymentInfo = $payment->getPaymentInfo("services_id", $serviceId);
 
+    // echo var_dump($arrayOfPaymentInfo);
     if (empty($arrayOfPaymentInfo[0])) {
 
         $result[] = array("payment_status" => "404");

@@ -102,7 +102,7 @@
     <div class="sm:flex gap-x-10">
         <!-- Full Name -->
         <div class="w-full">
-            <label for="ss-image" class="font-semibold text-cus-maron">Upload File<span class="text-red-500">*</span></label>
+            <label for="ss-image" class="font-semibold text-cus-maron">Profile Image<span class="text-red-500">*</span></label>
             <div class="mb-5">
                 <input class="block w-full mt-2 rounded cursor-pointer focus:outline-none bg-white" id="ss-image" type="file" name="ss-image" />
             </div>

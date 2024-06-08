@@ -59,9 +59,6 @@
                         <div>
                             <input type="search" id="search-sp" name="search-sp" class="block w-full p-4 ps-10 text-sm rounded-md bg-cus-maron text-primary-color-10 placeholder-primary-color-10 focus:ring-white" placeholder="Ex: Mechanic, Plumber ..." required />
                         </div>
-                        <button type="submit" class="absolute end-2.5 bottom-2.5 bg-primary-color-10 font-medium rounded text-sm px-5 py-2 text-cus-maron hover:bg-primary-color-9">
-                            Search
-                        </button>
                     </div>
                 </form>
             </div>
@@ -171,6 +168,13 @@
                 const userId = $(this).attr("href");
 
                 window.location.href = `./show-selected-sp-info.php?userId=${userId}`;
+            })
+
+            $("body").on("click", "#hire-btn", function(e) {
+                e.preventDefault();
+
+                const spId = $(this).attr("href");
+                window.location.href = `./show-selected-sp-info.php?userId=${spId}`;
             })
 
         })

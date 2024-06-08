@@ -64,8 +64,10 @@
                 },
                 success: function(response) {
 
-                    // console.log(response);
+                    console.log(response);
+
                     const paymentStatusResponse = JSON.parse(response);
+                    console.log(paymentStatusResponse);
                     const {
                         payment_status
                     } = paymentStatusResponse[0]
