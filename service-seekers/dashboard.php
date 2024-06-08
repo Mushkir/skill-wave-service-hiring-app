@@ -237,6 +237,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                 if (isset($_GET['viewPaymentInfo'])) {
                     include('./payment/view-payment-info.php');
                 }
+
+                if (isset($_GET['feedback'])) {
+                    include('./feedback/feedback.php');
+                }
                 ?>
             </section>
         </section>

@@ -1926,7 +1926,7 @@ if (isset($_GET['getParsedServiceIdInfo'])) {
     echo json_encode($arrayOfServiceInfo);
 }
 
-// Todo: Get the service-d from Payment portal, update the payment status as "Paid" and navigate to SS dashboard after update.
+// Todo: Get the service-id from Payment portal, update the payment status as "Paid" and navigate to SS dashboard after update.
 if (isset($_GET["paidServiceId"])) {
 
     $serviceId = $_GET["paidServiceId"];
@@ -1972,7 +1972,7 @@ if (isset($_GET["paidServiceId"])) {
 
         $db->sendEmail($spName, $spEmail, $subject, $body);
     }
-    echo "<script>window.location.href = '/skill-wave-service-hiring-app/service-seekers/dashboard.php?hiringProcess'</script>";
+    echo "<script>window.location.href = '/skill-wave-service-hiring-app/service-seekers/dashboard.php?feedback'</script>";
 }
 
 // Todo: Need to check Payment status. Based on status need to give response to frontend in SS Hiring Log
@@ -1994,4 +1994,19 @@ if (isset($_GET["checkPaymentStatus"])) {
     }
 
     echo json_encode($result);
+}
+
+// Todo: Get the paid service related info and show in hiring log UI, when user clicks "Paid" button
+if (isset($_POST['paidServiceId'])) {
+
+    $paidServiceId = $_POST['paidServiceId'];
+    // echo $paidServiceId;
+
+
+    $query = "SELECT ts.*, tsp.name AS serviceProviderName 
+    FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE ts.services_id = $paidServiceId";
+
+    $paidServiceData = $db->getMultipleData($query);
+
+    echo json_encode($paidServiceData);
 }
