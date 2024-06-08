@@ -196,6 +196,8 @@ if (isset($_GET['serviceProviderId'])) {
         $(document).ready(function() {
             getRequestedSpInfo();
 
+            checkAdminLoggedIn();
+
             // * Getting details of requested Service Provider from DB to Accept / Reject the request.
             function getRequestedSpInfo() {
                 $.ajax({
@@ -208,7 +210,7 @@ if (isset($_GET['serviceProviderId'])) {
                         // $("#infoContainer").html(`<div class="text-[#6D2932]"><svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mt-[150px]" width="50" height="50" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"/><path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"/></path></svg></div>`)
                     },
                     success: function(response) {
-                        // console.log(response);
+                        console.log(response);
                         const jsonSpData = JSON.parse(response);
                         // console.log(jsonSpData[0]);
                         const {
@@ -306,6 +308,39 @@ if (isset($_GET['serviceProviderId'])) {
                     }
                 })
             })
+
+            function checkAdminLoggedIn() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "checkAdminActive"
+                    },
+                    success: function(response) {
+
+                        if (response == "404") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Unauthorized Access",
+                                text: "You can't able to proceed without authorized access!",
+                            }).then((result) => {
+                                console.log(result);
+                                if (result.isConfirmed == true) {
+                                    window.location.href = "/skill-wave-service-hiring-app/index.php";
+                                }
+                            });
+
+                        }
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+
+                })
+            }
         })
     </script>
 

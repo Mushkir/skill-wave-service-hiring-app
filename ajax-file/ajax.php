@@ -68,6 +68,74 @@ if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
     }
 }
 
+// Todo: Need to check admin logged-in / not
+if (isset($_POST['request']) && $_POST['request'] == "checkAdminActive") {
+
+    if (!isset($_SESSION['adminUsername'])) {
+
+        echo "404";
+    }
+}
+
+// Todo: Sum all service charges
+if (isset($_POST['request']) && $_POST['request'] == "sumAllServiceEarnings") {
+
+    //     SELECT SUM(Quantity)
+    // FROM OrderDetails
+    // WHERE ProductId = 11;
+
+
+    $query = "SELECT SUM(service_charge) AS totalEarnings FROM `table_services` WHERE payment_status = 1";
+    $totalEarnings = $db->getMultipleData($query);
+
+    echo json_encode($totalEarnings[0]);
+}
+
+// Todo: Count all town and districts
+if (isset($_POST['request']) && $_POST['request'] == "countTotalTownAndDistrict") {
+
+    $totalTown = $town->countTotalRows();
+
+    $totalDistrict = $district->countRows();
+
+    $response[] = array("totalTown" => $totalTown, "total_district" => $totalDistrict);
+
+    echo json_encode($response);
+}
+
+
+// Todo: Get loggedin admin details
+if (isset($_POST['request']) && $_POST['request'] == "getLoggedInDetails") {
+    $adminUsername = $_SESSION['adminUsername'];
+
+    $getAdminDetails = $admin->getAdminByKeyAndValue("username", $adminUsername);
+
+    // echo json_encode($getAdminDetails);
+
+    $adminName = $getAdminDetails['name'];
+    $adminEmail = $getAdminDetails['email'];
+    $adminProfileImg = $getAdminDetails['image'];
+
+
+    $adminInfo[] = array("name" => $adminName, "email" => $adminEmail, "profileImg" => $adminProfileImg);
+
+    echo json_encode($adminInfo);
+}
+
+// Todo: Count Dashboard Elements
+if (isset($_POST['request']) && $_POST['request'] == "countAdminDashboardEls") {
+
+    $totalSp = $serviceProvider->countTotalServiceProviders();
+    $totalSs = $serviceSeeker->countTotalServiceSeekers();
+
+    $query = "SELECT * FROM `table_service_provider` WHERE  profile_status = 'pending'";
+    $totalPendingReq = $db->countMultipleData($query);
+
+    $response[] = array("total_sp" => $totalSp, "total_ss" => $totalSs, "total_requests" => $totalPendingReq);
+
+    echo json_encode($response);
+}
+
 // Todo: Admin Login Process
 if (isset($_POST['action']) && $_POST['action'] == 'adminLoginRequest') {
 

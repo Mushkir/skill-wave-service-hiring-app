@@ -177,15 +177,15 @@ session_start();
                 <div class="hover:cursor-pointer z-40 absolute top-0 right-0" id="admin-profile">
                     <div>
                         <div class="flex justify-end items-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" class="w-10 h-10 object-cover rounded-full" />
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s" alt="Admin Image" id="admin-img" class="w-10 h-10 object-cover rounded-full" />
                         </div>
 
                         <!-- Dropdown menu -->
                         <div class="mt-2 bg-primary-color-10 py-[10px] rounded-lg hidden" id="admin-profile-dropdown">
                             <ul>
-                                <li class="text-[#62242d] px-[16px]">Mohamed Mushkir</li>
-                                <li class="text-[#8a535a] px-[16px] mb-4">
-                                    <p class="text-[14px]">mushkirmohamed@gmail.com</p>
+                                <li class="text-[#62242d] capitalize px-[16px]" id="admin-name">Mohamed Mushkir</li>
+                                <li class="text-[#8a535a]  px-[16px] mb-4">
+                                    <p class="text-[14px]" id="admin-email">mushkirmohamed@gmail.com</p>
                                 </li>
 
                                 <hr />
@@ -338,6 +338,10 @@ session_start();
 
             showRequestCountInMenu();
 
+            getAdminInfo();
+
+            checkAdminLoggedIn();
+
             $(document).on("click", "#admin-logout", function(e) {
 
                 e.preventDefault();
@@ -382,6 +386,71 @@ session_start();
                         console.log("Status: " + status);
                         console.log("XHR Response: " + xhr.responseText);
                     }
+                })
+            }
+
+            function checkAdminLoggedIn() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "checkAdminActive"
+                    },
+                    success: function(response) {
+
+                        if (response == "404") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Unauthorized Access",
+                                text: "You can't able to proceed without authorized access!",
+                            }).then((result) => {
+                                console.log(result);
+                                if (result.isConfirmed == true) {
+                                    window.location.href = "/skill-wave-service-hiring-app/index.php";
+                                }
+                            });
+
+                        }
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+
+                })
+            }
+
+            function getAdminInfo() {
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'POST',
+                    data: {
+                        "request": "getLoggedInDetails"
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        const jsonData = JSON.parse(response);
+                        const {
+                            email,
+                            name,
+                            profileImg
+                        } = jsonData[0];
+
+                        $("#admin-img")[0].src = `/skill-wave-service-hiring-app/ajax-file/uploads/${profileImg}`
+                        $("#admin-name")[0].textContent = name;
+                        $("#admin-email")[0].textContent = email;
+
+                        console.dir();
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                        console.error("Error: " + error);
+                    }
+
                 })
             }
         })
