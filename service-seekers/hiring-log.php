@@ -49,6 +49,7 @@
 
         }
 
+        // * JQuery script for navigate to service summary page 
         $("body").on("click", "#navigateSummaryPageBtn", function(e) {
             e.preventDefault();
 
@@ -95,6 +96,49 @@
             })
 
 
+        })
+
+        // * JQuery script for navigate feedback page
+        $("body").on("click", "#feedback-btn", function(e) {
+            e.preventDefault();
+
+            const serviceID = $(this).attr("href");
+
+            // * Storyline
+            // * First need to check is there any feedback exist in the respective service-id.
+            // * If it is yes, it need to show the feedback with Edit and delete option.
+            // * Else need to navigate feedback page.
+            $.ajax({
+                url: '../ajax-file/ajax.php',
+                type: 'POST',
+                data: {
+                    "request": "verifyFeedbackExist",
+                    "serviceId": serviceID
+                },
+                success: function(response) {
+                    // console.log(response);
+                    const jsonData = JSON.parse(response)
+
+                    const {
+                        status
+                    } = jsonData[0];
+
+                    if (status == "200") {
+                        // * Feedback exist
+                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?showFeedback";
+
+                    } else {
+                        // * Feedback not exist
+                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?feedback"
+                    }
+                },
+                error: function(xhr, status, error) {
+
+                    console.log("Status: " + status);
+                    console.log("XHR Response: " + xhr.responseText);
+                    console.error("Error: " + error);
+                }
+            })
         })
     })
 </script>

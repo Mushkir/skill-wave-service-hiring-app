@@ -11,6 +11,7 @@ require_once('../classes/app/ServiceSeeker.php');
 require_once('../classes/app/ServiceProvide.php');
 require_once('../classes/app/Services.php');
 require_once('../classes/app/Payment.php');
+require_once('../classes/app/Feedback.php');
 
 $db = new Database();
 $admin = new Admin();
@@ -20,6 +21,7 @@ $serviceSeeker = new ServiceSeeker();
 $serviceProvider = new ServiceProvider();
 $services = new Services();
 $payment = new Payment();
+$feedback = new Feedback();
 
 // Todo: Admin Sign-Up process
 if (isset($_POST['action']) && $_POST['action'] == 'signUpAdmin') {
@@ -1299,6 +1301,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             <th class="p-2 text-center">Date</th>
             <th class="p-2 text-center">Time</th>
             <th class="p-2 text-center">Payment</th>
+            <th class="p-2 text-center">Feedback</th>
         </thead>
         <tbody>';
 
@@ -1357,9 +1360,12 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
                 <a href="serviceId=' . $serviceId . '" class=" hover:underline" id="navigateSummaryPageBtn" title="Click to show payment detail">Paid</a>
                 </td>';
             }
+            $result .= '<td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
+            <a href="' . $serviceId . '" class=" hover:underline" id="feedback-btn">Click to Say</a>
+            </td>
 
 
-            $result .= '</tr>';
+        </tr>';
         }
 
         $result .= '</tbody></table>';
@@ -2009,4 +2015,20 @@ if (isset($_POST['paidServiceId'])) {
     $paidServiceData = $db->getMultipleData($query);
 
     echo json_encode($paidServiceData);
+}
+
+// Todo: Need to verify the feedback and return the status to frontend
+if (isset($_POST['request']) && $_POST['request'] == "verifyFeedbackExist") {
+
+    // * Get the service-id
+    $serviceId = $_POST['serviceId'];
+
+    // * Check in db is any feedback exist or not in this service-id.
+    $feedbackInfo = $feedback->getFeedbackInfoById("service_id", $serviceId);
+
+    // echo var_dump($feedbackInfo);
+
+    echo json_encode($feedbackInfo);
+
+    // * If exist return 1, else return 0.
 }

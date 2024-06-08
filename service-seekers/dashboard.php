@@ -241,6 +241,10 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                 if (isset($_GET['feedback'])) {
                     include('./feedback/feedback.php');
                 }
+
+                if (isset($_GET['showFeedback'])) {
+                    include('./feedback/show-feedback.php');
+                }
                 ?>
             </section>
         </section>

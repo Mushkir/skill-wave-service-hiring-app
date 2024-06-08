@@ -35,7 +35,7 @@ if (isset($_GET["serviceId"])) {
 </head>
 
 <body class="" id="container">
-    <h3 class="text-center text-xl font-bold text-[#6D2932] block pt-5">
+    <h3 class="text-center text-xl font-bold text-[#6D2932] block pt-10">
         Almost done 🤗 &<span class="py-1 px-3 ">Feel free to share your experience</span>
 
     </h3>
@@ -50,7 +50,7 @@ if (isset($_GET["serviceId"])) {
             <div class="mb-3 w-full">
                 <label for="subject" class="block mb-1 text-[#6D2932]">Subject<span class=" text-red-500">*</span></label>
                 <div>
-                    <input type="text" name="subject" class="outline-none p-2 rounded-md border-0 w-full bg-[#f9f7f5]" id="subject" placeholder="Ex: Nice, Ordinary, Best" required="required" />
+                    <input type="text" name="subject" class="outline-none p-2 rounded-md border-0 w-full bg-[#f9f7f5] capitalize" id="subject" placeholder="Ex: Nice, Ordinary, Best" required="required" autocomplete="off" />
                 </div>
             </div>
 
@@ -95,52 +95,3 @@ if (isset($_GET["serviceId"])) {
 </body>
 
 </html>
-
-
-<div class="mt-4 feedback-responsive mx-auto">
-    <form>
-        <h3 class="pb-2 fw-bold text-center text-md-start">
-            Send us some feedback!
-        </h3>
-        <div class="align-items-center gap-5">
-            <!-- Subject -->
-            <div class="mb-3 w-100">
-                <label for="subject" class="form-label">Subject<span class="text-danger">*</span></label>
-                <div>
-                    <input type="text" name="subject" class="form-control shadow-none" id="subject" placeholder="Ex: Nice, Ordinary, Best" required="required" />
-                </div>
-            </div>
-
-            <!-- Feedback -->
-            <div class="mb-3 w-100">
-                <label for="feedback" class="form-label">Feedback<span class="text-danger">*</span></label>
-                <div>
-                    <textarea name="feedback" id="feedback" class="form-control" rows="10" placeholder="Describe your thoughts / opinions..."></textarea>
-                </div>
-            </div>
-
-            <!-- Rating -->
-            <div class="mb-3 w-100">
-                <label for="rating" class="form-label">Rating (Out of 5)<span class="text-danger">*</span></label>
-                <div>
-                    <input type="text" name="rating" class="form-control shadow-none" id="rating" placeholder="Ex: 4.9" required="required" />
-                </div>
-            </div>
-        </div>
-
-        <!-- Create Account Button -->
-        <div class="pt-3 w-100 d-md-flex align-items-center gap-2">
-            <button type="submit" class="btn bg-warning border-black w-100 mb-3" onclick="redirectToDashboard()">
-                Submit
-            </button>
-
-            <!-- Skip Button -->
-            <a href="../passenger-homepage.php?history" id="btn-skip" class="btn bg-secondary text-light w-100 mb-3">
-                Skip
-            </a>
-            <!-- <button type="button" id="btn-skip" class="btn bg-secondary text-light w-100 mb-3">
-                        Skip
-                    </button> -->
-        </div>
-    </form>
-</div>
