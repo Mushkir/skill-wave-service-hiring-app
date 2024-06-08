@@ -1854,7 +1854,7 @@ if (isset($_GET['acceptSpRequest'])) {
     echo json_encode($response);
 }
 
-// ! Need to implement Rejecttion of New Request with mail feature.
+// ! Need to implement Rejection of New Request with mail feature.
 
 // Todo: Need to verify the service-id and add the service description detail.
 if (isset($_POST['req']) && $_POST['req'] == 'updateDesc') {

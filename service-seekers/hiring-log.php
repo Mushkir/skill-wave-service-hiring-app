@@ -2,7 +2,7 @@
 
 <div class="relative mt-10 mb-5">
     <h3 class="text-center font-semibold text-xl text-[#6D2932]">
-        Dear <?php echo $_SESSION['serviceSeekerName']; ?>, here yu can explore your whole service hiring info.
+        Dear <?php echo $_SESSION['serviceSeekerName']; ?>, here you can explore your whole service hiring info.
     </h3>
     <div class="bg-[#6D2932] w-10 h-[3px] rounded-full mx-auto mt-2"></div>
 
