@@ -1256,8 +1256,11 @@ if (isset($_GET['getLoggedInSsId']) && isset($_GET['selectedServiceProviderId'])
     // 7. payment_status
     $paymentStatus = -1;
 
+    // 8. feedback status
+    $feedbackStatus = 0;
+
     // * Save the hiring process in table_services table.
-    $confirmedHiringProcess = $services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $serviceAgreed, $status, $paymentStatus);
+    $confirmedHiringProcess = $services->addNewServiceInfo($selectedSpId, $serviceSeekerId, $description, $serviceCharge, $serviceAgreed, $status, $paymentStatus, $feedbackStatus);
 
     if ($confirmedHiringProcess == true) {
 
@@ -1283,9 +1286,14 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
         $serviceSeekerId = $arrayOfSsInfo['service_seeker_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, ts.service_status, ts.date_time, ts.payment_status, tsp.name FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id WHERE ts.seeker_id = $serviceSeekerId";
+        $query = "SELECT ts.services_id, ts.provider_id, ts.description, ts.service_charge, 
+        ts.service_status, ts.date_time, ts.payment_status, tsp.name, ts.feedback_status AS feedbackStatus
+        FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id
+        WHERE ts.seeker_id = $serviceSeekerId";
 
         $arrayOfHiringProcessInfo = $db->getMultipleData($query);
+
+        // echo var_dump($arrayOfHiringProcessInfo);
 
         // * 4. Get the all the detail such as provider name, provider id, description, service charge and service status using the id & Display the results in UI.
         $serialNo = 1;
@@ -1315,6 +1323,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
             $serviceProviderName  = $data['name'];
             $dateTime  = $data['date_time'];
             $paymentStatus = $data['payment_status'];
+            $feedbackStatus = $data['feedbackStatus'];
 
             $arrayOfDateTime = explode(" ", $dateTime);
 
@@ -1360,12 +1369,21 @@ if (isset($_POST['request']) && $_POST['request'] == 'showSsAllHistoryLog') {
                 <a href="serviceId=' . $serviceId . '" class=" hover:underline" id="navigateSummaryPageBtn" title="Click to show payment detail">Paid</a>
                 </td>';
             }
-            $result .= '<td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
-            <a href="' . $serviceId . '" class=" hover:underline" id="feedback-btn">Click to Say</a>
-            </td>
 
+            // Based on the feedback status, it need to sahow the response.
+            if ($feedbackStatus == 0) {
 
-        </tr>';
+                $result .= '<td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
+                <a href="' . $serviceId . '" class=" hover:underline" id="feedback-btn">Click to Say</a>
+                </td>';
+            } else {
+
+                $result .= '<td class="text-center px-1 py-1.5 border-r-[#6D2932] border-r-2 capitalize">
+            <a href="' . $serviceId . '" class=" hover:underline" id="feedback-btn"><box-icon type="solid" name="badge-check"></box-icon> </a>
+            </td>';
+            }
+
+            $result .= '</tr>';
         }
 
         $result .= '</tbody></table>';
@@ -2027,8 +2045,42 @@ if (isset($_POST['request']) && $_POST['request'] == "verifyFeedbackExist") {
     $feedbackInfo = $feedback->getFeedbackInfoById("service_id", $serviceId);
 
     // echo var_dump($feedbackInfo);
-
+    // * Return the response object to frontend.
     echo json_encode($feedbackInfo);
+}
 
-    // * If exist return 1, else return 0.
+// Todo: Need to insert new feedback based on service-id
+if (isset($_POST['request']) && $_POST['request'] == "addServiceFeedback") {
+
+    // print_r($_REQUEST);
+    // * Get the service provider id using service-id.
+    $serviceIdEl = $_POST['service-id'];
+    $ssId = $_POST['ss-id']; // * Service Seeker id
+
+    $getServiceInfo = $services->getServiceInfoById($serviceIdEl);
+
+    $spId = $getServiceInfo['provider_id'];
+
+    $feedbackSubjectEl = $_POST['subject'];
+    $feedbackEl = $_POST["feedback"];
+    $ratingEl = $_POST["rating"];
+
+    $insertFeedback = $feedback->insertSsFeedback($spId, $feedbackSubjectEl, $feedbackEl, $ratingEl, $serviceIdEl, $ssId);
+
+    if ($insertFeedback == true) {
+
+        $query = "UPDATE `table_services` SET feedback_status = 1 WHERE services_id = $serviceIdEl";
+        $db->updateDataByQuery($query);
+
+        $serviceIdEl < 10 ? $newNumFormat = "0" . $serviceIdEl : $newNumFormat = $serviceIdEl;
+
+        $message = "Your feedback for service ID number $newNumFormat has been successfully registered.";
+        $response[] = array("status" => "200", "message" => $message);
+    } else {
+
+        $message = "Currently a technical error occured! Please try again later. Thank you!";
+        $response[] = array("status" => "500", "message" => $message);
+    }
+
+    echo json_encode($response);
 }

@@ -10,16 +10,16 @@ class Services extends Database
     protected $tableName = "table_services";
 
     // * Insert service info.
-    public function addNewServiceInfo($serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceAgreed, $serviceStatus, $paymentStatus)
+    public function addNewServiceInfo($serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceAgreed, $serviceStatus, $paymentStatus, $feedbackStatus)
     {
-        $query = "INSERT INTO {$this->tableName} (provider_id, seeker_id, description, service_charge, service_agreed, service_status, date_time, payment_status) 
-        VALUES (:provider_id, :seeker_id, :description, :service_charge, :service_agreed, :service_status, NOW(), :payment_status)";
+        $query = "INSERT INTO {$this->tableName} (provider_id, seeker_id, description, service_charge, service_agreed, service_status, date_time, payment_status, feedback_status) 
+        VALUES (:provider_id, :seeker_id, :description, :service_charge, :service_agreed, :service_status, NOW(), :payment_status, :feedback_status)";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':provider_id' => $serviceProviderId, ':seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_agreed' => $serviceAgreed, ':service_status' => $serviceStatus, ':payment_status' => $paymentStatus]);
+            $statement->execute([':provider_id' => $serviceProviderId, ':seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_agreed' => $serviceAgreed, ':service_status' => $serviceStatus, ':payment_status' => $paymentStatus, ':feedback_status' => $feedbackStatus]);
 
             return true;
             // $lastInsertId = $this->connection->lastInsertId();
@@ -110,16 +110,16 @@ class Services extends Database
     }
 
     // * Update Service Info
-    public function updateServiceInfo($servicesId, $serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceAgreed, $serviceStatus, $paymentStatus)
+    public function updateServiceInfo($servicesId, $serviceProviderId, $serviceSeekerId, $desc, $serviceCharge, $serviceAgreed, $serviceStatus, $paymentStatus, $feedbackStatus)
     {
 
-        $query = "UPDATE {$this->tableName} SET provider_id = ':provider_id', seeker_id = ':seeker_id', description = ':description', service_charge = ':service_charge', service_agreed = ':service_agreed', service_status = ':service_status', date_time = NOW(), payment_status = ':payment_status' WHERE services_id = ':services_id'";
+        $query = "UPDATE {$this->tableName} SET provider_id = ':provider_id', seeker_id = ':seeker_id', description = ':description', service_charge = ':service_charge', service_agreed = ':service_agreed', service_status = ':service_status', date_time = NOW(), payment_status = ':payment_status', feedback_status = :feedback_status WHERE services_id = ':services_id'";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':provider_id' => $serviceProviderId, 'seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_agreed' => $serviceAgreed, ':service_status' => $serviceStatus, ':payment_status' => $paymentStatus, ':services_id' => $servicesId]);
+            $statement->execute([':provider_id' => $serviceProviderId, 'seeker_id' => $serviceSeekerId, ':description' => $desc, ':service_charge' => $serviceCharge, ':service_agreed' => $serviceAgreed, ':service_status' => $serviceStatus, ':payment_status' => $paymentStatus, ':feedback_status' => $feedbackStatus, ':services_id' => $servicesId]);
 
             $updatedData = $this->getServiceInfoById($servicesId);
 

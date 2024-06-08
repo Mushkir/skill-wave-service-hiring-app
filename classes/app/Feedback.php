@@ -12,21 +12,23 @@ class Feedback extends Database
     protected $tableName = "table_feedback";
 
     // * Insert feedback function
-    public function insertSpFeedback($serviceProviderId, $feedback, $serviceId)
+    public function insertSsFeedback($serviceProviderId, $subject, $feedback, $rating, $serviceId, $serviceSeekerId)
     {
-        $query = "INSERT INTO {$this->tableName} (provider_id, feedback, service_id) VALUES (:provider_id, :feedback, :service_id)";
+        $query = "INSERT INTO {$this->tableName} (provider_id, seeker_id, subject, feedback, rating, service_id) VALUES (:provider_id, :seeker_id, :subject, :feedback, :rating, :service_id)";
 
         try {
 
             $statement = $this->connection->prepare($query);
 
-            $statement->execute([':provider_id' => $serviceProviderId, ':feedback' => $feedback, ':service_id' => $serviceId]);
+            $statement->execute([':provider_id' => $serviceProviderId, ':seeker_id' => $serviceSeekerId, ':subject' => $subject, ':feedback' => $feedback, ':rating' => $rating, ':service_id' => $serviceId]);
 
-            $lastInsertedID = $this->connection->lastInsertId();
+            return true;
 
-            $lastInsertedData = $this->getFeedbackInfoById($lastInsertedID);
+            // $lastInsertedID = $this->connection->lastInsertId();
 
-            echo json_encode($lastInsertedData);
+            // $lastInsertedData = $this->getFeedbackInfoById($lastInsertedID);
+
+            // echo json_encode($lastInsertedData);
         } catch (PDOException $ex) {
             echo "An error occured from insertSpFeedback(): " . $ex->getMessage();
         }

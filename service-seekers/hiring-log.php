@@ -125,11 +125,11 @@
 
                     if (status == "200") {
                         // * Feedback exist
-                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?showFeedback";
+                        window.location.href = `/skill-wave-service-hiring-app/service-seekers/dashboard.php?showFeedback&serviceId=${serviceID}`;
 
                     } else {
                         // * Feedback not exist
-                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?feedback"
+                        window.location.href = `/skill-wave-service-hiring-app/service-seekers/dashboard.php?feedback&serviceId=${serviceID}`
                     }
                 },
                 error: function(xhr, status, error) {

@@ -1,7 +1,20 @@
 <?php @session_start();
+
+require_once('../classes/common/Database.php');
+
+$db = new Database();
+
 if (isset($_GET["serviceId"])) {
 
     $serviceId = $_GET["serviceId"];
+    $ssName = $_SESSION["serviceSeekerName"];
+
+    $query = "SELECT service_seeker_id FROM table_service_seeker WHERE name = '$ssName'";
+    $getUserId = $db->getMultipleData($query);
+
+    $ssId = $getUserId[0]['service_seeker_id'];
+
+    // echo $ssId;
 }
 ?>
 
@@ -41,10 +54,13 @@ if (isset($_GET["serviceId"])) {
     </h3>
     <small class=" text-[#8a535a] text-center block mt-3">It will help us to enhance our service in the future to our valuable Service Seekers.</small>
     <div class="bg-[#e3dbd1] w-full max-w-[600px] mx-auto rounded-lg p-6 mt-4">
-        <form method="post" id="passenger-feedback-form">
+        <form method="post" id="feedback-form">
             <h3 class="text-[#6D2932] font-semibold text-center text-md-start">
                 Send us some feedback!
             </h3>
+
+            <input type="hidden" name="service-id" id="" value="<?php echo $serviceId; ?>" />
+            <input type="hidden" name="ss-id" value="<?php echo $ssId; ?>">
 
             <!-- Subject -->
             <div class="mb-3 w-full">
@@ -70,7 +86,7 @@ if (isset($_GET["serviceId"])) {
                 </div>
             </div>
 
-            <div class="pt-3 w-100 d-md-flex align-items-center gap-2">
+            <div class="pt-3 w-full flex items-center gap-x-3 align-items-center gap-2">
                 <button type="submit" class="bg-[#6D2932] px-5 py-1.5 text-white rounded-md hover:bg-[#572028] w-100 mb-3">
                     Submit
                 </button>
@@ -90,7 +106,130 @@ if (isset($_GET["serviceId"])) {
 
     <!-- JQuery script -->
     <script>
-        $(document).ready(function() {})
+        $(document).ready(function() {
+
+            const feedbackFormEl = document.querySelector("#feedback-form");
+
+            const validator = new window.JustValidate(feedbackFormEl);
+
+            // Subject
+            validator.addField(
+                "#subject",
+                [{
+                        rule: "required",
+                    },
+                    {
+                        rule: "minLength",
+                        value: 3,
+                    },
+                    {
+                        rule: "maxLength",
+                        value: 10,
+                    },
+                ], {
+                    errorLabelCssClass: ["errorMsg"],
+                }
+            );
+
+            validator.addField("#feedback",
+                [{
+                        rule: "required",
+                    },
+                    {
+                        rule: "minLength",
+                        value: 20,
+                    },
+                    {
+                        rule: "maxLength",
+                        value: 255,
+                    },
+                ], {
+                    errorLabelCssClass: ["errorMsg"],
+                })
+
+            validator.addField("#rating",
+                [{
+                        rule: "required",
+                    },
+                    {
+                        rule: "number",
+                    },
+                    {
+                        rule: "minLength",
+                        value: 1,
+                    },
+                    {
+                        rule: "maxLength",
+                        value: 4,
+                    },
+                ], {
+                    errorLabelCssClass: ["errorMsg"],
+                })
+
+            validator.onSuccess((e) => {
+                e.preventDefault();
+
+                $(document).on("submit", "#feedback-form", function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    const formData = new FormData(feedbackFormEl);
+
+                    formData.append("request", "addServiceFeedback");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../ajax-file/ajax.php",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(response) {
+                            // console.log(response);
+                            const jsonData = JSON.parse(response);
+                            const {
+                                status,
+                                message
+                            } = jsonData[0];
+
+                            if (status == "200") {
+                                Swal.fire({
+                                    title: "Feedback Registered",
+                                    text: `Thank you! ${message}`,
+                                    icon: "success"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?hiringProcess"
+                                        $("#feedback-form")[0].reset();
+                                    }
+                                });
+                            } else if (status == "500") {
+                                Swal.fire({
+                                    title: "Technical error!",
+                                    text: `Sorry! ${message}`,
+                                    icon: "error"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/skill-wave-service-hiring-app/service-seekers/dashboard.php?hiringProcess"
+                                        $("#feedback-form")[0].reset();
+                                    }
+                                });
+
+                            }
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Status: " + status);
+                            console.log("XHR Response: " + xhr.responseText);
+                            console.error("Error: " + error);
+                        }
+                    })
+                })
+
+
+            })
+
+
+        })
     </script>
 </body>
 
