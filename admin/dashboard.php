@@ -144,16 +144,20 @@ session_start();
 
                     <!-- Settings -->
                     <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                        <a href="dashboard.php?settings" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="settingsMenu">
+                        <a href="" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl" id="logout-button">
                             <!-- Icon -->
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M10.96 21q-.348 0-.605-.229t-.318-.571l-.264-2.092q-.479-.145-1.035-.454q-.557-.31-.948-.664l-1.915.823q-.317.14-.644.031q-.327-.11-.504-.415L3.648 15.57q-.177-.306-.104-.638q.073-.333.348-.546l1.671-1.25q-.044-.272-.073-.56q-.028-.287-.028-.558q0-.252.028-.53t.073-.626l-1.67-1.25q-.276-.213-.34-.555q-.063-.343.114-.648l1.06-1.8q.177-.287.504-.406q.327-.12.644.021l1.896.804q.448-.373.97-.673q.52-.3 1.013-.464l.283-2.092q.061-.342.318-.571T10.96 3h2.08q.348 0 .605.229t.318.571l.264 2.112q.575.201 1.016.463q.442.262.909.654l1.992-.804q.318-.14.644-.021q.327.12.504.406l1.06 1.819q.177.306.104.638q-.073.333-.348.546l-1.748 1.308q.082.31.092.568q.01.26.01.511q0 .233-.02.491q-.019.259-.088.626l1.69 1.27q.275.213.358.546q.083.332-.094.638l-1.066 1.839q-.177.305-.513.415q-.337.11-.654-.03l-1.923-.824q-.467.392-.94.673q-.474.281-.985.444l-.264 2.112q-.061.342-.318.571T13.04 21zm1.013-6.5q1.046 0 1.773-.727q.727-.727.727-1.773q0-1.046-.727-1.773q-.727-.727-1.773-.727q-1.052 0-1.776.727T9.473 12q0 1.046.724 1.773q.724.727 1.776.727" />
+                                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
+                                        <path stroke-linejoin="round" d="M13.477 21.245H8.34a4.918 4.918 0 0 1-5.136-4.623V7.378A4.918 4.918 0 0 1 8.34 2.755h5.136" />
+                                        <path stroke-miterlimit="10" d="M20.795 12H7.442" />
+                                        <path stroke-linejoin="round" d="m16.083 17.136l4.404-4.404a1.04 1.04 0 0 0 0-1.464l-4.404-4.404" />
+                                    </g>
                                 </svg>
                             </div>
 
                             <!-- Name -->
-                            Settings
+                            Logout
                         </a>
                     </li>
                 </ul>
@@ -343,6 +347,30 @@ session_start();
             checkAdminLoggedIn();
 
             $(document).on("click", "#admin-logout", function(e) {
+
+                e.preventDefault();
+
+                $.ajax({
+                    url: '../ajax-file/ajax.php',
+                    type: 'GET',
+                    data: {
+                        "request": 'getAdminUsername'
+                    },
+                    success: function(response) {
+                        if (response == 404) {
+                            window.location.href = '../index.php';
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Status: " + status);
+                        console.log("XHR Response: " + xhr.responseText);
+                    }
+                })
+            })
+
+            $(document).on("click", "#logout-button", function(e) {
+
+                e.preventDefault();
 
                 e.preventDefault();
 
