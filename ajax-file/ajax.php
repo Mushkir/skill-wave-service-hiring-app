@@ -815,21 +815,7 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
             </div>
             <!-- Separator Line -->
             <hr class="my-4 border-t border-gray-300" />
-            <!-- Stats -->
-            <div class="flex justify-between text-primary-color-10 px-1.5 sm:px-5 pb-3">
-                <div class="text-center flex flex-col">
-                    <span class="font-bold text-lg">90%</span>
-                    <span class="text-xs">Success Percentage</span>
-                </div>
-                <div class="text-center flex flex-col">
-                    <span class="font-bold text-lg">95%</span>
-                    <span class="text-xs">Positive Ratings</span>
-                </div>
-                <div class="text-center flex flex-col">
-                    <span class="font-bold text-lg">350</span>
-                    <a href="#" class="text-xs underline">Total Feedbacks</a>
-                </div>
-            </div>
+            
         </div>';
         }
     } else {
@@ -921,21 +907,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'showAllServiceProviders') 
         </div>
         <!-- Separator Line -->
         <hr class="my-4 border-t border-gray-300" />
-        <!-- Stats -->
-        <div class="flex justify-between text-primary-color-10 px-1.5 sm:px-5 pb-3">
-            <div class="text-center flex flex-col">
-                <span class="font-bold text-lg">90%</span>
-                <span class="text-xs">Success Percentage</span>
-            </div>
-            <div class="text-center flex flex-col">
-                <span class="font-bold text-lg">95%</span>
-                <span class="text-xs">Positive Ratings</span>
-            </div>
-            <div class="text-center flex flex-col">
-                <span class="font-bold text-lg">350</span>
-                <a href="#" class="text-xs underline">Total Feedbacks</a>
-            </div>
-        </div>
+        
     </div>';
     }
 
@@ -1036,21 +1008,7 @@ if (isset($_POST['request']) && $_POST['request'] == 'searchSp') {
             </div>
             <!-- Separator Line -->
             <hr class="my-4 border-t border-gray-300" />
-            <!-- Stats -->
-            <div class="flex justify-between text-primary-color-10 px-1.5 sm:px-5 pb-3">
-                <div class="text-center flex flex-col">
-                    <span class="font-bold text-lg">90%</span>
-                    <span class="text-xs">Success Percentage</span>
-                </div>
-                <div class="text-center flex flex-col">
-                    <span class="font-bold text-lg">95%</span>
-                    <span class="text-xs">Positive Ratings</span>
-                </div>
-                <div class="text-center flex flex-col">
-                    <span class="font-bold text-lg">350</span>
-                    <a href="#" class="text-xs underline">Total Feedbacks</a>
-                </div>
-            </div>
+            
         </div>';
         }
 
