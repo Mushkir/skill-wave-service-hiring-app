@@ -2162,3 +2162,242 @@ if (isset($_POST['request']) && $_POST['request'] == "reqForGetFeedbackData") {
 
     echo json_encode($getFeedbackDetails[0]['data'][0]);
 }
+
+// Todo: Show all the sp in admin dashboard.
+if (isset($_POST['request']) && $_POST['request'] == "showAllSpInAdminPanel") {
+
+    $query = "SELECT tsp.*, td.name AS districtName, tt.name AS townName
+    FROM table_service_provider tsp JOIN table_district td ON tsp.district_id = td.district_id
+    JOIN table_town tt ON tsp.town_id = tt.town_id
+    ";
+
+    $arrayOfAllSpData = $db->getMultipleData($query);
+
+    // echo var_dump($arrayOfAllSpData);
+
+    $result = "";
+    $sNo = 1;
+
+    $result .= '<table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="sp-table">
+        <thead>
+            <tr class="bg-[#6D2932] text-[#F9F6EE] text-center">
+                <th class="p-3 text-center">S.No</th>
+                <th class="p-3 text-center">Service Provider ID</th>
+                <th class="p-3 text-center">Image</th>
+                <th class="p-3 text-center">Name</th>
+                <th class="p-3 text-center">Email Address</th>
+                <th class="p-3 text-center">Contact No.</th>
+                <th class="p-3 text-center">Username</th>
+                <th class="p-3 text-center">Gender</th>
+                <th class="p-3 text-center">Address</th>
+                <th class="p-3 text-center">District</th>
+                <th class="p-3 text-center">Town</th>
+                <th class="p-3 text-center">Qualification</th>
+                <th class="p-3 text-center">Skills</th>
+                <th class="p-3 text-center">Description</th>
+                <th class="p-3 text-center">Keywords</th>
+                <th class="p-3 text-center">Service Charge</th>
+                <th class="p-3 text-center">Available state</th>
+                <th class="p-3 text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+    foreach ($arrayOfAllSpData as $data) {
+
+        $spId = $data['service_provider_id'];
+        $spName = $data['name'];
+        $spEmail = $data['email_address'];
+        $spContactNo = $data['contact_no'];
+        $spUsername = $data['username'];
+        $spGender = $data['gender'];
+        $spAddress = $data['address_line'];
+        $spQualification = $data['qualification'];
+        $spSkills = $data['skills'];
+        $spImage = $data['image'];
+        $spDesc = $data['description'];
+        $spKeywords = $data['keywords'];
+        $spPrice = $data['price'];
+        $spStatus = $data['status'];
+        $spDistrictName = $data['districtName'];
+        $spTownName = $data['townName'];
+
+
+        $result .= '<tr>
+                <td class="p-3 text-center border border-[#6D2932]">#' . $sNo++ . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spId . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">
+                    <img class="rounded-full" src="/skill-wave-service-hiring-app/ajax-file/uploads/' . $spImage . '" alt="' . $spName . '\'s Image">
+                </td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spName . '</td>
+                <td class="p-3 text-center">
+                    <a href="mailto:' . $spEmail . '">' . $spEmail . '</a>
+                </td>
+                <td class="p-3 text-center border border-[#6D2932]">
+                    <a href="tel:' . $spContactNo . '">' . $spContactNo . '</a>
+                </td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spUsername . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spGender . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spAddress . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spDistrictName . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spTownName . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spQualification . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spSkills . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spDesc . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spKeywords . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">' . $spPrice . '</td>
+                <td class="p-3 text-center border border-[#6D2932] capitalize">' . $spStatus . '</td>
+                <td class="p-3 text-center border border-[#6D2932]">
+                    <div class="flex justify-center gap-x-4 items-center">
+                        <a href="' . $spId . '" class=" bg-green-500 text-white p-2 rounded-md hover:-translate-y-1 hover:transition 500" id="update-sp-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M21.194 2.806a2.753 2.753 0 0 1 0 3.893l-.496.496a4.61 4.61 0 0 1-.533-.151a5.19 5.19 0 0 1-1.968-1.241a5.19 5.19 0 0 1-1.241-1.968a4.613 4.613 0 0 1-.15-.533l.495-.496a2.753 2.753 0 0 1 3.893 0M14.58 13.313c-.404.404-.606.606-.829.78a4.59 4.59 0 0 1-.848.524c-.255.121-.526.211-1.068.392l-2.858.953a.742.742 0 0 1-.939-.94l.953-2.857c.18-.542.27-.813.392-1.068c.144-.301.32-.586.524-.848c.174-.223.376-.425.78-.83l4.916-4.915a6.7 6.7 0 0 0 1.533 2.36a6.702 6.702 0 0 0 2.36 1.533z" />
+                                <path fill="currentColor" d="M20.536 20.536C22 19.07 22 16.714 22 12c0-1.548 0-2.842-.052-3.934l-6.362 6.362c-.351.352-.615.616-.912.847a6.08 6.08 0 0 1-1.125.696c-.34.162-.694.28-1.166.437l-2.932.977a2.242 2.242 0 0 1-2.836-2.836l.977-2.932c.157-.472.275-.826.437-1.166c.19-.399.424-.776.696-1.125c.231-.297.495-.56.847-.912l6.362-6.362C14.842 2 13.548 2 12 2C7.286 2 4.929 2 3.464 3.464C2 4.93 2 7.286 2 12c0 4.714 0 7.071 1.464 8.535C4.93 22 7.286 22 12 22c4.714 0 7.071 0 8.535-1.465" />
+                            </svg>
+                        </a>
+                        <a href="' . $spId . '" class="text-white bg-red-500 p-2 rounded-md hover:-translate-y-1 hover:transition 500" id="delete-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M3 6.524c0-.395.327-.714.73-.714h4.788c.006-.842.098-1.995.932-2.793A3.68 3.68 0 0 1 12 2a3.68 3.68 0 0 1 2.55 1.017c.834.798.926 1.951.932 2.793h4.788c.403 0 .73.32.73.714a.722.722 0 0 1-.73.714H3.73A.722.722 0 0 1 3 6.524M11.607 22h.787c2.707 0 4.06 0 4.94-.863c.881-.863.971-2.28 1.151-5.111l.26-4.08c.098-1.537.146-2.306-.295-2.792c-.442-.487-1.187-.487-2.679-.487H8.23c-1.491 0-2.237 0-2.679.487c-.441.486-.392 1.255-.295 2.791l.26 4.08c.18 2.833.27 4.249 1.15 5.112C7.545 22 8.9 22 11.607 22" />
+                            </svg>
+                        </a>
+                    </div>
+                </td>
+            </tr>';
+    }
+
+
+    $result .=  '</tbody></table>';
+    echo $result;
+}
+
+// Todo: List the town detail in SP update page
+if (isset($_POST['request']) && $_POST['request'] == 'getTownList') {
+
+    $result = "";
+
+    $townDetails = $town->viewAllTownData();
+
+    foreach ($townDetails as $data) {
+
+        $townId = $data['town_id'];
+        $townName = $data['name'];
+        $result .= ' <option value="' . $townId . '">' . $townName . '</option>';
+    }
+
+    echo $result;
+}
+
+// Todo: List the district detail in SP update page
+if (isset($_POST['request']) && $_POST['request'] == 'getDistrictList') {
+
+    $result = "";
+
+
+    $districtDetails = $district->viewDistrict();
+
+    // echo var_dump($districtDetails);
+
+    foreach ($districtDetails as $data) {
+
+        $districtId = $data['district_id'];
+        $districtName = $data['name'];
+        $result .= ' <option value="' . $districtId . '">' . $districtName . '</option>';
+    }
+
+    echo $result;
+}
+
+// Todo: find the SP Town and District
+if (isset($_POST['request']) && $_POST['request'] == 'getTownAndDistrictInfo') {
+
+    $townId = $_POST['townId'];
+
+    $townInfo = $town->getTownInfoById($townId);
+
+    echo json_encode($townInfo);
+}
+
+// Todo: Delete SP by Admin
+if (isset($_POST["request"]) && $_POST['request'] == "deleteSpByAdmin") {
+
+    $spId = $_POST['spId'];
+
+    $deleteSp = $serviceProvider->deleteServiceProvider($spId);
+
+    if ($deleteSp == true) {
+        echo "Deleted Successfully";
+    }
+}
+
+// Todo: Need to show selcted sp info to admin
+if (isset($_POST["request"]) && $_POST['request'] == "showSpAllDetail") {
+
+    $spId = $_POST['spId'];
+
+    $query = "SELECT tsp.*, td.name AS districtName, tt.name AS townName
+    FROM table_service_provider tsp JOIN table_district td ON tsp.district_id = td.district_id
+    JOIN table_town tt ON tsp.town_id = tt.town_id WHERE tsp.service_provider_id = $spId
+    ";
+
+    $spDataset = $db->getMultipleData($query);
+
+    echo json_encode($spDataset);
+}
+
+// Todo: Update SP info by Admin
+if (isset($_POST["request"]) && $_POST['request'] == "updateSpByAdmin") {
+
+    $spId = $_POST['sp-id'];
+    $spName = $_POST['sp-fullname'];
+    $spEmail = $_POST['sp-email'];
+    $spContactNo = $_POST['sp-contact-no'];
+    $spUsername = $_POST['sp-username'];
+    $spDistrict = $_POST['sp-district'];
+    $spTown = $_POST['sp-town'];
+    $spAddressline = $_POST['sp-address-line'];
+    $spStartingPrice = $_POST['sp-starting-price'];
+    $spQualification = $_POST['sp-qualification'];
+    $spSkills = $_POST['sp-skills'];
+    $spDesc = $_POST['sp-desc'];
+    $spKeywords = $_POST['sp-keywords'];
+    $img = $_FILES['fileInput'];
+
+    $townInfo = $town->getTownInfoById($spTown);
+    $townName = $townInfo['name'];
+
+    $latitudeValue = $serviceProvider->getServiceProviderLatitudeValue($townName);
+    $longitudeValue = $serviceProvider->getServiceProviderLongitudeValue($townName);
+
+    if ($img['error'] == UPLOAD_ERR_NO_FILE) {
+        $query = "UPDATE `table_service_provider` SET name = '$spName', email_address = '$spEmail',
+        contact_no = '$spContactNo', username = '$spUsername', address_line = '$spAddressline',
+        district_id = $spDistrict,  town_id = $spTown, latitude_value = '$latitudeValue', longitutde_value = '$longitudeValue',
+        qualification = '$spQualification', skills = '$spSkills', description = '$spDesc', keywords = '$spKeywords',
+        price = '$spStartingPrice' WHERE service_provider_id = $spId
+        ";
+
+        $updateSp = $db->updateDataByQuery($query);
+
+        if ($updateSp == true) {
+            $response[] = array("status" => "200", "message" => $spName . "'s data has been updated successfully.");
+        }
+    } else {
+
+        $spProfilePic = $db->imageUpload($img);
+
+        $query = "UPDATE `table_service_provider` SET name = '$spName', email_address = '$spEmail',
+            contact_no = '$spContactNo', username = '$spUsername', address_line = '$spAddressline',
+        district_id = $spDistrict,  town_id = $spTown, latitude_value = '$latitudeValue', longitutde_value = '$longitudeValue',
+        qualification = '$spQualification', skills = '$spSkills', image = '$spProfilePic' , description = '$spDesc', keywords = '$spKeywords',
+        price = '$spStartingPrice' WHERE service_provider_id = $spId
+        ";
+
+        $updateWithImg = $db->updateDataByQuery($query);
+
+        if ($updateWithImg == true) {
+            $response[] = array("status" => "201", "message" => $spName . "'s data has been updated successfully.");
+        }
+    }
+
+    echo json_encode($response);
+}
