@@ -1,7 +1,11 @@
 <?php
+require_once '../classes/app/ServiceSeeker.php';
 session_start();
 $serviceSeekerName = $_SESSION['serviceSeekerName'];
-// echo $_SESSION['serviceSeekerName'];
+$serviceSeeker = new ServiceSeeker();
+
+$getSsData = $serviceSeeker->getServiceSeekerInfo("name", $serviceSeekerName);
+$serviceSeekerId = $getSsData['service_seeker_id']
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +56,8 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
         <!-- Sidebar -->
         <section class="w-1/5 min-h-screen">
             <div class=" absolute top-6">
+                <input type="hidden" name="ss-id" id="ss-id" value="<?php echo $serviceSeekerId; ?>">
+
                 <h1 class="p-5 text-2xl font-bold text-[#6D2932]"><?php echo $serviceSeekerName; ?></h1>
 
                 <!-- Menu List Item -->
@@ -125,7 +131,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
 
                     <!-- Delete Service Provider -->
                     <li class="hover:bg-[#6D2932] hover:rounded-r-xl hover:text-white hover:transition 500 mb-2">
-                        <a href="dashboard.php?delete" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                        <a href="" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl delete-btn">
                             <!-- Icon -->
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -316,6 +322,7 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
         $(document).ready(function() {
 
             showLoggedInUserProfile();
+            getSSId();
 
             // * Function for show number of pending hiring process in Hiring Log superscript.
             showHiringLogOnProcessInNumber();
@@ -413,6 +420,80 @@ $serviceSeekerName = $_SESSION['serviceSeekerName'];
                     }
                 })
             }
+
+            function getSSId() {
+                const ssID = $("#ss-id").val()
+
+                const deleteBtnEl = document.querySelector(".delete-btn");
+
+                deleteBtnEl.id = ssID
+            }
+
+            $("body").on("click", ".delete-btn", function(e) {
+                e.preventDefault();
+
+                const ssId = $(this).attr("id")
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "px-5 py-2 rounded-md mt-5 bg-green-600 text-white",
+                        cancelButton: "px-5 py-2 rounded-md bg-[#FF0000] me-4 text-white"
+                    },
+                    buttonsStyling: true
+                });
+                swalWithBootstrapButtons.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel!",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '../ajax-file/ajax.php',
+                            type: 'POST',
+                            data: {
+                                "request": "deleteSs",
+                                "ssId": ssId
+                            },
+                            success: function(response) {
+
+                                console.log(response);
+                                if (response == "404") {
+                                    swalWithBootstrapButtons.fire({
+                                        title: "Deleted!",
+                                        text: `Your account has been deleted. Here after you can't get this account`,
+                                        icon: "success"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = "/skill-wave-service-hiring-app/index.php"
+                                        }
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+
+                                console.log("Status: " + status);
+                                console.log("XHR Response: " + xhr.responseText);
+                                console.error("Error: " + error);
+                            }
+                        })
+
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire({
+                            title: "Cancelled",
+                            text: "Your imaginary file is safe :)",
+                            icon: "error"
+                        });
+                    }
+                });
+
+            })
         })
     </script>
 

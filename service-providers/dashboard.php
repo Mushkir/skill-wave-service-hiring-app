@@ -1,7 +1,11 @@
 <?php
-@session_start();
+require_once '../classes/app/ServiceProvide.php';
+session_start();
 $serviceProviderName = $_SESSION['serviceProviderName'];
-// echo $serviceProviderName;
+$serviceProvider = new ServiceProvider();
+
+$getSsData = $serviceProvider->getServiceProviderInfo("name", $serviceProviderName);
+$serviceProviderId = $getSsData['service_provider_id']
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +53,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
         <!-- Sidebar -->
         <section class="w-1/5  min-h-screen">
             <div class="absolute top-6">
+                <input type="hidden" name="sp-id" id="sp-id" value="<?php echo $serviceProviderId; ?>">
                 <h1 class="p-5 text-xl font-bold text-[#e94e1c] bg-[#0C0C0C] rounded-r-xl"><?php echo $serviceProviderName; ?></h1>
                 <!-- Menu List Item -->
                 <ul class="mt-5">
@@ -101,7 +106,7 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
 
                     <!-- Delete Service Provider -->
                     <li class="hover:bg-gray-200 hover:rounded-r-xl hover:text-black hover:transition 500 mb-2">
-                        <a href="dashboard.php?delete" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl">
+                        <a href="" id="<?php echo $serviceProviderId ?>" class="flex items-center gap-4 pl-5 p-3 rounded-r-xl delete-btn-sp">
                             <!-- Icon -->
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -498,6 +503,72 @@ $serviceProviderName = $_SESSION['serviceProviderName'];
                     }
 
                 })
+            })
+
+            $("body").on("click", ".delete-btn-sp", function(e) {
+                e.preventDefault();
+
+                const spId = $(this).attr("id")
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "px-5 py-2 rounded-md mt-5 bg-green-600 text-white",
+                        cancelButton: "px-5 py-2 rounded-md bg-[#FF0000] me-4 text-white"
+                    },
+                    buttonsStyling: true
+                });
+                swalWithBootstrapButtons.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel!",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '../ajax-file/ajax.php',
+                            type: 'POST',
+                            data: {
+                                "request": "deleteSp",
+                                "spId": spId
+                            },
+                            success: function(response) {
+
+                                console.log(response);
+                                if (response == "404") {
+                                    swalWithBootstrapButtons.fire({
+                                        title: "Deleted!",
+                                        text: `Your account has been deleted. Here after you can't get this account`,
+                                        icon: "success"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = "/skill-wave-service-hiring-app/index.php"
+                                        }
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+
+                                console.log("Status: " + status);
+                                console.log("XHR Response: " + xhr.responseText);
+                                console.error("Error: " + error);
+                            }
+                        })
+
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire({
+                            title: "Cancelled",
+                            text: "Your imaginary file is safe :)",
+                            icon: "error"
+                        });
+                    }
+                });
+
             })
         })
     </script>

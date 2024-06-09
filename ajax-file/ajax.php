@@ -1509,7 +1509,7 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
         $spId = $arrayOfSpInfo['service_provider_id'];
 
         // * 3. Get the details from 'table_services' table using fetched Id in Step 2.
-        $query = "SELECT ts.services_id, ts.seeker_id, ts.description, ts.service_charge, ts.service_agreed, ts.service_status, ts.date_time, tss.name, tss.contact_no 
+        $query = "SELECT ts.services_id, ts.seeker_id, ts.description, ts.service_charge, ts.service_agreed, ts.service_status, ts.date_time, tss.name, tss.contact_no, ts.payment_status AS paymentStatus 
         FROM table_services ts JOIN table_service_provider tsp ON ts.provider_id = tsp.service_provider_id 
         JOIN table_service_seeker tss ON ts.seeker_id = tss.service_seeker_id WHERE tsp.service_provider_id = $spId";
 
@@ -1545,6 +1545,7 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
             $serviceSeekerName = $data['name'];
             $serviceSeekerContactNo = $data['contact_no'];
             $dateTime = $data['date_time'];
+            $paymentStatus = $data['paymentStatus'];
 
             $arrayOfDateTime = explode(" ", $dateTime);
             $date = $arrayOfDateTime[0];
@@ -1595,12 +1596,22 @@ if (isset($_POST["request"]) && $_POST["request"] == 'showAllServiceProviderSumm
             $result .= '<td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $serviceStatus . '</td>
 
             <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $date . '</td>
-            <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $time . '</td>
+            <td class="px-1 py-1.5 border-gray-400 border-r-2 capitalize">' . $time . '</td>';
 
-        <td class="px-1 py-1.5 border-gray-400 border-r-2">
-            <a href="#" class="hover:underline hover:transition 500 hover:text-gray-700">Pending</a>
-        </td>
-    </tr>';
+            if ($paymentStatus == 0) {
+                $result .= '<td class="px-1 py-1.5 text-center border-gray-400 border-r-2">
+            Pending
+        </td>';
+            } else {
+                $result .= '<td class="px-1 py-1.5 text-center border-gray-400 border-r-2">
+                Paid
+            </td>';
+                //         <td class="px-1 py-1.5 border-gray-400 border-r-2">
+                //     <a href="#" class="hover:underline hover:transition 500 hover:text-gray-700">Pending</a>
+                // </td>
+            }
+
+            $result .= '</tr>';
         }
 
         $result .= '</tbody></table>';
@@ -2403,6 +2414,65 @@ if (isset($_POST["request"]) && $_POST['request'] == "updateSpByAdmin") {
 }
 
 
+// Todo: Update SP info by SP
+if (isset($_POST["request"]) && $_POST['request'] == "updateSp") {
+
+
+    $spId = $_POST['service-providerid'];
+    $spName = $_POST['service-providerfullname'];
+    $spEmail = $_POST['service-provideremail'];
+    $spContactNo = $_POST['service-providercontact-no'];
+    $spUsername = $_POST['service-providerusername'];
+    $spDistrict = $_POST['service-providerdistrict'];
+    $spTown = $_POST['service-providertown'];
+    $spAddressline = $_POST['service-provideraddress-line'];
+    $spStartingPrice = $_POST['service-providerstarting-price'];
+    $spQualification = $_POST['service-providerqualification'];
+    $spSkills = $_POST['service-providerskills'];
+    $spDesc = $_POST['service-providerdesc'];
+    $spKeywords = $_POST['service-providerkeywords'];
+    $img = $_FILES['fileInput'];
+
+    $townInfo = $town->getTownInfoById($spTown);
+    $townName = $townInfo['name'];
+
+    $latitudeValue = $serviceProvider->getServiceProviderLatitudeValue($townName);
+    $longitudeValue = $serviceProvider->getServiceProviderLongitudeValue($townName);
+
+    if ($img['error'] == UPLOAD_ERR_NO_FILE) {
+        $query = "UPDATE `table_service_provider` SET name = '$spName', email_address = '$spEmail',
+        contact_no = '$spContactNo', username = '$spUsername', address_line = '$spAddressline',
+        district_id = $spDistrict,  town_id = $spTown, latitude_value = '$latitudeValue', longitutde_value = '$longitudeValue',
+        qualification = '$spQualification', skills = '$spSkills', description = '$spDesc', keywords = '$spKeywords',
+        price = '$spStartingPrice' WHERE service_provider_id = $spId
+        ";
+
+        $updateSp = $db->updateDataByQuery($query);
+
+        if ($updateSp == true) {
+            $response[] = array("status" => "200", "message" => $spName . "'s data has been updated successfully.");
+        }
+    } else {
+
+        $spProfilePic = $db->imageUpload($img);
+
+        $query = "UPDATE `table_service_provider` SET name = '$spName', email_address = '$spEmail',
+            contact_no = '$spContactNo', username = '$spUsername', address_line = '$spAddressline',
+        district_id = $spDistrict,  town_id = $spTown, latitude_value = '$latitudeValue', longitutde_value = '$longitudeValue',
+        qualification = '$spQualification', skills = '$spSkills', image = '$spProfilePic' , description = '$spDesc', keywords = '$spKeywords',
+        price = '$spStartingPrice' WHERE service_provider_id = $spId
+        ";
+
+        $updateWithImg = $db->updateDataByQuery($query);
+
+        if ($updateWithImg == true) {
+            $response[] = array("status" => "201", "message" => $spName . "'s data has been updated successfully.");
+        }
+    }
+
+    echo json_encode($response);
+}
+
 // Todo: Show all the ss in admin dashboard.
 if (isset($_POST['request']) && $_POST['request'] == "showAllSsInAdminPanel") {
 
@@ -2547,4 +2617,80 @@ if (isset($_POST["request"]) && $_POST['request'] == "updateSsByAdmin") {
     }
 
     echo json_encode($response);
+}
+
+// Todo: Update SS info by SS
+if (isset($_POST["request"]) && $_POST['request'] == "updateServiceSeeker") {
+
+    // print_r($_REQUEST);
+    $ssId = $_POST['service-seeker-id'];
+    $ssFullname = $_POST['service-seeker-fullname'];
+    $ssEmail = $_POST['service-seeker-email'];
+    $ssContactNo = $_POST['service-seeker-contact-no'];
+    $ssUsername = $_POST['service-seeker-username'];
+    $ssAddressLine = $_POST['service-seeker-addreservice-seeker-line'];
+    $ssCity = $_POST['service-seeker-city'];
+    $img = $_FILES['fileInput'];
+
+    $latitude = $serviceSeeker->getLatitudeValue($ssCity);
+    $longitude = $serviceSeeker->getLongitudeValue($ssCity);
+
+    if ($img['error'] == UPLOAD_ERR_NO_FILE) {
+
+        $query = "UPDATE `table_service_seeker` SET name = '$ssFullname', email_address = '$ssEmail', contact_no = '$ssContactNo', username = '$ssUsername',
+        address_line = '$ssAddressLine', city = '$ssCity', latitude_Value = '$latitude', longitude_value = '$longitude' WHERE service_seeker_id = $ssId
+        ";
+
+        $updateSs = $db->updateDataByQuery($query);
+
+        if ($updateSs == true) {
+            $response[] = array("status" => "200", "message" => $ssFullname . "'s data has been updated successfully.");
+        }
+    } else {
+
+        $ssProfilePic = $db->imageUpload($img);
+
+        $query = "UPDATE `table_service_seeker` SET name = '$ssFullname', email_address = '$ssEmail', contact_no = '$ssContactNo', username = '$ssUsername',
+        address_line = '$ssAddressLine', city = '$ssCity', latitude_Value = '$latitude', longitude_value = '$longitude', image = '$ssProfilePic' WHERE service_seeker_id = $ssId
+        ";
+
+        $updateWithImg = $db->updateDataByQuery($query);
+
+        if ($updateWithImg == true) {
+            $response[] = array("status" => "201", "message" => $ssFullname . "'s data has been updated successfully.");
+        }
+    }
+
+    echo json_encode($response);
+}
+
+// Todo: Delete Ss by Admin
+if (isset($_POST["request"]) && $_POST['request'] == "deleteSs") {
+
+    $ssId = $_POST['ssId'];
+
+    $deleteSs = $serviceSeeker->deleteServiceSeeker($ssId);
+
+    if ($deleteSs == true) {
+        @session_start();
+        session_unset();
+        session_destroy();
+        echo "404";
+    }
+}
+
+
+// Todo: Delete Sp by Admin
+if (isset($_POST["request"]) && $_POST['request'] == "deleteSp") {
+
+    $spId = $_POST['spId'];
+
+    $deleteSp = $serviceProvider->deleteServiceProvider($spId);
+
+    if ($deleteSp == true) {
+        @session_start();
+        session_unset();
+        session_destroy();
+        echo "404";
+    }
 }
