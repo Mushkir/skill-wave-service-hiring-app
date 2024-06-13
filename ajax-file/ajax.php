@@ -739,6 +739,7 @@ if (isset($_POST['request']) && $_POST['request'] == "listRandomServiceProviders
         // * 2. If it is yes, Fetch all the data from DB.
         $query = "SELECT tsp.*, tt.name AS town_name FROM table_service_provider tsp 
         JOIN table_town tt ON tsp.town_id = tt.town_id WHERE tsp.profile_status = 'accepted' ORDER BY RAND() LIMIT 9";
+
         $arrayOfServiceProviders = $db->getMultipleData($query);
 
         foreach ($arrayOfServiceProviders as $dataSetOfServiceProviders) {

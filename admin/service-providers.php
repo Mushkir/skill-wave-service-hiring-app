@@ -1,4 +1,4 @@
-<div class="w-[950px] overflow-x-scroll" id="sp-table-container">
+<div class="w-[1150px] overflow-x-scroll" id="sp-table-container">
     <!-- <table class="[&>tbody>*:nth-child(even)]:bg-[#99767B] table border-2 border-[#6D2932] w-full text-center table-auto" id="sp-table">
         <thead>
             <tr class="bg-[#6D2932] text-[#F9F6EE] text-center">

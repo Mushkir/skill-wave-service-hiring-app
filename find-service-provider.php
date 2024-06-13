@@ -57,7 +57,7 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
                         <div>
-                            <input type="search" id="search-sp" name="search-sp" class="block w-full p-4 ps-10 text-sm rounded-md bg-cus-maron text-primary-color-10 placeholder-primary-color-10 focus:ring-white" placeholder="Ex: Mechanic, Plumber ..." required />
+                            <input type="search" id="search-sp" name="search-sp" class="block w-full p-4 ps-10 text-sm rounded-md bg-cus-maron text-primary-color-10 placeholder-primary-color-10 focus:ring-white" placeholder="Ex: Mechanic, Plumber ..." required autocomplete="off" />
                         </div>
                     </div>
                 </form>

@@ -6,7 +6,7 @@
         <div class="w-full">
             <label for="sp-fullname" class="font-semibold text-cus-maron">Name<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="sp-fullname" id="sp-fullname" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: Mohamed Mushkir" required />
+                <input type="text" name="sp-fullname" id="sp-fullname" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: Mohamed Mushkir" required autocomplete="off" />
             </div>
         </div>
 
@@ -14,7 +14,7 @@
         <div class="w-full">
             <label for="sp-email" class="font-semibold text-cus-maron">Email<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="email" name="sp-email" id="sp-email" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: username@example.com" required />
+                <input type="email" name="sp-email" id="sp-email" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: username@example.com" required autocomplete="off" />
             </div>
         </div>
 
@@ -22,7 +22,7 @@
         <div class="w-full">
             <label for="sp-contact-no" class="font-semibold text-cus-maron">Contact No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="tel" name="sp-contact-no" id="sp-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94 777195282 / +94777195282" required />
+                <input type="tel" name="sp-contact-no" id="sp-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94 777195282 / +94777195282" required autocomplete="off" />
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
         <div class="w-full">
             <label for="sp-username" class="font-semibold text-cus-maron">Username<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="sp-username" id="sp-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: john_devil" required onkeyup="showCustomError()" />
+                <input type="text" name="sp-username" id="sp-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: john_devil" required onkeyup="showCustomError()" autocomplete="off" />
                 <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden"></span>
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="w-full">
             <label for="sp-password" class="font-semibold text-cus-maron">Password<span class="text-red-500">*</span></label>
             <div class="mb-5 mt-2 flex bg-white items-center justify-center rounded">
-                <input type="password" name="sp-password" id="sp-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Enter your password" required />
+                <input type="password" name="sp-password" id="sp-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Enter your password" required autocomplete="off" />
 
                 <!-- Eye Icon -->
                 <button type="button" class="mr-3" id="eye-closed-icon">
@@ -55,7 +55,7 @@
         <div class="w-full">
             <label for="sp-confirm-password" class="font-semibold text-cus-maron">Confirm Password<span class="text-red-500">*</span></label>
             <div class="mb-5 mt-2 flex bg-white items-center justify-center rounded">
-                <input type="password" name="sp-confirm-password" id="sp-confirm-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Confirm password" required />
+                <input type="password" name="sp-confirm-password" id="sp-confirm-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Confirm password" required autocomplete="off" />
 
                 <!-- Eye Icon -->
                 <button type="button" class="mr-3" id="eye-closed-icon-conf">
@@ -84,7 +84,7 @@
         <div class="w-full">
             <label for="sp-addresp-line" class="font-semibold text-cus-maron">Address Line<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="sp-addresp-line" id="sp-addresp-line" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: no. 246/a, meera nagar road" required />
+                <input type="text" name="sp-addresp-line" id="sp-addresp-line" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: no. 246/a, meera nagar road" required autocomplete="off" />
             </div>
         </div>
 
@@ -116,7 +116,7 @@
         <div class="w-full">
             <label for="sp-qualification" class="font-semibold text-cus-maron">Qualifications<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <textarea name="sp-qualification" id="sp-qualification" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: MBBS, Engineer..."></textarea>
+                <textarea name="sp-qualification" id="sp-qualification" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: MBBS, Engineer..." autocomplete="off"></textarea>
             </div>
         </div>
 
@@ -124,7 +124,7 @@
         <div class="w-full">
             <label for="sp-skills" class="font-semibold text-cus-maron">Skills<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <textarea name="sp-skills" id="sp-skills" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Mechanic, Plumber..."></textarea>
+                <textarea name="sp-skills" id="sp-skills" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Mechanic, Plumber..." autocomplete="off"></textarea>
             </div>
         </div>
 
@@ -143,7 +143,7 @@
         <div class="w-full">
             <label for="sp-desc" class="font-semibold text-cus-maron">Service Description<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <textarea name="sp-desc" id="sp-desc" rows="5" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Puncturing, Oil Changing..."></textarea>
+                <textarea name="sp-desc" id="sp-desc" rows="5" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Puncturing, Oil Changing..." autocomplete="off"></textarea>
             </div>
         </div>
 
@@ -151,7 +151,7 @@
         <div class="w-full">
             <label for="sp-keywords" class="font-semibold text-cus-maron">Keywords<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <textarea name="sp-keywords" id="sp-keywords" rows="5" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Puncture, Mechanic, Car Reparing, Oil Changing..."></textarea>
+                <textarea name="sp-keywords" id="sp-keywords" rows="5" class="font-normal w-full bg-white border-none rounded mt-2 p-3 outline-none" placeholder="Ex: Puncture, Mechanic, Car Reparing, Oil Changing..." autocomplete="off"></textarea>
             </div>
         </div>
 
@@ -159,7 +159,7 @@
         <div class="w-full">
             <label for="sp-starting-price" class="font-semibold text-cus-maron">Package Starting Price<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input class="font-normal w-full bg-white border-none rounded mt-2 outline-none" id="sp-starting-price" type="text" name="sp-starting-price" placeholder="Ex: 500.00" />
+                <input class="font-normal w-full bg-white border-none rounded mt-2 outline-none" id="sp-starting-price" type="text" name="sp-starting-price" placeholder="Ex: 500.00" autocomplete="off" />
             </div>
         </div>
     </div>

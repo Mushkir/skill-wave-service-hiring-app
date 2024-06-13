@@ -57,7 +57,7 @@
                 <div class="w-full">
                     <label for="username" class="font-semibold text-cus-maron">Username</label>
                     <div class="mb-5">
-                        <input type="text" name="username" id="username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: mushkir_mohamed" required onkeyup="showCustomError()" />
+                        <input type="text" name="username" id="username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: mushkir_mohamed" required onkeyup="showCustomError()" autocomplete="off" />
                         <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden"></span>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <div class="w-full">
                     <label for="password" class="font-semibold text-cus-maron">Password</label>
                     <div class="mb-3">
-                        <input type="password" name="password" id="password" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Enter your password" required />
+                        <input type="password" name="password" id="password" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Enter your password" required autocomplete="off" />
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@
                     </button>
                 </div>
 
-                <a href="#" class="text-sm text-center sm:text-left font-normal block mt-5 text-cus-maron-1 hover:text-cus-maron hover:underline">Forgot Password?</a>
+                <!-- <a href="#" class="text-sm text-center sm:text-left font-normal block mt-5 text-cus-maron-1 hover:text-cus-maron hover:underline">Forgot Password?</a> -->
             </form>
         </section>
     </main>

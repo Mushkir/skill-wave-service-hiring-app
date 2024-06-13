@@ -7,7 +7,7 @@
         <div class="w-full">
             <label for="ss-fullname" class="font-semibold text-cus-maron">Name<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-fullname" id="ss-fullname" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: Mohamed Mushkir" required />
+                <input type="text" name="ss-fullname" id="ss-fullname" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: Mohamed Mushkir" required autocomplete="off" />
             </div>
         </div>
 
@@ -15,7 +15,7 @@
         <div class="w-full">
             <label for="ss-email" class="font-semibold text-cus-maron">Email<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="email" name="ss-email" id="ss-email" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: username@example.com" required />
+                <input type="email" name="ss-email" id="ss-email" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: username@example.com" required autocomplete="off" />
             </div>
         </div>
 
@@ -23,7 +23,7 @@
         <div class="w-full">
             <label for="ss-contact-no" class="font-semibold text-cus-maron">Contact No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="tel" name="ss-contact-no" id="ss-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94777195282" required />
+                <input type="tel" name="ss-contact-no" id="ss-contact-no" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: +94777195282" required autocomplete="off" />
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="w-full">
             <label for="ss-username" class="font-semibold text-cus-maron">Username<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-username" id="ss-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: mushkir_mohamed" required onkeyup="showCustomError()" />
+                <input type="text" name="ss-username" id="ss-username" class="font-normal w-full bg-white border-none rounded mt-2 outline-none" placeholder="Ex: mushkir_mohamed" required onkeyup="showCustomError()" autocomplete="off" />
                 <span id="username-custom-error-el" class=" text-red-700 font-normal mt-2 hidden"></span>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="w-full">
             <label for="ss-password" class="font-semibold text-cus-maron">Password<span class="text-red-500">*</span></label>
             <div class="mb-5 mt-2 flex bg-white items-center justify-center rounded">
-                <input type="password" name="ss-password" id="ss-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Enter your password" required />
+                <input type="password" name="ss-password" id="ss-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Enter your password" required autocomplete="off" />
 
                 <!-- Eye Icon -->
                 <button type="button" class="mr-3" id="eye-closed-icon">
@@ -56,7 +56,7 @@
         <div class="w-full">
             <label for="ss-confirm-password" class="font-semibold text-cus-maron">Confirm Password<span class="text-red-500">*</span></label>
             <div class="mb-5 mt-2 flex bg-white items-center justify-center rounded">
-                <input type="password" name="ss-confirm-password" id="ss-confirm-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Confirm password" required />
+                <input type="password" name="ss-confirm-password" id="ss-confirm-password" class="font-normal w-full bg-white border-none rounded outline-none" placeholder="Confirm password" required autocomplete="off" />
 
                 <!-- Eye Icon -->
                 <button type="button" class="mr-3" id="eye-closed-icon-conf">
@@ -85,7 +85,7 @@
         <div class="w-full">
             <label for="ss-address-line" class="font-semibold text-cus-maron">Address Line<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-address-line" id="ss-address-line" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: no. 246/a, meera nagar road" required />
+                <input type="text" name="ss-address-line" id="ss-address-line" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: no. 246/a, meera nagar road" required autocomplete="off" />
             </div>
         </div>
 
@@ -93,7 +93,7 @@
         <div class="w-full">
             <label for="ss-city" class="font-semibold text-cus-maron">City<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-city" id="ss-city" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: nintavur" required />
+                <input type="text" name="ss-city" id="ss-city" class="font-normal w-full bg-white border-none rounded mt-2 outline-none capitalize" placeholder="Ex: nintavur" required autocomplete="off" />
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
         <div class="w-full">
             <label for="ss-id-card-no" class="font-semibold text-cus-maron">NIC No.<span class="text-red-500">*</span></label>
             <div class="mb-5">
-                <input type="text" name="ss-id-card-no" id="ss-id-card-no" class="font-normal w-full bg-white border-none rounded mt-2" placeholder="Ex: 199631401505" required />
+                <input type="text" name="ss-id-card-no" id="ss-id-card-no" class="font-normal w-full bg-white border-none rounded mt-2" placeholder="Ex: 199631401505" required autocomplete="off" />
             </div>
         </div>
     </div>
